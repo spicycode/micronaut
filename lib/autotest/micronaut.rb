@@ -8,10 +8,6 @@ Autotest.add_hook :initialize do |at|
     filename 
   }
   at.add_mapping(%r%^lib/(.*)\.rb$%) { |filename, m| 
-    puts "filename => #{filename}"
-    puts "m[1] => #{m[1]}"
-    path = "examples/lib/#{m[1]}_example.rb"
-    puts "path => #{path}"
     [path]
   }
   at.add_mapping(%r%^examples/(example_helper|shared/.*)\.rb$%) { 
