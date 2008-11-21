@@ -1,13 +1,17 @@
-class Micronaut::ExampleWorld
-  
-  def self.reset
-    @@example_groups = []
-  end
+module Micronaut
 
-  reset
+  class ExampleWorld
   
-  def self.example_groups
-    @@example_groups
+    def self.reset
+      @@example_groups = []
+    end
+
+    reset
+  
+    def self.example_groups
+      @@example_groups
+    end
+  
   end
   
 end
