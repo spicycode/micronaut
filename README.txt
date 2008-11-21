@@ -1,0 +1,17 @@
+= Micronaut
+
+* http://github.com/spicycode/micronaut
+
+== DESCRIPTION:
+
+Micronaut is an ultra light-weight BDD test framework.   For the moment think of it is a prototype of
+RSpec lite.  Definitely pre alpha at the moment.
+
+== REQUIREMENTS:
+
++ Ruby 1.8
+
+== CREDITS:
+
+* Mini/Unit for the great ideas and runner
+* RSpec for the great ideas and matchers
