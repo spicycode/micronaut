@@ -29,8 +29,8 @@ module Micronaut
     return ["No backtrace"] unless backtrace
 
     new_backtrace = []
-    backtrace.each do |line|
-      break if line.rindex(MICRONAUT_DIR, 0)
+    backtrace.each_with_index do |line, index|
+      break if line.rindex(MICRONAUT_DIR, 0) && index > 2
       new_backtrace << line
     end
 

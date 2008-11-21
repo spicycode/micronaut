@@ -64,7 +64,11 @@ class Micronaut::ExampleGroup
 
         before_each_parts.each { |part| part.call }
 
-        example_block.call
+        if example_block.nil?
+          result << 'P'
+        else
+          example_block.call
+        end
 
         result << '.'
 
@@ -74,13 +78,13 @@ class Micronaut::ExampleGroup
 
       @passed = true
     rescue Exception => e
-      result << runner.puke(self.class, self.name, e)
+      result << runner.complain(self.class, self.name, e)
       @passed = false
     ensure
       begin
         after_all_parts.each { |part| part.call }
       rescue Exception => e
-        result << runner.puke(self.class, self.name, e)
+        result << runner.complain(self.class, self.name, e)
       end
     end
 
