@@ -1,3 +1,5 @@
+require 'micronaut/mocking/with_mocha'
+require 'micronaut/exceptions'
 require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/example_world'
@@ -6,9 +8,7 @@ require 'micronaut/example_group'
 require 'micronaut/extensions/kernel'
 
 module Micronaut
-  VERSION = "0.0.1"
-  
-  class ExpectationNotMetError < ::StandardError; end
+  VERSION = "0.0.2"
 
   file = if RUBY_VERSION =~ /^1\.9/ then  # bt's expanded, but __FILE__ isn't :(
            File.expand_path __FILE__

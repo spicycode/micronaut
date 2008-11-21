@@ -9,7 +9,7 @@ module Micronaut
 
     def initialize
       @report = []
-      @errors = @failures = 0
+      @errors, @failures = 0, 0
       @verbose = false
     end
 
@@ -32,13 +32,15 @@ module Micronaut
     end
 
     def complain(cls, method_in_question, e)
-      e = case e
-          when Micronaut::ExpectationNotMetError then
+      bt = Micronaut::filter_backtrace(e.backtrace).join("\n    ")
+      
+      e = case e.class.to_s
+          when 'Micronaut::Exceptions::ExpectationNotMetError', 'Mocha::ExpectationError' then
             @failures += 1
-            "Failure:\n#{method_in_question}(#{cls}) [#{location(e)}]:\n#{e.message}\n"
+            "Failure:\n#{method_in_question}(#{cls}) [#{location(e)}]:\n#{e.message}\n    #{bt}\n"
           else
+            puts e.to_s
             @errors += 1
-            bt = Micronaut::filter_backtrace(e.backtrace).join("\n    ")
             "Error:\n#{method_in_question}(#{cls}):\n#{e.class}: #{e.message}\n    #{bt}\n"
           end
       @report << e

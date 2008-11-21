@@ -1,6 +1,7 @@
 class Micronaut::ExampleGroup
   include Micronaut::Matchers
-
+  include Micronaut::Mocking::WithMocha
+  
   attr_reader :name, :description, :examples, :before_parts, :after_parts
 
   def initialize(const_or_name, description=nil)
@@ -61,7 +62,9 @@ class Micronaut::ExampleGroup
       before_all_parts.each { |part| part.call }
 
       @examples.each do |example_description, example_block| 
-
+        
+        setup_mocks
+        
         before_each_parts.each { |part| part.call }
 
         if example_block.nil?
@@ -73,7 +76,10 @@ class Micronaut::ExampleGroup
         result << '.'
 
         after_each_parts.each { |part| part.call }
-
+        
+        verify_mocks
+        
+        teardown_mocks
       end
 
       @passed = true

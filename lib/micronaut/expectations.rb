@@ -34,7 +34,7 @@ module Micronaut
     class << self
       attr_accessor :differ
 
-      # raises a Micronaut::ExpectationNotMetError with message
+      # raises a Micronaut::Exceptions::ExpectationNotMetError with message
       #
       # When a differ has been assigned and fail_with is passed
       # <code>expected</code> and <code>target</code>, passes them
@@ -50,7 +50,7 @@ module Micronaut
             message << "\nDiff:" << self.differ.diff_as_object(target, expected)
           end
         end
-        Kernel::raise(Micronaut::ExpectationNotMetError.new(message))
+        Kernel::raise(Micronaut::Exceptions::ExpectationNotMetError.new(message))
       end
     end
   end

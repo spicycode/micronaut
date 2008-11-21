@@ -4,7 +4,7 @@ require 'rubygems/specification'
 require 'date'
 
 GEM = "micronaut"
-GEM_VERSION = "0.0.1"
+GEM_VERSION = "0.0.2"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -23,7 +23,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   
   # Uncomment this to add a dependency
-  # s.add_dependency "foo"
+  s.add_dependency "mocha"
   
   s.require_path = 'lib'
   s.autorequire = GEM

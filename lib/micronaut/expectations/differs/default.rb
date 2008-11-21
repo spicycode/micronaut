@@ -12,8 +12,9 @@ module Micronaut
 
       # TODO add some rdoc
       class Default
-        def initialize(options)
-          @options = options
+        def initialize(diff_type = :unified, context_lines = 3)
+          @format = diff_type
+          @context_lines = context_lines
         end
 
         # This is snagged from diff/lcs/ldiff.rb (which is a commandline tool)
@@ -54,11 +55,11 @@ module Micronaut
 
         protected
         def format
-          @options.diff_format
+          @format
         end
 
         def context_lines
-          @options.context_lines
+          @context_lines
         end
       end
     end
