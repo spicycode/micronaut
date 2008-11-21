@@ -1,7 +1,8 @@
 module Micronaut
   module Expectations
-    # We add #should and #should_not to every Object (and, implicitly, every Class).
-    module ObjectExtensions
+    # rspec adds #should and #should_not to every Object (and,
+    # implicitly, every Class).
+    module ObjectExpectations
       # :call-seq:
       #   should(matcher)
       #   should == expected
@@ -58,5 +59,5 @@ module Micronaut
 end
 
 class Object
-  include Micronaut::Expectations::ObjectExtensions
+  include Micronaut::Expectations::ObjectExpectations
 end

@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 
 describe Micronaut::Expectations, "#fail_with with no diff" do
-  before(:each) do
+  before do
     @old_differ = Micronaut::Expectations.differ
     Micronaut::Expectations.differ = nil
   end
@@ -24,7 +24,7 @@ describe Micronaut::Expectations, "#fail_with with no diff" do
 end
 
 describe Micronaut::Expectations, "#fail_with with diff" do
-  before(:each) do
+  before do
     @old_differ = Micronaut::Expectations.differ
     @differ = mock("differ")
     Micronaut::Expectations.differ = @differ

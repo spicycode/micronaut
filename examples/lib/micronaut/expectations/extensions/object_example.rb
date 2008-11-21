@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../../example_helper")
 
 describe Object, "#should" do
   
-  before(:each) do
+  before do
     @target = "target"
     @matcher = mock("matcher")
     @matcher.stubs(:matches?).returns(true)
@@ -17,27 +17,34 @@ describe Object, "#should" do
   it "should ask for a failure_message when matches? returns false" do
     @matcher.expects(:matches?).with(@target).returns(false)
     @matcher.expects(:failure_message).returns("the failure message")
-    
-    lambda { @target.should @matcher }.should fail_with("the failure message")
+    lambda {
+      @target.should @matcher
+    }.should fail_with("the failure message")
   end
   
   it "should raise error if it receives false directly" do
-    lambda { @target.should false }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
+    lambda {
+      @target.should false
+    }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
   end
   
   it "should raise error if it receives false (evaluated)" do
-    lambda { @target.should eql?("foo") }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
+    lambda {
+      @target.should eql?("foo")
+    }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
   end
   
   it "should raise error if it receives true" do
-    lambda { @target.should true }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
+    lambda {
+      @target.should true
+    }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
   end
   
 end
 
 describe Object, "#should_not" do
   
-  before(:each) do
+  before do
     @target = "target"
     @matcher = mock("matcher")
   end
@@ -74,5 +81,5 @@ describe Object, "#should_not" do
       @target.should_not true
     }.should raise_error(Micronaut::Expectations::InvalidMatcherError)
   end
-  
+
 end

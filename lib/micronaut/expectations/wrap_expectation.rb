@@ -5,6 +5,11 @@ module Micronaut
     # expectation passes and false if it fails (without bubbling up
     # the failure).
     #     
+    # This is intended to be used in the context of a simple matcher,
+    # and is especially useful for wrapping multiple expectations or
+    # one or more assertions from test/unit extensions when running
+    # with test/unit.
+    #
     # == Examples
     #
     #   def eat_cheese(cheese)

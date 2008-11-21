@@ -1,10 +1,10 @@
 require 'micronaut/mocking/with_mocha'
-require 'micronaut/exceptions'
 require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/example_world'
 require 'micronaut/example_runner'
 require 'micronaut/example_group'
+require 'micronaut/extensions/class'
 require 'micronaut/extensions/kernel'
 
 module Micronaut

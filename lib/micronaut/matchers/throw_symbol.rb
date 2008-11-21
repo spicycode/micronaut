@@ -21,9 +21,13 @@ module Micronaut
             end
             @caught_symbol = @expected_symbol unless @caught_arg == :nothing_thrown
           end
-        rescue NameError => e
-          raise e unless e.message =~ /uncaught throw/
-          @caught_symbol = e.name.to_sym
+
+        # Ruby 1.8 uses NameError with `symbol'
+        # Ruby 1.9 uses ArgumentError with :symbol
+        rescue NameError, ArgumentError => e
+          raise e unless e.message =~ /uncaught throw (`|\:)([a-zA-Z0-9_]*)(')?/
+          @caught_symbol = $2.to_sym
+
         ensure
           if @expected_symbol.nil?
             return !@caught_symbol.nil?
@@ -31,6 +35,8 @@ module Micronaut
             if @expected_arg.nil?
               return @caught_symbol == @expected_symbol
             else
+              # puts [@caught_symbol, @expected_symbol].inspect
+              # puts [@caught_arg, @expected_arg].inspect
               return @caught_symbol == @expected_symbol && @caught_arg == @expected_arg
             end
           end

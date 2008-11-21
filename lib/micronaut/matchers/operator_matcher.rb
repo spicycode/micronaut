@@ -1,40 +1,20 @@
 module Micronaut
   module Matchers
-    class BaseOperatorMatcher
-      def initialize(given)
-        @given = given
+    class OperatorMatcher
+      def initialize(actual)
+        @actual = actual
       end
-
-      def ==(expected)
-        __delegate_method_missing_to_given("==", expected)
-      end
-
-      def ===(expected)
-        __delegate_method_missing_to_given("===", expected)
-      end
-
-      def =~(expected)
-        __delegate_method_missing_to_given("=~", expected)
-      end
-
-      def >(expected)
-        __delegate_method_missing_to_given(">", expected)
-      end
-
-      def >=(expected)
-        __delegate_method_missing_to_given(">=", expected)
-      end
-
-      def <(expected)
-        __delegate_method_missing_to_given("<", expected)
-      end
-
-      def <=(expected)
-        __delegate_method_missing_to_given("<=", expected)
+      
+      ['==','===','<','<=','>=','>','=~'].each do |operator|
+        define_method operator do |expected|
+          ::Micronaut::Matchers.last_matcher = self
+          @operator, @expected = operator, expected
+          __delegate_operator(@actual, operator, expected)
+        end
       end
 
       def fail_with_message(message)
-        Micronaut::Expectations.fail_with(message, @expected, @given)
+        Micronaut::Expectations.fail_with(message, @expected, @actual)
       end
       
       def description
@@ -43,27 +23,24 @@ module Micronaut
 
     end
 
-    class PositiveOperatorMatcher < BaseOperatorMatcher #:nodoc:
+    class PositiveOperatorMatcher < OperatorMatcher #:nodoc:
 
-      def __delegate_method_missing_to_given(operator, expected)
-        @expected = expected
-        @operator = operator
-        ::Micronaut::Matchers.last_matcher = self
-        return true if @given.__send__(operator, expected)
-        return fail_with_message("expected: #{expected.inspect},\n     got: #{@given.inspect} (using #{operator})") if ['==','===', '=~'].include?(operator)
-        return fail_with_message("expected: #{operator} #{expected.inspect},\n     got: #{operator.gsub(/./, ' ')} #{@given.inspect}")
+      def __delegate_operator(actual, operator, expected)
+        return true if actual.__send__(operator, expected)
+        if ['==','===', '=~'].include?(operator)
+          fail_with_message("expected: #{expected.inspect},\n     got: #{actual.inspect} (using #{operator})") 
+        else
+          fail_with_message("expected: #{operator} #{expected.inspect},\n     got: #{operator.gsub(/./, ' ')} #{actual.inspect}")
+        end
       end
 
     end
 
-    class NegativeOperatorMatcher < BaseOperatorMatcher #:nodoc:
+    class NegativeOperatorMatcher < OperatorMatcher #:nodoc:
 
-      def __delegate_method_missing_to_given(operator, expected)
-        @expected = expected
-        @operator = operator
-        ::Micronaut::Matchers.last_matcher = self
-        return true unless @given.__send__(operator, expected)
-        return fail_with_message("expected not: #{operator} #{expected.inspect},\n         got: #{operator.gsub(/./, ' ')} #{@given.inspect}")
+      def __delegate_operator(actual, operator, expected)
+        return true unless actual.__send__(operator, expected)
+        return fail_with_message("expected not: #{operator} #{expected.inspect},\n         got: #{operator.gsub(/./, ' ')} #{actual.inspect}")
       end
 
     end

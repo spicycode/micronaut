@@ -21,7 +21,6 @@ module Micronaut
 end
 
 describe "Diff" do
-
   before do
     @differ = Micronaut::Expectations::Differs::Default.new(:unified)
   end
@@ -97,7 +96,7 @@ end
 
 
 describe "Diff in context format" do
-  before(:each) do
+  before do
     @differ = Micronaut::Expectations::Differs::Default.new(:context)
   end
 

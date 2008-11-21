@@ -20,7 +20,7 @@ require 'micronaut/matchers/operator_matcher'
 
 module Micronaut
 
-  # We ship with a number of useful Expression Matchers. An Expression Matcher
+  # We ship (courtesy of OSS and RMicronaut) with a number of useful Expression Matchers. An Expression Matcher
   # is any object that responds to the following methods:
   #
   #   matches?(actual)
@@ -135,7 +135,5 @@ module Micronaut
   #     config.include(CustomGameMatchers)
   #   end
   #
-  module Matchers
-  
-  end
+  module Matchers; end
 end

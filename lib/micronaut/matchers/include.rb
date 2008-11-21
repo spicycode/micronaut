@@ -7,16 +7,19 @@ module Micronaut
         @expecteds = expecteds
       end
       
-      def matches?(given)
-        @given = given
+      def matches?(actual)
+        @actual = actual
         @expecteds.each do |expected|
-          case given
-          when Hash
-            expected.each_pair do |k,v|
-              return false unless given[k] == v
+          if actual.is_a?(Hash)
+            if expected.is_a?(Hash)
+              expected.each_pair do |k,v|
+                return false unless actual[k] == v
+              end
+            else
+              return false unless actual.has_key?(expected)
             end
           else
-            return false unless given.include?(expected)
+            return false unless actual.include?(expected)
           end
         end
         true
@@ -36,7 +39,7 @@ module Micronaut
       
       private
         def _message(maybe_not="")
-          "expected #{@given.inspect} #{maybe_not}to include #{_pretty_print(@expecteds)}"
+          "expected #{@actual.inspect} #{maybe_not}to include #{_pretty_print(@expecteds)}"
         end
         
         def _pretty_print(array)
@@ -58,7 +61,7 @@ module Micronaut
     #   should include(expected)
     #   should_not include(expected)
     #
-    # Passes if given includes expected. This works for
+    # Passes if actual includes expected. This works for
     # collections and Strings. You can also pass in multiple args
     # and it will only pass if all args are found in collection.
     #

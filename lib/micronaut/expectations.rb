@@ -1,6 +1,6 @@
 require 'micronaut/matchers'
-require 'micronaut/expectations/object_extensions'
-require 'micronaut/expectations/string_and_symbol_extensions'
+require 'micronaut/expectations/errors'
+require 'micronaut/expectations/extensions'
 require 'micronaut/expectations/handler'
 require 'micronaut/expectations/wrap_expectation'
 
@@ -28,13 +28,13 @@ module Micronaut
   # it returns +false+, the spec passes and execution continues. If it returns
   # +true+, then the spec fails with the message returned by <tt>matcher.negative_failure_message</tt>.
   #
-  # Micronaut ships with a standard set of useful matchers, and writing your own
+  # RMicronaut ships with a standard set of useful matchers, and writing your own
   # matchers is quite simple. See Micronaut::Matchers for details.
   module Expectations
     class << self
       attr_accessor :differ
 
-      # raises a Micronaut::Exceptions::ExpectationNotMetError with message
+      # raises a Micronaut::Expectations::ExpectationNotMetError with message
       #
       # When a differ has been assigned and fail_with is passed
       # <code>expected</code> and <code>target</code>, passes them
@@ -50,7 +50,7 @@ module Micronaut
             message << "\nDiff:" << self.differ.diff_as_object(target, expected)
           end
         end
-        Kernel::raise(Micronaut::Exceptions::ExpectationNotMetError.new(message))
+        Kernel::raise(Micronaut::Expectations::ExpectationNotMetError.new(message))
       end
     end
   end
