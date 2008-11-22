@@ -9,13 +9,6 @@ module Micronaut
       @name, @description = const_or_name.to_s, description
       @examples, @before_parts, @after_parts = [], {:each => [], :all => []}, {:each => [], :all => []}
     end
-    
-    def self.create_example_group(name_or_const, desc=nil, &describe_block)
-      self.subclass("Subclass") do
-        # set_description(*args)
-        #         module_eval(&example_group_block)
-      end
-    end
 
     def before(type = :each, &block)
       @before_parts[type] << block
