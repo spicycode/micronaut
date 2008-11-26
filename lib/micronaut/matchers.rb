@@ -1,6 +1,5 @@
 require 'micronaut/matchers/generated_descriptions'
 require 'micronaut/matchers/errors'
-require 'micronaut/matchers/method_missing'
 require 'micronaut/matchers/simple_matcher'
 require 'micronaut/matchers/be'
 require 'micronaut/matchers/be_close'
@@ -135,5 +134,15 @@ module Micronaut
   #     config.include(CustomGameMatchers)
   #   end
   #
-  module Matchers; end
+  module Matchers
+    
+    private
+    def method_missing(sym, *args, &block) # :nodoc:
+      return Matchers::Be.new(sym, *args) if sym.starts_with?("be_")
+      return has(sym, *args) if sym.starts_with?("have_")
+      super
+    end
+      
+  end
+  
 end

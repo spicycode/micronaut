@@ -5,7 +5,6 @@ module Micronaut
   module Mocking
     module WithMocha
       include Mocha::Standalone
-    
       def setup_mocks
         mocha_setup
       end

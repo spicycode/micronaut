@@ -35,11 +35,11 @@ module Micronaut
       e = case e.class.to_s
           when /Micronaut::Expectations/, 'Mocha::ExpectationError' then
             @failures += 1
-            "Failure:\n#{group.name}(#{group.class}) [#{location(e)}]:\n#{e.message}\n    #{bt}\n"
+            "Failure:\n#{group.class.name}(#{group.class}) [#{location(e)}]:\n#{e.message}\n    #{bt}\n"
           else
             puts e.to_s
             @errors += 1
-            "Error:\n#{group.name}(#{group.class}):\n#{e.class}: #{e.message}\n    #{bt}\n"
+            "Error:\n#{group.class.name}(#{group.class}):\n#{e.class}: #{e.message}\n    #{bt}\n"
           end
       @report << e
       e[0, 1]
@@ -88,12 +88,12 @@ module Micronaut
           @@out.print "#{example_group.name}: " if @verbose
 
           t = Time.now if @verbose
-          result = example_group.run_group_using(self)
+          result = example_group.run(self)
 
           @example_count += example_group.examples.size
           
           @@out.print "%.6fs: " % (Time.now - t) if @verbose
-          @@out.print result
+          @@out.print(result) if result
           @@out.puts if @verbose
         # end
       end

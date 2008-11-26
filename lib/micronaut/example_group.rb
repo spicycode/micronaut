@@ -1,114 +1,154 @@
+require 'mocha/standalone'
+require 'mocha/object'
+
 module Micronaut
   class ExampleGroup
     include Micronaut::Matchers
-    include Micronaut::Mocking::WithMocha
-    extend  Micronaut::ExampleGroupClassMethods
+    include Mocha::Standalone
 
-    attr_reader :name, :options, :examples, :before_parts, :after_parts
-
-    def initialize(const_or_name, options={})
-      @name, @options = const_or_name.to_s, options
-      @examples, @before_parts, @after_parts = [], {:each => [], :all => []}, {:each => [], :all => []}
-    end
-
-    def before(type = :each, &block)
-      @before_parts[type] << block
-    end
-
-    def before_each_parts
-      @before_parts[:each]
-    end
-
-    def before_all_parts
-      @before_parts[:all]
-    end
-
-    def after(type = :each, &block)
-      @after_parts[type] << block
-    end
-
-    def after_each_parts
-      @after_parts[:each]
-    end
-
-    def after_all_parts
-      @after_parts[:all]
-    end
-
-    def it(example_description, &example_block)
-      @examples << [example_description, example_block]
-    end
-
-    def run
-      before_all_parts.each { |part| part.call }
-
-      @examples.each do |example_description, example_block| 
-
-        before_each_parts.each { |part| part.call }
-
-        example_block.call
-
-        after_each_parts.each { |part| part.call }
-
-      end
-
-      after_all_parts.each { |part| part.call }
+    def self.inherited(klass)
+      super
+      Micronaut::ExampleWorld.example_groups << klass
     end
     
-    def with_mocks
-      yield
-      verify_mocks
+    def self.befores
+      @_befores ||= { :all => [], :each => [] }
     end
-
-    def run_group_using(runner)
-      result = ''
-
-      begin
-        @passed = nil
-
-        setup_mocks
+    
+    def self.before_eachs
+      befores[:each]
+    end
+    
+    def self.before_alls
+      befores[:all]
+    end
+    
+    def self.before(type=:each, &block)
+      befores[type] << block
+    end
+    
+    def self.afters
+      @_afters ||= { :all => [], :each => [] }
+    end
+    
+    def self.after_eachs
+      afters[:each]
+    end
+    
+    def self.after_alls
+      afters[:all]
+    end
+    
+    def self.after(type=:each, &block)
+      @_afters ||= { :all => [], :each => [] }
+      @_afters[type] << block
+    end
+    
+    def self.it(desc=nil, options={}, &block)
+      examples << [desc, options, block]
+    end
+    
+    def self.examples
+      @_examples ||= []
+    end
+    
+    def self.set_it_up(name_or_const, desc, options)
+      @name, @subject, @description, @options = name_or_const.to_s, name_or_const, desc, options
+    end
+    
+    def self.name
+      @name
+    end
+    
+    def self.subject
+      @subject
+    end
+    
+    def self.description
+      @description
+    end
+    
+    def self.options
+      @options
+    end
+    
+    def self.describe(name_or_const, desc=nil, options={}, &block)
+      subclass('NestedLevel') do
+        set_it_up(name_or_const, desc, options)
+        
+        module_eval(&block)
+      end
+    end
+    
+    def self.create_example_group(name_or_const, desc=nil, options={}, &describe_block)
+      describe(name_or_const, desc, options, &describe_block)
+    end
+    
+    def self.each_ancestor(superclass_last=false)
+      classes = []
+      current_class = self
+      while is_example_group_class?(current_class)
+        superclass_last ? classes << current_class : classes.unshift(current_class)
+        current_class = current_class.superclass
+      end
+      
+      classes.each do |example_group|
+        yield example_group
+      end
+    end
+    
+    def self.is_example_group_class?(klass)
+      klass.kind_of?(Micronaut::ExampleGroup)
+    end    
   
-        before_all_parts.each { |part| part.call }
-        puts "Example Group: #{@name} #{@description}"
-        @examples.each do |example_description, example_block| 
-          
-          puts " - #{example_description}"
-          
-          before_each_parts.each { |part| with_mocks { part.call } }
-          
-          if example_block.nil?
-            result << 'P'
-          else
-            with_mocks { example_block.call }
-          end
-          
-          result << '.'
-          
-          after_each_parts.each { |part| with_mocks { part.call } }
-          teardown_mocks
-        end
-        puts "\n"
+    def self.all_before_alls
+      _before_alls = []
+      each_ancestor do |ancestor|
+        _before_alls << ancestor.befores[:all]
+      end
+      _before_alls
+    end
+    
+    def self.run(runner)
+      new.execute(runner)
+    end
 
-        @passed = true
-      rescue Exception => e
-        result << runner.complain(self, e)
-        @passed = false
-      ensure
-        teardown_mocks
+    def execute(runner)
+      result = ''
+      return result if self.class.examples.empty?
+      self.class.all_before_alls.each { |aba| instance_eval(&aba) }
+      
+      self.class.examples.each do |desc, opts, block|
+        execution_error = nil
+
         begin
-          after_all_parts.each { |part| part.call }
+          mocha_setup
+          self.class.befores[:each].each { |be| instance_eval(&be) }
+          if block
+            result << '.'
+            instance_eval(&block)
+          else
+            result << 'P'
+          end
+          mocha_verify
         rescue Exception => e
-          result << runner.complain(self, e)
+          runner.complain(self, e)
+          execution_error ||= e
+        ensure
+          mocha_teardown
+        end
+        
+        begin
+          self.class.afters[:each].each { |ae| instance_eval(&ae) }
+        rescue Exception => e
+          runner.complain(self, e)
+          execution_error ||= e
         end
       end
-
       result
+      # options.reporter.example_finished(self, execution_error)
+      # success = execution_error.nil? || ExamplePendingError === execution_error
     end
-    
-    def describe(name_or_const, &describe_block)
-      Kernel.describe(name_or_const, &describe_block)
-      puts "nested describe called with args: #{name_or_const}"
-    end
-    
+     
   end
 end
