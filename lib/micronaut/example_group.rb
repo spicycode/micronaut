@@ -2,11 +2,12 @@ module Micronaut
   class ExampleGroup
     include Micronaut::Matchers
     include Micronaut::Mocking::WithMocha
+    extend  Micronaut::ExampleGroupClassMethods
 
-    attr_reader :name, :description, :examples, :before_parts, :after_parts
+    attr_reader :name, :options, :examples, :before_parts, :after_parts
 
-    def initialize(const_or_name, description=nil)
-      @name, @description = const_or_name.to_s, description
+    def initialize(const_or_name, options={})
+      @name, @options = const_or_name.to_s, options
       @examples, @before_parts, @after_parts = [], {:each => [], :all => []}, {:each => [], :all => []}
     end
 
@@ -53,6 +54,11 @@ module Micronaut
 
       after_all_parts.each { |part| part.call }
     end
+    
+    def with_mocks
+      yield
+      verify_mocks
+    end
 
     def run_group_using(runner)
       result = ''
@@ -60,43 +66,49 @@ module Micronaut
       begin
         @passed = nil
 
+        setup_mocks
+  
         before_all_parts.each { |part| part.call }
-
+        puts "Example Group: #{@name} #{@description}"
         @examples.each do |example_description, example_block| 
-
-          setup_mocks
-
-          before_each_parts.each { |part| part.call }
-
+          
+          puts " - #{example_description}"
+          
+          before_each_parts.each { |part| with_mocks { part.call } }
+          
           if example_block.nil?
             result << 'P'
           else
-            example_block.call
+            with_mocks { example_block.call }
           end
-
+          
           result << '.'
-
-          after_each_parts.each { |part| part.call }
-
-          verify_mocks
-
+          
+          after_each_parts.each { |part| with_mocks { part.call } }
           teardown_mocks
         end
+        puts "\n"
 
         @passed = true
       rescue Exception => e
-        result << runner.complain(self.class, self.name, e)
+        result << runner.complain(self, e)
         @passed = false
       ensure
+        teardown_mocks
         begin
           after_all_parts.each { |part| part.call }
         rescue Exception => e
-          result << runner.complain(self.class, self.name, e)
+          result << runner.complain(self, e)
         end
       end
 
       result
     end
-
+    
+    def describe(name_or_const, &describe_block)
+      Kernel.describe(name_or_const, &describe_block)
+      puts "nested describe called with args: #{name_or_const}"
+    end
+    
   end
 end

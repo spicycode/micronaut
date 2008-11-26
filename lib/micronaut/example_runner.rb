@@ -26,22 +26,20 @@ module Micronaut
     end
     
     def location(e)
-      e.backtrace.find { |s|
-        s !~ /in .(assert|refute|flunk|pass|fail|raise)/
-      }.sub(/:in .*$/, '')
+      e.backtrace.find { |s| s !~ /in .(expectations|fail)/ }.sub(/:in .*$/, '')
     end
 
-    def complain(cls, method_in_question, e)
+    def complain(group, e)
       bt = Micronaut::filter_backtrace(e.backtrace).join("\n    ")
       
       e = case e.class.to_s
-          when 'Micronaut::Exceptions::ExpectationNotMetError', 'Mocha::ExpectationError' then
+          when /Micronaut::Expectations/, 'Mocha::ExpectationError' then
             @failures += 1
-            "Failure:\n#{method_in_question}(#{cls}) [#{location(e)}]:\n#{e.message}\n    #{bt}\n"
+            "Failure:\n#{group.name}(#{group.class}) [#{location(e)}]:\n#{e.message}\n    #{bt}\n"
           else
             puts e.to_s
             @errors += 1
-            "Error:\n#{method_in_question}(#{cls}):\n#{e.class}: #{e.message}\n    #{bt}\n"
+            "Error:\n#{group.name}(#{group.class}):\n#{e.class}: #{e.message}\n    #{bt}\n"
           end
       @report << e
       e[0, 1]

@@ -3,6 +3,7 @@ require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/example_world'
 require 'micronaut/example_runner'
+require 'micronaut/example_group_class_methods'
 require 'micronaut/example_group'
 require 'micronaut/extensions/class'
 require 'micronaut/extensions/kernel'
@@ -30,7 +31,7 @@ module Micronaut
 
     new_backtrace = []
     backtrace.each_with_index do |line, index|
-      break if line.rindex(MICRONAUT_DIR, 0) && index > 2
+      break if line.rindex(MICRONAUT_DIR, 0)
       new_backtrace << line
     end
 
