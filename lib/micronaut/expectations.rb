@@ -28,7 +28,7 @@ module Micronaut
   # it returns +false+, the spec passes and execution continues. If it returns
   # +true+, then the spec fails with the message returned by <tt>matcher.negative_failure_message</tt>.
   #
-  # RMicronaut ships with a standard set of useful matchers, and writing your own
+  # Micronaut ships with a standard set of useful matchers, and writing your own
   # matchers is quite simple. See Micronaut::Matchers for details.
   module Expectations
     class << self

@@ -4,26 +4,28 @@ module Micronaut
     include Micronaut::Matchers
     include Micronaut::Mocking::WithMocha
 
-    def execute(runner)
-      result = ''
-      return result if self.class.examples.empty?
+    def execute(reporter)
+      return true if self.class.examples.empty?
       self.class.all_before_alls.each { |aba| instance_eval(&aba) }
+      
+      success = true
       
       self.class.examples.each do |desc, opts, block|
         execution_error = nil
-
+        reporter.example_started(self)
+        
         begin
           setup_mocks
           self.class.befores[:each].each { |be| instance_eval(&be) }
           if block
-            result << '.'
             instance_eval(&block)
+            reporter.example_passed(self)
           else
-            result << 'P'
+            reporter.example_pending([desc, self], 'Not yet implemented')
           end
           verify_mocks
         rescue Exception => e
-          runner.complain(self, e)
+          reporter.example_failed(self, e)
           execution_error ||= e
         ensure
           teardown_mocks
@@ -32,11 +34,13 @@ module Micronaut
         begin
           self.class.afters[:each].each { |ae| instance_eval(&ae) }
         rescue Exception => e
-          runner.complain(self, e)
           execution_error ||= e
         end
+        
+        success &= execution_error.nil?
       end
-      result
+      
+      success
     end
      
   end

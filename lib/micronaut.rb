@@ -2,14 +2,14 @@ require 'micronaut/mocking/with_mocha'
 require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/example_world'
-require 'micronaut/example_runner'
+require 'micronaut/runner'
+require 'micronaut/runner_options'
 require 'micronaut/behaviour_group_class_methods'
 require 'micronaut/behaviour_group'
 require 'micronaut/extensions/kernel'
+require 'micronaut/formatters'
 
 module Micronaut
-  VERSION = "0.0.2"
-
   file = if RUBY_VERSION =~ /^1\.9/ then  # bt's expanded, but __FILE__ isn't :(
            File.expand_path __FILE__
          elsif  __FILE__ =~ /^[^\.]/ then # assume both relative

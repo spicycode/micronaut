@@ -16,4 +16,4 @@ module Micronaut
   end
 end
 
-Micronaut::ExampleRunner.autorun
+Micronaut::Runner.autorun

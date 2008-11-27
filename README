@@ -14,4 +14,4 @@ RSpec lite.  Definitely pre alpha at the moment.
 == CREDITS:
 
 * Mini/Unit for the great ideas and runner
-* RSpec for the great ideas, and the matchers/expectations
+* RSpec for the great ideas, matchers, expectations and formatter ideas

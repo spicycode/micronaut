@@ -7,9 +7,7 @@ describe "should match(expected)" do
   end
 
   it "should fail when target (String) does not match expected (Regexp)" do
-    lambda {
-      "string".should match(/rings/)
-    }.should fail
+    lambda { "string".should match(/rings/) }.should fail
   end
   
   it "should provide message, expected and actual on failure" do

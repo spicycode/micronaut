@@ -101,11 +101,11 @@ module Micronaut
     end    
   
     def all_before_alls
-      _before_alls = []
+      all_before_alls = []
       each_ancestor do |ancestor|
-        _before_alls << ancestor.befores[:all]
+        all_before_alls << ancestor.before_alls
       end
-      _before_alls
+      all_before_alls.concat(before_alls)
     end
     
     def run(runner)

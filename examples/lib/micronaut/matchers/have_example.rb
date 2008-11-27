@@ -36,7 +36,7 @@ describe "should have(n).items" do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -94,7 +94,7 @@ describe 'should have(1).item when ActiveSupport::Inflector is defined' do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -131,7 +131,7 @@ describe 'should have(1).item when Inflector is defined' do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -192,7 +192,7 @@ describe "should_not have(n).items" do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -240,7 +240,7 @@ describe "should have_exactly(n).items" do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -298,7 +298,7 @@ describe "should have_at_least(n).items" do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -374,7 +374,7 @@ describe "should have_at_most(n).items" do
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
@@ -491,7 +491,7 @@ describe Micronaut::Matchers::Have, "for a collection owner that implements #sen
     owner
   end
   
-  before(:each) do
+  before do
     unless defined?(ActiveSupport::Inflector)
       @active_support_was_not_defined
       module ActiveSupport
