@@ -3,8 +3,8 @@ require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/example_world'
 require 'micronaut/example_runner'
-require 'micronaut/example_group'
-require 'micronaut/extensions/class'
+require 'micronaut/behaviour_group_class_methods'
+require 'micronaut/behaviour_group'
 require 'micronaut/extensions/kernel'
 
 module Micronaut

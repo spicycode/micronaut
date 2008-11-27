@@ -30,14 +30,6 @@ spec = Gem::Specification.new do |s|
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,examples}/**/*")
 end
 
-desc "Run all examples"
-task :default do
-  examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-  examples.map! {|f| %Q(require "#{f}")}
-  command = "-e '#{examples.join("; ")}'"
-  ruby command
-end
-
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
@@ -53,3 +45,24 @@ task :make_spec do
     file.puts spec.to_ruby
   end
 end
+
+namespace :micronaut do
+  
+  desc 'Run all examples'
+  task :examples do
+    examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
+    examples.map! {|f| %Q(require "#{f}")}
+    command = "-e '#{examples.join("; ")}'"
+    ruby command
+  end
+  
+  desc "Run all examples using rcov"
+  task :coverage do
+    examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
+    system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-report --sort coverage --no-validator-links #{examples.join(' ')}"
+  end
+  
+end
+
+task :default => 'micronaut:coverage'
+
