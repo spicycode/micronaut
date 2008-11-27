@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 
 describe "Matchers should be able to generate their own descriptions" do
-  after(:each) do
+  after do
     Micronaut::Matchers.clear_generated_description
   end
 

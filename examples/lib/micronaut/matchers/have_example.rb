@@ -112,7 +112,7 @@ describe 'should have(1).item when ActiveSupport::Inflector is defined' do
     owner.should have(1).item
   end
   
-  after(:each) do
+  after do
     if @active_support_was_not_defined
       Object.__send__ :remove_const, :ActiveSupport
     end
@@ -160,7 +160,7 @@ describe 'should have(1).item when Inflector is defined' do
     owner.should have(1).item
   end
 
-  after(:each) do
+  after do
     if @inflector_was_not_defined
       Object.__send__ :remove_const, :Inflector
     end

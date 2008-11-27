@@ -2,11 +2,10 @@ module Micronaut
   module Formatters
 
     class BaseTextFormatter < BaseFormatter
-      attr_reader :output, :pending_examples, :failed_examples
+      attr_reader :pending_examples, :failed_examples
 
       def initialize(options, output_to)
         super
-        @output = output_to
         @pending_examples = []
         @failed_examples = []
       end
@@ -25,11 +24,10 @@ module Micronaut
       def dump_failures        
         @output.puts
         @failed_examples.each_with_index do |examples_with_exception, index|
-          @output.puts "#{index.next})"
           example, exception = examples_with_exception.first, examples_with_exception.last
-          @output.puts colorise("#{example}\n#{exception.message}", exception)
+          @output.puts "#{index.next})  #{example.class.name}"
+          @output.puts colorise(exception.message, exception)
           @output.puts format_backtrace(exception.backtrace)
-          @output.puts "\n"
           @output.flush
         end
       end

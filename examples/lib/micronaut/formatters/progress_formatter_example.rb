@@ -85,7 +85,7 @@ EOE
       @formatter.class.__send__ :public, :output_to_tty?
     end
 
-    after(:each) do
+    after do
       @formatter.class.__send__ :protected, :output_to_tty?
     end
 

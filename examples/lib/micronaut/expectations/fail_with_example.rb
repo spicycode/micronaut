@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 
 describe Micronaut::Expectations, "#fail_with with no diff" do
+  
   before do
     @old_differ = Micronaut::Expectations.differ
     Micronaut::Expectations.differ = nil
@@ -18,7 +19,7 @@ describe Micronaut::Expectations, "#fail_with with no diff" do
     }.should fail_with("the message")
   end
 
-  after(:each) do
+  after do
     Micronaut::Expectations.differ = @old_differ
   end
 end
@@ -65,7 +66,8 @@ describe Micronaut::Expectations, "#fail_with with diff" do
     }.should fail_with(/the message\nDiff:diff/)
   end
   
-  after(:each) do
+  after do
     Micronaut::Expectations.differ = @old_differ
+    Micronaut::Expectations.differ.should be_nil
   end
 end

@@ -86,9 +86,12 @@ module Micronaut
     def each_ancestor(superclass_last=false)
       classes = []
       current_class = self
+      #puts "each_ancestor(self) => #{self.inspect}\n"
       while is_example_group_class?(current_class)
         superclass_last ? classes << current_class : classes.unshift(current_class)
         current_class = current_class.superclass
+        #puts "each_ancestor considering #{current_class.inspect}\n"
+        current_class
       end
       
       classes.each do |example_group|
@@ -97,17 +100,12 @@ module Micronaut
     end
     
     def is_example_group_class?(klass)
-      klass.kind_of?(Micronaut::BehaviourGroup)
+      # require 'pp'
+      #    pp klass.class
+      #puts "#{klass.to_s}.kind_of?(Micronaut::BehaviourGroup) => #{klass.kind_of?(Micronaut::BehaviourGroup)}"
+      klass < Micronaut::BehaviourGroup
     end    
   
-    def all_before_alls
-      all_before_alls = []
-      each_ancestor do |ancestor|
-        all_before_alls << ancestor.before_alls
-      end
-      all_before_alls.concat(before_alls)
-    end
-    
     def run(runner)
       new.execute(runner)
     end
@@ -122,12 +120,16 @@ module Micronaut
       klass
     end
     
-    private
-    
-    def _sub_class_count!
+    def subclass(base_name, &body) # :nodoc:
       @_sub_class_count ||= 0
       @_sub_class_count += 1
-      @_sub_class_count
+      klass = Class.new(self)
+      class_name = "#{base_name}_#{@_sub_class_count}"
+      instance_eval do
+        const_set(class_name, klass)
+      end
+      klass.instance_eval(&body)
+      klass
     end
     
   end

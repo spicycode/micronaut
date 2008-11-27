@@ -2,9 +2,10 @@ module Micronaut
   module Formatters
     # Baseclass for formatters that implements all required methods as no-ops. 
     class BaseFormatter
-      attr_accessor :example_group, :options, :where, :total_example_failed, :total_example_pending
-      def initialize(options, where)
-        @options, @where = options, where
+      attr_accessor :example_group, :options, :output, :total_example_failed, :total_example_pending
+      
+      def initialize(options, output_to)
+        @options, @output = options, output_to
         @total_example_failed, @total_example_pending = 0, 0
       end
 

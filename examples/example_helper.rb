@@ -16,4 +16,14 @@ module Micronaut
   end
 end
 
+def remove_last_describe_from_runner
+  Micronaut::ExampleWorld.example_groups.pop
+end
+
+class DummyFormatter <  Micronaut::Formatters::BaseTextFormatter; end
+
+def dummy_reporter
+  DummyFormatter.new({}, StringIO.new)
+end
+
 Micronaut::Runner.autorun

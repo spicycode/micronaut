@@ -4,44 +4,67 @@ module Micronaut
     include Micronaut::Matchers
     include Micronaut::Mocking::WithMocha
 
+    def eval_before_alls
+      self.class.each_ancestor do |ancestor| 
+        ancestor.before_alls.each { |ba| instance_eval(&ba) }
+      end
+    end
+
+    def eval_after_alls
+      self.class.each_ancestor do |ancestor| 
+        ancestor.after_alls.each { |aa| instance_eval(&aa) }
+      end
+    end
+
+    def eval_before_eachs
+      self.class.each_ancestor do |ancestor| 
+        ancestor.before_eachs.each { |be| instance_eval(&be) }
+      end
+    end
+
+    def eval_after_eachs
+      self.class.each_ancestor(:superclass_first) do |ancestor|
+        ancestor.after_eachs.each { |ae| instance_eval(&ae) }
+      end
+    end
+
     def execute(reporter)
       return true if self.class.examples.empty?
-      self.class.all_before_alls.each { |aba| instance_eval(&aba) }
-      
+      eval_before_alls
       success = true
-      
+
       self.class.examples.each do |desc, opts, block|
-        execution_error = nil
         reporter.example_started(self)
-        
+
+        execution_error = nil
         begin
           setup_mocks
-          self.class.befores[:each].each { |be| instance_eval(&be) }
+          eval_before_eachs
           if block
             instance_eval(&block)
             reporter.example_passed(self)
           else
             reporter.example_pending([desc, self], 'Not yet implemented')
           end
-          verify_mocks
         rescue Exception => e
           reporter.example_failed(self, e)
+          execution_error ||= e
+        end
+
+        begin
+          eval_after_eachs
+          verify_mocks
+        rescue Exception => e
           execution_error ||= e
         ensure
           teardown_mocks
         end
-        
-        begin
-          self.class.afters[:each].each { |ae| instance_eval(&ae) }
-        rescue Exception => e
-          execution_error ||= e
-        end
-        
+
         success &= execution_error.nil?
       end
-      
+      eval_after_alls
       success
     end
-     
+
   end
 end
