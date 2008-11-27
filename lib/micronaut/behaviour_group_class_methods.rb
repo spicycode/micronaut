@@ -46,15 +46,14 @@ module Micronaut
       @_examples ||= []
     end
     
-    def set_it_up(name_or_const, given_description, given_options)
-      @_behaviour_group_name = name_or_const.to_s
-      @_behaviour_described_type = name_or_const.is_a?(String) ? Object : name_or_const
-      @_behaviour_group_description = given_description
-      @_behaviour_group_options =  given_options
+    def set_it_up(*args)
+      @_behaviour_group_options = args.last.is_a?(Hash) ? args.pop : {}
+      @_behaviour_described_type = args.first.is_a?(String) ? self.superclass.described_type : args.shift
+      @_behaviour_group_description = args.shift || ''      
     end
     
     def name
-      @_behaviour_group_name
+      "#{@_behaviour_described_type} #{@_behaviour_group_description}".strip
     end
     
     def described_type
@@ -69,29 +68,25 @@ module Micronaut
       @_behaviour_group_options
     end
     
-    def describe(name_or_const, desc=nil, options={}, &block)
-      raise ArgumentError if block.nil? || name_or_const.nil?
+    def describe(*args, &describe_block)
+      raise ArgumentError if args.empty? || describe_block.nil?
+      
+      args << {} unless Hash === args.last
+     # args.last[:spec_path] ||= File.expand_path(caller(0)[2])
       
       subclass('NestedLevel') do
-        set_it_up(name_or_const, desc, options)
-        
-        module_eval(&block)
+        set_it_up(*args)
+        module_eval(&describe_block)
       end
-    end
-    
-    def create_example_group(name_or_const, desc=nil, options={}, &describe_block)
-      describe(name_or_const, desc, options, &describe_block)
     end
     
     def each_ancestor(superclass_last=false)
       classes = []
       current_class = self
-      #puts "each_ancestor(self) => #{self.inspect}\n"
+
       while is_example_group_class?(current_class)
         superclass_last ? classes << current_class : classes.unshift(current_class)
         current_class = current_class.superclass
-        #puts "each_ancestor considering #{current_class.inspect}\n"
-        current_class
       end
       
       classes.each do |example_group|
@@ -100,9 +95,6 @@ module Micronaut
     end
     
     def is_example_group_class?(klass)
-      # require 'pp'
-      #    pp klass.class
-      #puts "#{klass.to_s}.kind_of?(Micronaut::BehaviourGroup) => #{klass.kind_of?(Micronaut::BehaviourGroup)}"
       klass < Micronaut::BehaviourGroup
     end    
   

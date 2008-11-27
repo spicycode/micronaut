@@ -38,8 +38,8 @@ describe Micronaut::BehaviourGroup do
          Micronaut::BehaviourGroup.describe(Foo) { }.described_type.should == Foo
        end
        
-       it "should be Object when the first parameter is a string" do
-         Micronaut::BehaviourGroup.describe("i'm a computer") { }.described_type.should == Object
+       it "should be nil when the first parameter is a string" do
+         Micronaut::BehaviourGroup.describe("i'm a computer") { }.described_type.should be_nil
        end
        
      end
@@ -51,7 +51,7 @@ describe Micronaut::BehaviourGroup do
        end
   
        it "should allow the second parameter to be nil" do
-         Micronaut::BehaviourGroup.describe(Foo, nil) { }.description.should be_nil
+         Micronaut::BehaviourGroup.describe(Foo, nil) { }.description.size.should == 0
        end
        
      end
