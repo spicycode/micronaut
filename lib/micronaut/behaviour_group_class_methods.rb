@@ -84,19 +84,13 @@ module Micronaut
       classes = []
       current_class = self
 
-      while is_example_group_class?(current_class)
+      while current_class < Micronaut::BehaviourGroup
         superclass_last ? classes << current_class : classes.unshift(current_class)
         current_class = current_class.superclass
       end
       
-      classes.each do |example_group|
-        yield example_group
-      end
+      classes.each { |example_group| yield example_group }
     end
-    
-    def is_example_group_class?(klass)
-      klass < Micronaut::BehaviourGroup
-    end    
   
     def run(runner)
       new.execute(runner)
@@ -107,9 +101,7 @@ module Micronaut
       @_sub_class_count += 1
       klass = Class.new(self)
       class_name = "#{base_name}_#{@_sub_class_count}"
-      instance_eval do
-        const_set(class_name, klass)
-      end
+      instance_eval { const_set(class_name, klass) }
       klass.instance_eval(&body)
       klass
     end
