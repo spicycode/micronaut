@@ -24,19 +24,5 @@ module Micronaut
 
   # './lib' in project dir, or '/usr/local/blahblah' if installed
   MICRONAUT_DIR = File.expand_path(File.dirname(File.dirname(file)))
-
-  def self.filter_backtrace(backtrace)
-    return ["No backtrace"] unless backtrace
-
-    new_backtrace = []
-    backtrace.each_with_index do |line, index|
-      break if line.rindex(MICRONAUT_DIR, 0)
-      new_backtrace << line
-    end
-
-    new_backtrace = backtrace.reject { |line| line.rindex(MICRONAUT_DIR, 0) } if new_backtrace.empty?
-    new_backtrace = backtrace.dup if new_backtrace.empty?
-    new_backtrace
-  end
   
 end
