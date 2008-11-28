@@ -102,16 +102,6 @@ module Micronaut
       new.execute(runner)
     end
     
-    def subclass(base_name, &body)
-      klass = Class.new(self)
-      class_name = "#{base_name}_#{_sub_class_count!}"
-      instance_eval do
-        const_set(class_name, klass)
-      end
-      klass.instance_eval(&body) if block_given?
-      klass
-    end
-    
     def subclass(base_name, &body) # :nodoc:
       @_sub_class_count ||= 0
       @_sub_class_count += 1
