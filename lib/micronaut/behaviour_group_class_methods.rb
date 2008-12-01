@@ -101,7 +101,7 @@ module Micronaut
       @_sub_class_count += 1
       klass = Class.new(self)
       class_name = "#{base_name}_#{@_sub_class_count}"
-      instance_eval { const_set(class_name, klass) }
+      const_set(class_name, klass)
       klass.instance_eval(&body)
       klass
     end

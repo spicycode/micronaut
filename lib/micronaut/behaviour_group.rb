@@ -6,25 +6,25 @@ module Micronaut
 
     def eval_before_alls
       self.class.each_ancestor do |ancestor| 
-        ancestor.before_alls.each { |ba| instance_eval(&ba) }
+        ancestor.before_alls.each { |blk| instance_eval(&blk) }
       end
     end
 
     def eval_after_alls
-      self.class.each_ancestor do |ancestor| 
-        ancestor.after_alls.each { |aa| instance_eval(&aa) }
+      self.class.each_ancestor(:superclass_first) do |ancestor| 
+        ancestor.after_alls.each { |blk| instance_eval(&blk) }
       end
     end
 
     def eval_before_eachs
       self.class.each_ancestor do |ancestor| 
-        ancestor.before_eachs.each { |be| instance_eval(&be) }
+        ancestor.before_eachs.each { |blk| instance_eval(&blk) }
       end
     end
 
     def eval_after_eachs
       self.class.each_ancestor(:superclass_first) do |ancestor|
-        ancestor.after_eachs.each { |ae| instance_eval(&ae) }
+        ancestor.after_eachs.each { |blk| instance_eval(&blk) }
       end
     end
 
