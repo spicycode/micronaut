@@ -5,7 +5,7 @@ module Micronaut
       
       def example_failed(example, exception)
         super
-        @output.print colorise('F',exception)
+        @output.print colorise('F', exception)
         @output.flush
       end
 

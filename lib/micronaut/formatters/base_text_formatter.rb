@@ -1,4 +1,5 @@
 module Micronaut
+
   module Formatters
 
     class BaseTextFormatter < BaseFormatter
@@ -9,13 +10,12 @@ module Micronaut
         @pending_examples = []
         @failed_examples = []
       end
-      
+
       def example_pending(example, message)
         super
-        # @pending_examples << [example.full_description, message, pending_caller]
         @pending_examples << [example, message]
       end
-      
+
       def example_failed(example, exception)
         super
         @failed_examples << [example, exception]
@@ -28,6 +28,7 @@ module Micronaut
           @output.puts "#{index.next})  #{example.class.name}"
           @output.puts colorise(exception.message, exception)
           @output.puts format_backtrace(exception.backtrace)
+          @output.puts 
           @output.flush
         end
       end
@@ -41,9 +42,7 @@ module Micronaut
       end
 
       def dump_summary(duration, example_count, failure_count, pending_count)
-        @output.puts
-        @output.puts "Finished in #{duration} seconds"
-        @output.puts
+        @output.puts "\nFinished in #{duration} seconds\n"
 
         summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failure#{'s' unless failure_count == 1}"
         summary << ", #{pending_count} pending" if pending_count > 0  
@@ -105,13 +104,28 @@ module Micronaut
         end
       end
 
-      def green(text); color(text, "\e[32m"); end
-      def red(text); color(text, "\e[31m"); end
-      def magenta(text); color(text, "\e[35m"); end
-      def yellow(text); color(text, "\e[33m"); end
-      def blue(text); color(text, "\e[34m"); end
+      def green(text)
+        color(text, "\e[32m")
+      end
+
+      def red(text)
+        color(text, "\e[31m")
+      end
+
+      def magenta(text)
+        color(text, "\e[35m")
+      end
+
+      def yellow(text)
+        color(text, "\e[33m")
+      end
+
+      def blue(text)
+        color(text, "\e[34m")
+      end
 
     end
+    
   end
-  
+
 end
