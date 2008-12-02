@@ -4,7 +4,6 @@ class Bar; end
 
 describe Micronaut::World do
 
-
   describe "behaviour groups" do
 
     it "should contain all defined behaviour groups" do
@@ -51,7 +50,6 @@ describe Micronaut::World do
     it "should find three groups when searching for :description => /find group/" do
       Micronaut::World.find(:description => /find group/).should == [@bg1, @bg2, @bg3]
     end
-
     
     it "should find one group when searching for :options => { :foo => 1 }" do
       Micronaut::World.find(:options => { :foo => 1 }).should == [@bg1]
@@ -77,10 +75,6 @@ describe Micronaut::World do
       Micronaut::World.find(:options => { :feature => 'reporting' }).should == [@bg1, @bg2]
     end
 
-    it "should find two groups when searching for :options => { :feature => 'reporting' }" do
-      Micronaut::World.find(:options => { :feature => 'reporting' }).should == [@bg1, @bg2]
-    end
-    
   end
 
   describe "reset" do
