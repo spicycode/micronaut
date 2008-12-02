@@ -30,7 +30,7 @@ module Micronaut
                  /./ # anything - ^example_ already filtered by #examples
                end
 
-       total_examples = Micronaut::ExampleWorld.example_groups.inject(0) { |sum, eg| sum + eg.examples.size }
+       total_examples = Micronaut::World.behaviour_groups.inject(0) { |sum, eg| sum + eg.examples.size }
        
        old_sync, options.formatter.output.sync = options.formatter.output.sync, true if options.formatter.output.respond_to?(:sync=)
               
@@ -39,7 +39,7 @@ module Micronaut
        suite_success = true
       
        starts_at = Time.now
-       Micronaut::ExampleWorld.example_groups.each do |example_group|
+       Micronaut::World.behaviour_groups.each do |example_group|
          suite_success &= example_group.run(options.formatter)
        end
        duration = Time.now - starts_at

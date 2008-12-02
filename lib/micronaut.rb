@@ -1,7 +1,7 @@
 require 'micronaut/mocking/with_mocha'
 require 'micronaut/matchers'
 require 'micronaut/expectations'
-require 'micronaut/example_world'
+require 'micronaut/world'
 require 'micronaut/runner'
 require 'micronaut/runner_options'
 require 'micronaut/behaviour_group_class_methods'

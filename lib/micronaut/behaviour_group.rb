@@ -42,19 +42,14 @@ module Micronaut
           eval_before_eachs
           if block
             instance_eval(&block)
+            verify_mocks
             reporter.example_passed(self)
           else
             reporter.example_pending([desc, self], 'Not yet implemented')
           end
+          eval_after_eachs
         rescue Exception => e
           reporter.example_failed(self, e)
-          execution_error ||= e
-        end
-
-        begin
-          eval_after_eachs
-          verify_mocks
-        rescue Exception => e
           execution_error ||= e
         ensure
           teardown_mocks

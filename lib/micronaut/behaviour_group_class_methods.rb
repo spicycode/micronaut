@@ -3,7 +3,7 @@ module Micronaut
     
     def inherited(klass)
       super
-      Micronaut::ExampleWorld.example_groups << klass
+      Micronaut::World.behaviour_groups << klass
     end
     
     def befores
@@ -104,6 +104,10 @@ module Micronaut
       const_set(class_name, klass)
       klass.instance_eval(&body)
       klass
+    end
+    
+    def to_s
+      name
     end
     
   end

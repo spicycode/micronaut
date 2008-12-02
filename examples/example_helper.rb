@@ -16,8 +16,8 @@ module Micronaut
   end
 end
 
-def remove_last_describe_from_runner
-  Micronaut::ExampleWorld.example_groups.pop
+def remove_last_describe_from_world
+  Micronaut::World.behaviour_groups.pop
 end
 
 class DummyFormatter <  Micronaut::Formatters::BaseTextFormatter; end
