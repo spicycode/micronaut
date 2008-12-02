@@ -20,6 +20,10 @@ module Micronaut
           case value
           when Hash
             value.all? { |k, v| group.metadata[key][k] == v }
+          when Regexp
+            group.metadata[key] =~ value
+          when Proc
+            value.call(group.metadata[key]) rescue false
           else
             group.metadata[key] == value
           end
