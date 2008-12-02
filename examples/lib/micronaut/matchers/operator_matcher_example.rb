@@ -1,7 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 
-require 'micronaut/expectations/differs/default'
-
 describe "should ==" do
   
   it "should delegate message to target" do
