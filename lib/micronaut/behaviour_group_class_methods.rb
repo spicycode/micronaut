@@ -47,25 +47,30 @@ module Micronaut
     end
     
     def set_it_up(*args)
-      @_behaviour_group_options = args.last.is_a?(Hash) ? args.pop : {}
-      @_behaviour_described_type = args.first.is_a?(String) ? self.superclass.described_type : args.shift
-      @_behaviour_group_description = args.shift || ''      
+      metadata[:options] = args.last.is_a?(Hash) ? args.pop : {}
+      metadata[:described_type] = args.first.is_a?(String) ? self.superclass.described_type : args.shift
+      metadata[:description] = args.shift || ''
+      metadata[:name] = "#{metadata[:described_type]} #{metadata[:description]}".strip
+    end
+    
+    def metadata
+      @_metadata ||= {}
     end
     
     def name
-      "#{@_behaviour_described_type} #{@_behaviour_group_description}".strip
+      metadata[:name]
     end
     
     def described_type
-      @_behaviour_described_type
+      metadata[:described_type]
     end
     
     def description
-      @_behaviour_group_description
+      metadata[:description]
     end
     
     def options
-      @_behaviour_group_options
+      metadata[:options]
     end
     
     def describe(*args, &describe_block)
