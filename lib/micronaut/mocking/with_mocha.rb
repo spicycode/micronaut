@@ -5,18 +5,9 @@ module Micronaut
   module Mocking
     module WithMocha
       include Mocha::Standalone
-      def setup_mocks
-        mocha_setup
-      end
-    
-      def verify_mocks
-        mocha_verify
-      end
-    
-      def teardown_mocks
-        mocha_teardown
-      end
-      
+      alias :_setup_mocks :mocha_setup
+      alias :_verify_mocks :mocha_verify
+      alias :_teardown_mocks :mocha_teardown      
     end
   end
 end

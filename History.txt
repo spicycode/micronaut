@@ -1,5 +1,7 @@
 0.0.6 (In progress)
 =======================
+- MockWith::Mocha autoloads now
+- Beginnings of the configure block in example helper
 - Ability to search behaviour groups is in
 
 0.0.5

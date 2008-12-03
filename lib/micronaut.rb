@@ -1,7 +1,8 @@
-require 'micronaut/mocking/with_mocha'
+require 'micronaut/mocking'
 require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/world'
+require 'micronaut/configuration'
 require 'micronaut/runner'
 require 'micronaut/runner_options'
 require 'micronaut/behaviour_group'
@@ -23,5 +24,13 @@ module Micronaut
 
   # './lib' in project dir, or '/usr/local/blahblah' if installed
   MICRONAUT_DIR = File.expand_path(File.dirname(File.dirname(file)))
+  
+  def self.configuration
+    @configuration ||= Micronaut::Configuration.new
+  end
+
+  def self.configure
+    yield configuration
+  end
   
 end

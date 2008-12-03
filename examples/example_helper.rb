@@ -26,4 +26,18 @@ def dummy_reporter
   DummyFormatter.new({}, StringIO.new)
 end
 
+Micronaut.configure do |config|
+  
+  config.mock_with :mocha
+  
+  config.before(:pending => true) do 
+    puts 'foo bar baz'
+  end
+  
+  config.after(:focused => true) do
+    puts 'was the focus worth it?'
+  end
+  
+end
+
 Micronaut::Runner.autorun

@@ -1,7 +1,6 @@
 module Micronaut
   class BehaviourGroup
-    include Micronaut::Matchers
-    include Micronaut::Mocking::WithMocha
+    include Micronaut::Matchers 
 
     def self.inherited(klass)
       super
@@ -130,7 +129,7 @@ module Micronaut
 
     def self.run(reporter)
       return true if examples.empty?
-
+      
       group = new
       
       eval_before_alls(group)
@@ -141,12 +140,12 @@ module Micronaut
 
         execution_error = nil
         begin
-          group.setup_mocks
+          group._setup_mocks
           eval_before_eachs(group)
 
           if block
             group.instance_eval(&block)
-            group.verify_mocks
+            group._verify_mocks
             reporter.example_passed(group)
           else
             reporter.example_pending([desc, group], 'Not yet implemented')
@@ -156,7 +155,7 @@ module Micronaut
           reporter.example_failed(group, e)
           execution_error ||= e
         ensure
-          group.teardown_mocks
+          group._teardown_mocks
         end
 
         success &= execution_error.nil?
@@ -176,7 +175,7 @@ module Micronaut
     end
 
     def self.to_s
-      name
+      self == Micronaut::BehaviourGroup ? 'Micronaut::BehaviourGroup' : name
     end
     
   end
