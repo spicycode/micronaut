@@ -1,5 +1,4 @@
 require 'micronaut/matchers/generated_descriptions'
-require 'micronaut/matchers/errors'
 require 'micronaut/matchers/simple_matcher'
 require 'micronaut/matchers/be'
 require 'micronaut/matchers/be_close'
@@ -134,6 +133,8 @@ module Micronaut
   #   end
   #
   module Matchers
+    
+    class MatcherError < StandardError; end
     
     private
     def method_missing(sym, *args, &block) # :nodoc:
