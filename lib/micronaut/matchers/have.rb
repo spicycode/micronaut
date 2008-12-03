@@ -1,6 +1,8 @@
 module Micronaut
   module Matchers
+    
     class Have #:nodoc:
+      
       def initialize(expected, relativity=:exactly)
         @expected = (expected == :no ? 0 : expected)
         @relativity = relativity
@@ -146,5 +148,6 @@ EOF
     def have_at_most(n)
       Matchers::Have.new(n, :at_most)
     end
+    
   end
 end

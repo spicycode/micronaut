@@ -96,9 +96,66 @@ module Micronaut
       
       classes.each { |example_group| yield example_group }
     end
+    
+    def eval_before_alls(example)
+      each_ancestor do |ancestor| 
+        ancestor.before_alls.each { |blk| example.instance_eval(&blk) }
+      end
+    end
+
+    def eval_after_alls(example)
+      each_ancestor(:superclass_first) do |ancestor| 
+        ancestor.after_alls.each { |blk| example.instance_eval(&blk) }
+      end
+    end
+
+    def eval_before_eachs(example)
+      each_ancestor do |ancestor| 
+        ancestor.before_eachs.each { |blk| example.instance_eval(&blk) }
+      end
+    end
+
+    def eval_after_eachs(example)
+      each_ancestor(:superclass_first) do |ancestor|
+        ancestor.after_eachs.each { |blk| example.instance_eval(&blk) }
+      end
+    end
   
-    def run(runner)
-      new.execute(runner)
+    def run(reporter)
+      return true if examples.empty?
+      
+      group = new
+      
+      eval_before_alls(group)
+      success = true
+
+      examples.each do |desc, opts, block|
+        reporter.example_started(self)
+
+        execution_error = nil
+        begin
+          group.setup_mocks
+          eval_before_eachs(group)
+          
+          if block
+            group.instance_eval(&block)
+            group.verify_mocks
+            reporter.example_passed(group)
+          else
+            reporter.example_pending([desc, group], 'Not yet implemented')
+          end
+          eval_after_eachs(group)
+        rescue Exception => e
+          reporter.example_failed(group, e)
+          execution_error ||= e
+        ensure
+          group.teardown_mocks
+        end
+
+        success &= execution_error.nil?
+      end
+      eval_after_alls(group)
+      success
     end
     
     def subclass(base_name, &body) # :nodoc:

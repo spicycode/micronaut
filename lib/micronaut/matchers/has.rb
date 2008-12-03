@@ -1,5 +1,6 @@
 module Micronaut
   module Matchers
+
     def has(sym, *args) # :nodoc:
       simple_matcher do |actual, matcher|
         matcher.failure_message          = "expected ##{predicate(sym)}(#{args[0].inspect}) to return true, got false"
@@ -8,8 +9,8 @@ module Micronaut
         actual.__send__(predicate(sym), *args)
       end
     end
-    
-  private
+
+    private
     def predicate(sym)
       "#{sym.to_s.sub("have_","has_")}?".to_sym
     end
