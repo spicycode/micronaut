@@ -15,7 +15,11 @@ module Micronaut
     end
     
     def include(module_to_include, options={})
-      
+      Micronaut::BehaviourGroup.send(:include, module_to_include)
+    end
+    
+    def extend(module_to_extend, options={})
+      Micronaut::BehaviourGroup.send(:extend, module_to_extend)
     end
     
     def before(type=:each, options={}, &block)

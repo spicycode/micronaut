@@ -15,5 +15,27 @@ describe Micronaut::Configuration do
     end
     
   end
+  
+  describe "#include" do
+    
+    module FakeModule; end
+    
+    it "should include the given module in Micronaut::BehaviourGroup" do
+      Micronaut::BehaviourGroup.expects(:send).with(:include, FakeModule)
+      Micronaut::Configuration.new.include(FakeModule)
+    end
+    
+  end
 
+  describe "#extend" do
+    
+    module FakeModule; end
+    
+    it "should extend the given module in Micronaut::BehaviourGroup" do
+      Micronaut::BehaviourGroup.expects(:send).with(:extend, FakeModule)
+      Micronaut::Configuration.new.extend(FakeModule)
+    end
+    
+  end
+  
 end
