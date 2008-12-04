@@ -19,8 +19,8 @@ module Micronaut
       befores[:all]
     end
 
-    def self.before(type=:each, &block)
-      befores[type] << block
+    def self.before(type=:each, options={}, &block)
+      befores[type] << [options, block]
     end
 
     def self.afters
@@ -35,8 +35,8 @@ module Micronaut
       afters[:all]
     end
 
-    def self.after(type=:each, &block)
-      afters[type] << block
+    def self.after(type=:each, options={}, &block)
+      afters[type] << [options, block]
     end
 
     def self.it(desc=nil, options={}, &block)
@@ -105,25 +105,25 @@ module Micronaut
 
     def self.eval_before_alls(example)
       before_ancestors.each do |ancestor| 
-        ancestor.before_alls.each { |blk| example.instance_eval(&blk) }
+        ancestor.before_alls.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
         
     def self.eval_before_eachs(example)
       before_ancestors.each do |ancestor| 
-        ancestor.before_eachs.each { |blk| example.instance_eval(&blk) }
+        ancestor.before_eachs.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
 
     def self.eval_after_alls(example)
       after_ancestors.each do |ancestor| 
-        ancestor.after_alls.each { |blk| example.instance_eval(&blk) }
+        ancestor.after_alls.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
 
     def self.eval_after_eachs(example)
       after_ancestors.each do |ancestor|
-        ancestor.after_eachs.each { |blk| example.instance_eval(&blk) }
+        ancestor.after_eachs.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
 

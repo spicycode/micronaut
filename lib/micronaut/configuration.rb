@@ -23,11 +23,11 @@ module Micronaut
     end
     
     def before(type=:each, options={}, &block)
-      
+      Micronaut::BehaviourGroup.before(type, options, &block)
     end
     
     def after(type=:each, options={}, &block)
-      
+      Micronaut::BehaviourGroup.after(type, options, &block)
     end
     
   end

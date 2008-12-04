@@ -82,9 +82,9 @@ describe Micronaut::BehaviourGroup do
          group.before(:each) { 'A' }
          group.before(:each) { 33.5 }
   
-         group.before_eachs[0].call.should == 15
-         group.before_eachs[1].call.should == 'A'
-         group.before_eachs[2].call.should == 33.5
+         group.before_eachs[0].last.call.should == 15
+         group.before_eachs[1].last.call.should == 'A'
+         group.before_eachs[2].last.call.should == 33.5
        end
   
        it "should expose the before all blocks at before_alls" do
@@ -99,9 +99,9 @@ describe Micronaut::BehaviourGroup do
          group.before(:all) { 'A' }
          group.before(:all) { 33.5 }
   
-         group.before_alls[0].call.should == 15
-         group.before_alls[1].call.should == 'A'
-         group.before_alls[2].call.should == 33.5
+         group.before_alls[0].last.call.should == 15
+         group.before_alls[1].last.call.should == 'A'
+         group.before_alls[2].last.call.should == 33.5
        end
   
        it "should expose the after each blocks at after_eachs" do
@@ -116,9 +116,9 @@ describe Micronaut::BehaviourGroup do
          group.after(:each) { 'A' }
          group.after(:each) { 33.5 }
   
-         group.after_eachs[0].call.should == 15
-         group.after_eachs[1].call.should == 'A'
-         group.after_eachs[2].call.should == 33.5
+         group.after_eachs[0].last.call.should == 15
+         group.after_eachs[1].last.call.should == 'A'
+         group.after_eachs[2].last.call.should == 33.5
        end
   
        it "should expose the after all blocks at after_alls" do
@@ -133,9 +133,9 @@ describe Micronaut::BehaviourGroup do
          group.after(:all) { 'A' }
          group.after(:all) { 33.5 }
   
-         group.after_alls[0].call.should == 15
-         group.after_alls[1].call.should == 'A'
-         group.after_alls[2].call.should == 33.5
+         group.after_alls[0].last.call.should == 15
+         group.after_alls[1].last.call.should == 'A'
+         group.after_alls[2].last.call.should == 33.5
        end
   
      end
