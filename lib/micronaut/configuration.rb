@@ -8,7 +8,7 @@ module Micronaut
                         when :mocha
                           Micronaut::Mocking::WithMocha
                         else
-                          Micronaut::Mocking::AbsolutelyNothing
+                          Micronaut::Mocking::WithAbsolutelyNothing
                         end 
 
       Micronaut::BehaviourGroup.send(:include, @mock_framework)
