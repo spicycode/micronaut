@@ -56,6 +56,19 @@ namespace :micronaut do
     ruby command
   end
   
+  desc "List files that don't have examples"
+  task :untested do
+    code = Dir["lib/**/*.rb"].map { |g| Dir.glob(g) }.flatten
+    examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
+    examples.map! { |f| f =~ /examples\/(.*)_example/; "#{$1}.rb" }
+    missing_examples = (code - examples)
+    puts
+    puts "The following files seem to be missing their examples:"
+    missing_examples.each do |missing|
+      puts "  #{missing}"
+    end
+  end
+  
   desc "Run all examples using rcov"
   task :coverage do
     examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten

@@ -5,12 +5,17 @@ module Micronaut
     
     def mock_with(make_a_mockery_with=nil)
       @mock_framework = case make_a_mockery_with
-                        when :mocha then Micronaut::Mocking::WithMocha
+                        when :mocha
+                          Micronaut::Mocking::WithMocha
                         else
                           Micronaut::Mocking::AbsolutelyNothing
                         end 
 
       Micronaut::BehaviourGroup.send(:include, @mock_framework)
+    end
+    
+    def include(module_to_include, options={})
+      
     end
     
     def before(type=:each, options={}, &block)
