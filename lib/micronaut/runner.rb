@@ -22,14 +22,6 @@ module Micronaut
     def run(args = [])
       @verbose = args.delete('-v')
 
-      filter = if args.first =~ /^(-n|--name)$/ then
-                 args.shift
-                 arg = args.shift
-                 arg =~ /\/(.*)\// ? Regexp.new($1) : arg
-               else
-                 /./ # anything - ^example_ already filtered by #examples
-               end
-
        total_examples = Micronaut::World.behaviour_groups.inject(0) { |sum, eg| sum + eg.examples.size }
        
        old_sync, options.formatter.output.sync = options.formatter.output.sync, true if options.formatter.output.respond_to?(:sync=)
