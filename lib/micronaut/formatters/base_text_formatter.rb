@@ -64,7 +64,7 @@ module Micronaut
           @output.puts
           @output.puts "Pending:"
           @pending_examples.each do |pending_example, message|
-            @output.puts "\n  #{pending_example.last.class.name} #{pending_example.first}"
+            @output.puts "\n  #{pending_example.behaviour}\n  - #{pending_example.description}"
           end
         end
         @output.flush

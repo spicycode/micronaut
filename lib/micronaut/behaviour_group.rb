@@ -1,4 +1,5 @@
 module Micronaut
+  
   class BehaviourGroup
     include Micronaut::Matchers 
 
@@ -40,7 +41,7 @@ module Micronaut
     end
 
     def self.it(desc=nil, options={}, &block)
-      examples << [desc, options, block]
+      examples << Micronaut::Example.new(self, desc, options, block)
     end
 
     def self.examples
@@ -142,24 +143,24 @@ module Micronaut
       eval_before_alls(group)
       success = true
 
-      examples.each do |desc, opts, block|
-        reporter.example_started(self)
+      examples.each do |ex|
+        reporter.example_started(ex)
 
         execution_error = nil
         begin
           group._setup_mocks
           eval_before_eachs(group)
 
-          if block
-            group.instance_eval(&block)
+          if ex.example_block
+            group.instance_eval(&ex.example_block)
             group._verify_mocks
-            reporter.example_passed(group)
+            reporter.example_passed(ex)
           else
-            reporter.example_pending([desc, group], 'Not yet implemented')
+            reporter.example_pending(ex, 'Not yet implemented')
           end
           eval_after_eachs(group)
         rescue Exception => e
-          reporter.example_failed(group, e)
+          reporter.example_failed(ex, e)
           execution_error ||= e
         ensure
           group._teardown_mocks
