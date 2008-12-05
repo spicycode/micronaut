@@ -30,14 +30,6 @@ Micronaut.configure do |config|
   
   config.mock_with :mocha
   
-  config.before(:each, :pending => true) do 
-    raise "the roof"
-  end
-  
-  config.after(:each, :focused => true) do
-    puts 'was the focus worth it?'
-  end
-  
 end
 
 Micronaut::Runner.autorun

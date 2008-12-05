@@ -54,12 +54,8 @@ module Micronaut
       metadata[:description] = args.shift || ''
       metadata[:name] = "#{metadata[:described_type]} #{metadata[:description]}".strip
       
-      Micronaut.configuration.extra_modules[:extend].each do |mod, options|
-        send(:extend, mod) if options.empty?
-      end
-      
-      Micronaut.configuration.extra_modules[:include].each do |mod, options|
-        send(:include, mod) if options.empty?
+      Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
+        send(include_or_extend, mod)
       end
     end
 
@@ -112,24 +108,32 @@ module Micronaut
     end
 
     def self.eval_before_alls(example)
+      Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| example.instance_eval(&blk) }
+      
       before_ancestors.each do |ancestor| 
         ancestor.before_alls.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
         
     def self.eval_before_eachs(example)
+      Micronaut.configuration.find_before_or_after(:before, :each, self).each { |blk| example.instance_eval(&blk) }
+      
       before_ancestors.each do |ancestor| 
         ancestor.before_eachs.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
 
     def self.eval_after_alls(example)
+      Micronaut.configuration.find_before_or_after(:after, :all, self).each { |blk| example.instance_eval(&blk) }
+            
       after_ancestors.each do |ancestor| 
         ancestor.after_alls.each { |opts, blk| example.instance_eval(&blk) }
       end
     end
 
     def self.eval_after_eachs(example)
+      Micronaut.configuration.find_before_or_after(:after, :each, self).each { |blk| example.instance_eval(&blk) }
+      
       after_ancestors.each do |ancestor|
         ancestor.after_eachs.each { |opts, blk| example.instance_eval(&blk) }
       end
@@ -138,8 +142,8 @@ module Micronaut
     def self.run(reporter)
       return true if examples.empty?
       
+
       group = new
-      
       eval_before_alls(group)
       success = true
 
