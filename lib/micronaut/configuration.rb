@@ -14,20 +14,32 @@ module Micronaut
       Micronaut::BehaviourGroup.send(:include, @mock_framework)
     end
     
+    def befores
+      @befores ||= { :each => [], :all => {} }
+    end
+    
+    def afters
+      @afters ||= { :each => [], :all => {} }
+    end
+    
+    def extra_modules
+      @extra_modules ||= { :include => [], :extend => [] }
+    end
+    
     def include(module_to_include, options={})
-      Micronaut::BehaviourGroup.send(:include, module_to_include)
+      extra_modules[:include] << [module_to_include, options]
     end
     
     def extend(module_to_extend, options={})
-      Micronaut::BehaviourGroup.send(:extend, module_to_extend)
+      extra_modules[:extend] << [module_to_extend, options]
     end
     
     def before(type=:each, options={}, &block)
-      Micronaut::BehaviourGroup.before(type, options, &block)
+      befores[type] << [options, block]
     end
     
     def after(type=:each, options={}, &block)
-      Micronaut::BehaviourGroup.after(type, options, &block)
+      afters[type] << [options, block]
     end
     
   end

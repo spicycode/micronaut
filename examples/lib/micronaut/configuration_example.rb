@@ -18,22 +18,38 @@ describe Micronaut::Configuration do
   
   describe "#include" do
     
-    module FakeModule; end
+    module InstanceLevelMethods
+      def you_call_this_a_blt?
+        "egad man, where's the mayo?!?!?"
+      end
+    end
     
-    it "should include the given module in Micronaut::BehaviourGroup" do
-      Micronaut::BehaviourGroup.expects(:send).with(:include, FakeModule)
-      Micronaut::Configuration.new.include(FakeModule)
+    it "should include the given module into each behaviour group" do
+      Micronaut.configuration.include(InstanceLevelMethods)
+      group = Micronaut::BehaviourGroup.describe(Object, 'does like, stuff and junk') { }
+      group.should_not respond_to(:you_call_this_a_blt?)
+      remove_last_describe_from_world
+
+      group.new.you_call_this_a_blt?.should == "egad man, where's the mayo?!?!?"
     end
     
   end
 
   describe "#extend" do
     
-    module FakeModule; end
+    module FocusedSupport
+      
+      def fit(desc, options={}, &block)
+        it(desc, options.merge(:focused => true), &block)
+      end
+      
+    end
     
-    it "should extend the given module in Micronaut::BehaviourGroup" do
-      Micronaut::BehaviourGroup.expects(:send).with(:extend, FakeModule)
-      Micronaut::Configuration.new.extend(FakeModule)
+    it "should extend the given module into each behaviour group" do
+      Micronaut.configuration.extend(FocusedSupport)
+      group = Micronaut::BehaviourGroup.describe(FocusedSupport, 'the focused support ') { }
+      group.should respond_to(:fit)
+      remove_last_describe_from_world
     end
     
   end

@@ -30,11 +30,11 @@ Micronaut.configure do |config|
   
   config.mock_with :mocha
   
-  config.before(:pending => true) do 
-    puts 'foo bar baz'
+  config.before(:each, :pending => true) do 
+    raise "the roof"
   end
   
-  config.after(:focused => true) do
+  config.after(:each, :focused => true) do
     puts 'was the focus worth it?'
   end
   

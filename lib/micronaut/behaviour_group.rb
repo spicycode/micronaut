@@ -52,6 +52,14 @@ module Micronaut
       metadata[:described_type] = args.first.is_a?(String) ? self.superclass.described_type : args.shift
       metadata[:description] = args.shift || ''
       metadata[:name] = "#{metadata[:described_type]} #{metadata[:description]}".strip
+      
+      Micronaut.configuration.extra_modules[:extend].each do |mod, options|
+        send(:extend, mod) if options.empty?
+      end
+      
+      Micronaut.configuration.extra_modules[:include].each do |mod, options|
+        send(:include, mod) if options.empty?
+      end
     end
 
     def self.metadata
@@ -76,7 +84,6 @@ module Micronaut
 
     def self.describe(*args, &describe_block)
       raise ArgumentError if args.empty? || describe_block.nil?
-
       subclass('NestedLevel') do
         set_it_up(*args)
         module_eval(&describe_block)
