@@ -5,7 +5,7 @@ require 'micronaut/expectations/handler'
 require 'micronaut/expectations/wrap_expectation'
 
 module Micronaut
-  
+
   # Micronaut::Expectations lets you set expectations on your objects.
   #
   #   result.should == 37
@@ -31,15 +31,14 @@ module Micronaut
   # Micronaut ships with a standard set of useful matchers, and writing your own
   # matchers is quite simple. See Micronaut::Matchers for details.
   module Expectations
-    class << self
-      attr_accessor :differ
-
-      def fail_with(message, expected=nil, target=nil) # :nodoc:
-        if Array === message && message.length == 3
-          message, expected, target = message[0], message[1], message[2]
-        end
-        Kernel::raise(Micronaut::Expectations::ExpectationNotMetError.new(message))
+  
+    def self.fail_with(message, expected=nil, target=nil) # :nodoc:
+      if Array === message && message.length == 3
+        message, expected, target = message[0], message[1], message[2]
       end
+      Kernel::raise(Micronaut::Expectations::ExpectationNotMetError.new(message))
     end
+  
   end
+  
 end
