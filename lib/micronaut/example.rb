@@ -9,7 +9,11 @@ module Micronaut
     end
     
     def inspect
-      "#{behaviour.name} - #{desc}"
+      "#{behaviour.name} - #{description}"
+    end
+    
+    def to_s
+      inspect
     end
   
   end

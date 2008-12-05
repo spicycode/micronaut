@@ -25,7 +25,7 @@ module Micronaut
         @output.puts
         @failed_examples.each_with_index do |examples_with_exception, index|
           example, exception = examples_with_exception.first, examples_with_exception.last
-          @output.puts "#{index.next})  #{example.class.name}"
+          @output.puts "#{index.next}) #{example}"
           @output.puts colorise(exception.message, exception)
           @output.puts format_backtrace(exception.backtrace)
           @output.puts 
