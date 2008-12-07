@@ -24,7 +24,7 @@ module Micronaut
          end
 
   # './lib' in project dir, or '/usr/local/blahblah' if installed
-  MICRONAUT_DIR = File.expand_path(File.dirname(File.dirname(file)))
+  InstallDirectory = File.expand_path(File.dirname(File.dirname(file)))
   
   def self.configuration
     @configuration ||= Micronaut::Configuration.new

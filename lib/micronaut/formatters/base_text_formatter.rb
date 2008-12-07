@@ -77,7 +77,8 @@ module Micronaut
 
       def format_backtrace(backtrace)
         return "" if backtrace.nil?
-        backtrace.map { |line| backtrace_line(line) }.join("\n")
+        cleansed = backtrace.map { |line| backtrace_line(line) }.compact.join("\n")
+        cleansed.empty? ? backtrace : cleansed
       end
 
       protected
@@ -87,7 +88,10 @@ module Micronaut
       end
 
       def backtrace_line(line)
-        line.sub(/\A([^:]+:\d+)$/, '\\1:')
+        return nil if line.rindex(Micronaut::InstallDirectory, 0)
+        line.sub!(/\A([^:]+:\d+)$/, '\\1')
+        return nil if line == '-e:1'
+        line
       end
 
       def color(text, color_code)
