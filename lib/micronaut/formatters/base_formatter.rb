@@ -2,7 +2,7 @@ module Micronaut
   module Formatters
     # Baseclass for formatters that implements all required methods as no-ops. 
     class BaseFormatter
-      attr_accessor :example_group, :options, :output, :total_example_failed, :total_example_pending
+      attr_accessor :behaviour, :options, :output, :total_example_failed, :total_example_pending
       
       def initialize(options, output_to)
         @options, @output = options, output_to
@@ -14,16 +14,16 @@ module Micronaut
       # formatters that need to provide progress on feedback (graphical ones)
       #
       # This method will only be invoked once, and the next one to be invoked
-      # is #add_example_group
+      # is #add_behaviour
       def start(example_count)
       end
 
-      # This method is invoked at the beginning of the execution of each example_group.
-      # +example_group+ is the example_group.
+      # This method is invoked at the beginning of the execution of each behaviour.
+      # +behaviour+ is the behaviour.
       #
       # The next method to be invoked after this is #example_failed or #example_finished
-      def add_example_group(example_group)
-        @example_group = example_group
+      def add_behaviour(behaviour)
+        @behaviour = behaviour
       end
 
       # This method is invoked when an +example+ starts.

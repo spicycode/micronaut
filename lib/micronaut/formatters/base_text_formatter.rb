@@ -12,7 +12,6 @@ module Micronaut
       end
 
       def example_pending(example, message)
-        super
         @pending_examples << [example, message]
       end
 
@@ -92,16 +91,8 @@ module Micronaut
       end
 
       def color(text, color_code)
-        return text unless enable_color_in_output? && output_to_tty?
+        return text unless enable_color_in_output?
         "#{color_code}#{text}\e[0m"
-      end
-
-      def output_to_tty?
-        begin
-          @output.tty? || ENV.has_key?("AUTOTEST")
-        rescue NoMethodError
-          false
-        end
       end
 
       def green(text)

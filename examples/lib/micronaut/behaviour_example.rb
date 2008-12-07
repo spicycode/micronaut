@@ -1,33 +1,34 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 
-describe Micronaut::BehaviourGroup do
+describe Micronaut::Behaviour do
 
   class Foo
 
   end  
 
   def empty_behaviour_group
-    Micronaut::BehaviourGroup.describe(Foo, 'Empty Behaviour Group') { }
+    group = Micronaut::Behaviour.describe(Foo, 'Empty Behaviour Group') { }
+    remove_last_describe_from_world
   end
 
   describe "describing behaviour with #describe" do
 
     it "should raise an ArgumentError if no name is given" do
-      lambda { Micronaut::BehaviourGroup.describe() {} }.should raise_error(ArgumentError)
+      lambda { Micronaut::Behaviour.describe() {} }.should raise_error(ArgumentError)
     end
 
     it "should raise an ArgumentError if no block is given" do
-      lambda { Micronaut::BehaviourGroup.describe('foo') }.should raise_error(ArgumentError)
+      lambda { Micronaut::Behaviour.describe('foo') }.should raise_error(ArgumentError)
     end
 
     describe '#name' do
 
       it "should expose the first parameter as name" do
-        Micronaut::BehaviourGroup.describe("my favorite pony") { }.name.should == 'my favorite pony'
+        Micronaut::Behaviour.describe("my favorite pony") { }.name.should == 'my favorite pony'
       end
 
       it "should call to_s on the first parameter in case it is a constant" do
-        Micronaut::BehaviourGroup.describe(Foo) { }.name.should == 'Foo'
+        Micronaut::Behaviour.describe(Foo) { }.name.should == 'Foo'
       end
 
     end
@@ -35,11 +36,11 @@ describe Micronaut::BehaviourGroup do
     describe '#described_type' do
 
       it "should be the first parameter when it is a constant" do
-        Micronaut::BehaviourGroup.describe(Foo) { }.described_type.should == Foo
+        Micronaut::Behaviour.describe(Foo) { }.described_type.should == Foo
       end
 
       it "should be nil when the first parameter is a string" do
-        Micronaut::BehaviourGroup.describe("i'm a computer") { }.described_type.should be_nil
+        Micronaut::Behaviour.describe("i'm a computer") { }.described_type.should be_nil
       end
 
     end
@@ -47,11 +48,11 @@ describe Micronaut::BehaviourGroup do
     describe '#description' do
 
       it "should expose the second parameter as description" do
-        Micronaut::BehaviourGroup.describe(Foo, "my desc") { }.description.should == 'my desc'
+        Micronaut::Behaviour.describe(Foo, "my desc") { }.description.should == 'my desc'
       end
 
       it "should allow the second parameter to be nil" do
-        Micronaut::BehaviourGroup.describe(Foo, nil) { }.description.size.should == 0
+        Micronaut::Behaviour.describe(Foo, nil) { }.description.size.should == 0
       end
 
     end
@@ -59,11 +60,11 @@ describe Micronaut::BehaviourGroup do
     describe '#options' do
 
       it "should expose the third parameter as options" do
-        Micronaut::BehaviourGroup.describe(Foo, nil, 'foo' => 'bar') { }.options.should == { "foo" => 'bar' }
+        Micronaut::Behaviour.describe(Foo, nil, 'foo' => 'bar') { }.options.should == { "foo" => 'bar' }
       end
 
       it "should be an empty hash if no options are supplied" do
-        Micronaut::BehaviourGroup.describe(Foo, nil) { }.options.should == {}
+        Micronaut::Behaviour.describe(Foo, nil) { }.options.should == {}
       end
 
     end
@@ -175,7 +176,8 @@ describe Micronaut::BehaviourGroup do
   describe "nested describes" do
 
     before { @wee += 5 }
-    # it "should set the described type to the parent described type (if it is not given)"
+    
+    it "should set the described type to the parent described type (if it is not given)"
 
     it "should have all of the parent before blocks" do
       @wee.should == 6

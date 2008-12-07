@@ -7,7 +7,7 @@ describe Micronaut::World do
   describe "behaviour groups" do
 
     it "should contain all defined behaviour groups" do
-      behaviour_group = Micronaut::BehaviourGroup.describe(Bar, 'Empty Behaviour Group') { }
+      behaviour_group = Micronaut::Behaviour.describe(Bar, 'Empty Behaviour Group') { }
       Micronaut::World.behaviour_groups.should include(behaviour_group)       
       remove_last_describe_from_world
     end
@@ -20,9 +20,9 @@ describe Micronaut::World do
       options_1 = { :foo => 1, :color => 'blue', :feature => 'reporting' }
       options_2 = { :pending => true, :feature => 'reporting'  }
       options_3 = { :array => [1,2,3,4], :color => 'blue', :feature => 'weather status' }      
-      @bg1 = Micronaut::BehaviourGroup.describe(Bar, "find group-1", options_1) { }
-      @bg2 = Micronaut::BehaviourGroup.describe(Bar, "find group-2", options_2) { }
-      @bg3 = Micronaut::BehaviourGroup.describe(Bar, "find group-3", options_3) { }
+      @bg1 = Micronaut::Behaviour.describe(Bar, "find group-1", options_1) { }
+      @bg2 = Micronaut::Behaviour.describe(Bar, "find group-2", options_2) { }
+      @bg3 = Micronaut::Behaviour.describe(Bar, "find group-3", options_3) { }
     end
 
     after(:all) do

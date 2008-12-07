@@ -6,7 +6,7 @@ require 'micronaut/configuration'
 require 'micronaut/runner'
 require 'micronaut/runner_options'
 require 'micronaut/example'
-require 'micronaut/behaviour_group'
+require 'micronaut/behaviour'
 require 'micronaut/kernel_extensions'
 require 'micronaut/formatters'
 

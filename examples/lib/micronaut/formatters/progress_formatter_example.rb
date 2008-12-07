@@ -20,10 +20,11 @@ describe Micronaut::Formatters::ProgressFormatter do
   end
   
   it "should produce standard summary" do
-    example_group = Micronaut::BehaviourGroup.describe("example_group") do
+    behaviour = Micronaut::Behaviour.describe("behaviour") do
       it('example') {}
     end
-    example = example_group.examples.first
+    remove_last_describe_from_world
+    example = behaviour.examples.first
     @formatter.example_pending(example, "message")
     @io.rewind
     @formatter.dump_summary(3, 2, 1, 1)
@@ -31,21 +32,18 @@ describe Micronaut::Formatters::ProgressFormatter do
   end
 
   it "should push green dot for passing spec" do
-    @io.expects(:tty?).returns(true)
     @options.expects(:enable_color_in_output?).returns(true)
     @formatter.example_passed("spec")
     @io.string.should == "\e[32m.\e[0m"
   end
 
   it "should push red F for failure spec" do
-    @io.expects(:tty?).returns(true)
     @options.expects(:enable_color_in_output?).returns(true)
     @formatter.example_failed("spec", Micronaut::Expectations::ExpectationNotMetError.new)
     @io.string.should eql("\e[31mF\e[0m")
   end
 
   it "should push magenta F for error spec" do
-    @io.expects(:tty?).returns(true)
     @options.expects(:enable_color_in_output?).returns(true)
     @formatter.example_failed("spec", RuntimeError.new)
     @io.string.should eql("\e[35mF\e[0m")
@@ -70,25 +68,6 @@ EOE
 /tmp/x.rb:2:
 /tmp/x.rb:3:
 EOE
-  end
-  
-  describe "outputting to custom out" do
-    before do
-      @out = mock("out")
-      @options = mock('options')
-      @out.stubs(:puts)
-      @formatter = Micronaut::Formatters::ProgressFormatter.new(@options, @out)
-      @formatter.class.__send__ :public, :output_to_tty?
-    end
-
-    after do
-      @formatter.class.__send__ :protected, :output_to_tty?
-    end
-
-    it "should not throw NoMethodError on output_to_tty?" do
-      @out.expects(:tty?).raises(NoMethodError)
-      @formatter.output_to_tty?.should be_false
-    end
   end
   
 end

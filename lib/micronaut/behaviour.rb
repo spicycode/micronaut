@@ -1,6 +1,5 @@
 module Micronaut
-  
-  class BehaviourGroup
+  class Behaviour
     include Micronaut::Matchers 
 
     def self.inherited(klass)
@@ -91,7 +90,7 @@ module Micronaut
       classes = []
       current_class = self
 
-      while current_class < Micronaut::BehaviourGroup
+      while current_class < Micronaut::Behaviour
         superclass_last ? classes << current_class : classes.unshift(current_class)
         current_class = current_class.superclass
       end
@@ -141,9 +140,11 @@ module Micronaut
 
     def self.run(reporter)
       return true if examples.empty?
-      
 
+      reporter.add_behaviour(self)
+      
       group = new
+      
       eval_before_alls(group)
       success = true
 
@@ -187,8 +188,8 @@ module Micronaut
     end
 
     def self.to_s
-      self == Micronaut::BehaviourGroup ? 'Micronaut::BehaviourGroup' : name
+      self == Micronaut::Behaviour ? 'Micronaut::Behaviour' : name
     end
-    
+
   end
 end

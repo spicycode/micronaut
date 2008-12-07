@@ -5,7 +5,7 @@ module Micronaut
     @@installed_at_exit ||= false
 
     def self.options
-      @options ||= Micronaut::RunnerOptions.new(:color => true, :formatter => :progress)
+      @options ||= Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
     end
     
     def self.autorun
@@ -35,9 +35,6 @@ module Micronaut
          suite_success &= example_group.run(options.formatter)
        end
        duration = Time.now - starts_at
-       
-       options.formatter.end
-       options.formatter.dump
        
        options.formatter.start_dump
        options.formatter.dump_pending

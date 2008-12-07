@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 
-module Micronaut
-  module Matchers
+describe Micronaut::Matchers do
+
     describe "wrap_expectation" do
       
       def stub_matcher
@@ -25,6 +25,7 @@ module Micronaut
           raise "error"
         end.should be_false
       end
+
     end
-  end
+    
 end

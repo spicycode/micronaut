@@ -5,12 +5,12 @@ describe Micronaut::Configuration do
   describe "#mock_with" do
     
     it "should include the mocha adapter when called with :mocha" do
-      Micronaut::BehaviourGroup.expects(:send).with(:include, Micronaut::Mocking::WithMocha)
+      Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithMocha)
       Micronaut::Configuration.new.mock_with :mocha
     end
   
     it "should include the do absolutely nothing mocking adapter for all other cases" do
-      Micronaut::BehaviourGroup.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
+      Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
       Micronaut::Configuration.new.mock_with
     end
     
@@ -26,7 +26,7 @@ describe Micronaut::Configuration do
     
     it "should include the given module into each behaviour group" do
       Micronaut.configuration.include(InstanceLevelMethods)
-      group = Micronaut::BehaviourGroup.describe(Object, 'does like, stuff and junk') { }
+      group = Micronaut::Behaviour.describe(Object, 'does like, stuff and junk') { }
       group.should_not respond_to(:you_call_this_a_blt?)
       remove_last_describe_from_world
 
@@ -47,7 +47,7 @@ describe Micronaut::Configuration do
     
     it "should extend the given module into each behaviour group" do
       Micronaut.configuration.extend(FocusedSupport)
-      group = Micronaut::BehaviourGroup.describe(FocusedSupport, 'the focused support ') { }
+      group = Micronaut::Behaviour.describe(FocusedSupport, 'the focused support ') { }
       group.should respond_to(:fit)
       remove_last_describe_from_world
     end

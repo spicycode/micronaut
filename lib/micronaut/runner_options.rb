@@ -1,5 +1,4 @@
 module Micronaut
-
   class RunnerOptions
     
     attr_accessor :color, :formatter
@@ -10,7 +9,11 @@ module Micronaut
     end
     
     def enable_color_in_output?
-      @color
+      !textmate? && @color
+    end
+    
+    def textmate?
+      ENV['TEXTMATE'] || ENV['TM_RUBY']
     end
     
     def output
@@ -18,9 +21,13 @@ module Micronaut
     end
     
     def formatter
-      @formatter_instance ||= Micronaut::Formatters::ProgressFormatter.new(self, output)
+      @formatter_instance ||= case @formatter.to_s
+                              when 'documentation'
+                                Micronaut::Formatters::DocumentationFormatter.new(self, output)
+                              else
+                                Micronaut::Formatters::ProgressFormatter.new(self, output)
+                              end
     end
 
   end
-  
 end

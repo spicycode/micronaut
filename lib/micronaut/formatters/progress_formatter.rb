@@ -10,6 +10,7 @@ module Micronaut
       end
 
       def example_passed(example)
+        super
         @output.print green('.')
         @output.flush
       end

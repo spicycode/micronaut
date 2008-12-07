@@ -11,7 +11,7 @@ module Micronaut
                           Micronaut::Mocking::WithAbsolutelyNothing
                         end 
 
-      Micronaut::BehaviourGroup.send(:include, @mock_framework)
+      Micronaut::Behaviour.send(:include, @mock_framework)
     end
     
     def extra_modules
