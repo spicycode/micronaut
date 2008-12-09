@@ -88,7 +88,7 @@ module Micronaut
       end
 
       def backtrace_line(line)
-        return nil if line.rindex(Micronaut::InstallDirectory, 0)
+        return nil if Micronaut.configuration.cleaned_from_backtrace?(line)
         line.sub!(/\A([^:]+:\d+)$/, '\\1')
         return nil if line == '-e:1'
         line

@@ -1,7 +1,19 @@
 module Micronaut
 
   class Configuration
-    attr_reader :mock_framework
+    attr_reader :mock_framework, :backtrace_clean_patterns
+    
+    def initialize
+      @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
+    end
+    
+    def cleaned_from_backtrace?(line)
+      return true if line.starts_with?(::Micronaut::InstallDirectory)
+      
+      @backtrace_clean_patterns.any? do |pattern|
+        line =~ pattern
+      end
+    end
     
     def mock_with(make_a_mockery_with=nil)
       @mock_framework = case make_a_mockery_with

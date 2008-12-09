@@ -3,8 +3,8 @@ module Micronaut
     class InvalidMatcherError < ArgumentError; end        
     
     class ExpectationMatcherHandler        
-      class << self
-        def handle_matcher(actual, matcher, &block)
+
+        def self.handle_matcher(actual, matcher, &block)
           ::Micronaut::Matchers.last_should = "should"
           return Micronaut::Matchers::PositiveOperatorMatcher.new(actual) if matcher.nil?
 
@@ -17,12 +17,12 @@ module Micronaut
           Micronaut::Expectations.fail_with(matcher.failure_message) unless match
           match
         end
-      end
+
     end
 
     class NegativeExpectationMatcherHandler
-      class << self
-        def handle_matcher(actual, matcher, &block)
+
+        def self.handle_matcher(actual, matcher, &block)
           ::Micronaut::Matchers.last_should = "should not"
           return Micronaut::Matchers::NegativeOperatorMatcher.new(actual) if matcher.nil?
           
@@ -44,7 +44,7 @@ EOF
           Micronaut::Expectations.fail_with(matcher.negative_failure_message) if match
           match
         end
-      end
+        
     end
 
   end
