@@ -13,7 +13,7 @@ module Micronaut
     end
     
     def textmate?
-      ENV['TEXTMATE'] || ENV['TM_RUBY']
+      ENV.has_key?('TM_RUBY')
     end
     
     def output
