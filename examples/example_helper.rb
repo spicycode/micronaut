@@ -2,6 +2,7 @@ lib_path = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 
 require 'micronaut'
+gem :mocha
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
 module Micronaut  
@@ -29,7 +30,7 @@ end
 Micronaut.configure do |config|
   
   config.mock_with :mocha
+  config.autorun!
+  config.options = Micronaut::RunnerOptions.new(:color => true, :formatter => :progress)
   
 end
-
-Micronaut::Runner.autorun

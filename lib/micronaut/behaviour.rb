@@ -6,6 +6,11 @@ module Micronaut
       super
       Micronaut::World.behaviour_groups << klass
     end
+    
+    def self.extended_modules #:nodoc:
+      ancestors = class << self; ancestors end
+      ancestors.select { |mod| mod.class == Module } - [ Object, Kernel ]
+    end
 
     def self.befores
       @_befores ||= { :all => [], :each => [] }
@@ -54,7 +59,11 @@ module Micronaut
       metadata[:name] = "#{metadata[:described_type]} #{metadata[:description]}".strip
       
       Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
-        send(include_or_extend, mod)
+        if include_or_extend == :extend
+          send(:extend, mod) unless extended_modules.include?(mod)
+        else
+          send(:include, mod) unless included_modules.include?(mod)
+        end
       end
     end
 
@@ -144,7 +153,6 @@ module Micronaut
       reporter.add_behaviour(self)
       
       group = new
-      
       eval_before_alls(group)
       success = true
 

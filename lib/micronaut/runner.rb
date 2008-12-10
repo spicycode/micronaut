@@ -1,22 +1,18 @@
 module Micronaut
 
   class Runner
-    
-    @@installed_at_exit ||= false
-
-    def self.options
-      @options ||= Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
+        
+    def self.installed_at_exit?
+      @installed_at_exit ||= false
     end
-    
+
     def self.autorun
-      at_exit {
-        Micronaut::Runner.new.run(ARGV) ? exit(0) : exit(1)
-      } unless @@installed_at_exit
-      @@installed_at_exit = true
+      at_exit { Micronaut::Runner.new.run(ARGV) ? exit(0) : exit(1) } unless installed_at_exit?
+      @installed_at_exit = true
     end
     
     def options
-      self.class.options
+      Micronaut.configuration.options
     end
 
     def run(args = [])

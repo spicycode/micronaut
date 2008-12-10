@@ -26,6 +26,19 @@ module Micronaut
       Micronaut::Behaviour.send(:include, @mock_framework)
     end
     
+    def autorun!
+      Micronaut::Runner.autorun unless Micronaut::Runner.installed_at_exit?      
+    end
+    
+    def options=(new_options)
+      raise ArguementError unless new_options.is_a?(Micronaut::RunnerOptions)
+      @options = new_options
+    end
+    
+    def options
+      @options ||= Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
+    end
+    
     def extra_modules
       @extra_modules ||= []
     end
