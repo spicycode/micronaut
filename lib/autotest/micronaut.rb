@@ -40,9 +40,8 @@ class Autotest::Micronaut < Autotest
     
     examples = files_to_test.keys.flatten
     
-    examples.map! {|f| %Q(require "#{f}")}
 
-    return "#{ruby} -e '#{examples.join("; ")}'"
+    "#{ruby} #{examples.join(" ")}"
   end
   
 end

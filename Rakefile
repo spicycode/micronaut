@@ -4,7 +4,7 @@ require 'rubygems/specification'
 require 'date'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.1"
+GEM_VERSION = "0.1.2"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -21,7 +21,9 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  
+  s.bindir = 'bin'
+  s.default_executable = 'micronaut'
+  s.executables = ["micronaut"]
   s.require_path = 'lib'
   s.autorequire = GEM
   s.files = %w(LICENSE README RSPEC-LICENSE Rakefile) + Dir.glob("{lib,examples}/**/*")

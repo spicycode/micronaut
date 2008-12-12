@@ -12,20 +12,20 @@ module Micronaut
       @behaviours
     end
 
-    def self.examples_to_run(behaviour)
-
-    end
-
     def self.behaviours_to_run
-      behaviours.each do |behaviour|
-        Micronaut.configuration.filters.each do |filter|
+      Micronaut.configuration.filters.each do |filter|
+        puts "  Run filtered using: #{filter.inspect}"
+        behaviours.each do |behaviour|
           behaviour.examples_to_run.concat find(behaviour.examples, filter)
         end
-      end
+      end      
       
-      if behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }.zero? 
-        puts "No behaviours found at all anywhere"
-      end
+      # if behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }.zero?
+      #   behaviours.each do |behaviour|
+      #     behaviour.examples_to_run.concat(behaviour.examples)
+      #   end
+      # end
+      
       behaviours
     end
 
