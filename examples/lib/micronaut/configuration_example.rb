@@ -40,7 +40,7 @@ describe Micronaut::Configuration do
     module FocusedSupport
       
       def fit(desc, options={}, &block)
-        it(desc, options.upd(:focused => true), &block)
+        it(desc, options.update(:focused => true), &block)
       end
       
     end

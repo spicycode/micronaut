@@ -23,6 +23,7 @@ describe Micronaut::World do
       @bg1 = Micronaut::Behaviour.describe(Bar, "find group-1", options_1) { }
       @bg2 = Micronaut::Behaviour.describe(Bar, "find group-2", options_2) { }
       @bg3 = Micronaut::Behaviour.describe(Bar, "find group-3", options_3) { }
+      @behaviours = [@bg1, @bg2, @bg3]
     end
 
     after(:all) do
@@ -32,47 +33,47 @@ describe Micronaut::World do
     end
     
     it "should find no groups when given no search parameters" do
-      Micronaut::World.find.should == []
+      Micronaut::World.find([]).should == []
     end
   
     it "should find three groups when searching for :described_type => Bar" do
-      Micronaut::World.find(:described_type => Bar).should == [@bg1, @bg2, @bg3]
+      Micronaut::World.find(@behaviours, :described_type => Bar).should == [@bg1, @bg2, @bg3]
     end
     
     it "should find one group when searching for :description => 'find group-1'" do
-      Micronaut::World.find(:description => 'find group-1').should == [@bg1]
+      Micronaut::World.find(@behaviours, :description => 'find group-1').should == [@bg1]
     end
     
     it "should find two groups when searching for :description => lambda { |v| v.include?('-1') || v.include?('-3') }" do
-      Micronaut::World.find(:description => lambda { |v| v.include?('-1') || v.include?('-3') }).should == [@bg1, @bg3]
+      Micronaut::World.find(@behaviours, :description => lambda { |v| v.include?('-1') || v.include?('-3') }).should == [@bg1, @bg3]
     end
     
     it "should find three groups when searching for :description => /find group/" do
-      Micronaut::World.find(:description => /find group/).should == [@bg1, @bg2, @bg3]
+      Micronaut::World.find(@behaviours, :description => /find group/).should == [@bg1, @bg2, @bg3]
     end
     
     it "should find one group when searching for :options => { :foo => 1 }" do
-      Micronaut::World.find(:options => { :foo => 1 }).should == [@bg1]
+      Micronaut::World.find(@behaviours, :options => { :foo => 1 }).should == [@bg1]
     end
     
     it "should find one group when searching for :options => { :pending => true }" do
-      Micronaut::World.find(:options => { :pending => true }).should == [@bg2]
+      Micronaut::World.find(@behaviours, :options => { :pending => true }).should == [@bg2]
     end
 
     it "should find one group when searching for :options => { :array => [1,2,3,4] }" do
-      Micronaut::World.find(:options => { :array => [1,2,3,4] }).should == [@bg3]
+      Micronaut::World.find(@behaviours, :options => { :array => [1,2,3,4] }).should == [@bg3]
     end
 
     it "should find no group when searching for :options => { :array => [4,3,2,1] }" do
-      Micronaut::World.find(:options => { :array => [4,3,2,1] }).should be_empty
+      Micronaut::World.find(@behaviours, :options => { :array => [4,3,2,1] }).should be_empty
     end    
 
     it "should find two groups when searching for :options => { :color => 'blue' }" do
-      Micronaut::World.find(:options => { :color => 'blue' }).should == [@bg1, @bg3]
+      Micronaut::World.find(@behaviours, :options => { :color => 'blue' }).should == [@bg1, @bg3]
     end
 
     it "should find two groups when searching for :options => { :feature => 'reporting' }" do
-      Micronaut::World.find(:options => { :feature => 'reporting' }).should == [@bg1, @bg2]
+      Micronaut::World.find(@behaviours, :options => { :feature => 'reporting' }).should == [@bg1, @bg2]
     end
 
   end
