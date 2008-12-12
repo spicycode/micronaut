@@ -18,7 +18,7 @@ module Micronaut
 end
 
 def remove_last_describe_from_world
-  Micronaut::World.behaviour_groups.pop
+  Micronaut::World.behaviours.pop
 end
 
 class DummyFormatter <  Micronaut::Formatters::BaseTextFormatter; end
@@ -28,9 +28,8 @@ def dummy_reporter
 end
 
 Micronaut.configure do |config|
-  
   config.mock_with :mocha
+  config.options = Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
+  config.add_filter :options => { :focused => true }
   config.autorun!
-  config.options = Micronaut::RunnerOptions.new(:color => true, :formatter => :progress)
-  
 end

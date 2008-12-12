@@ -4,7 +4,7 @@ module Micronaut
 
     def self.inherited(klass)
       super
-      Micronaut::World.behaviour_groups << klass
+      Micronaut::World.behaviours << klass
     end
     
     def self.extended_modules #:nodoc:
@@ -47,9 +47,17 @@ module Micronaut
     def self.it(desc=nil, options={}, &block)
       examples << Micronaut::Example.new(self, desc, options, block)
     end
+    
+    def self.focused(desc=nil, options={}, &block)
+      it(desc, options.update(:focused => true), &block)
+    end
 
     def self.examples
       @_examples ||= []
+    end
+    
+    def self.examples_to_run
+      @_examples_to_run ||= []
     end
 
     def self.set_it_up(*args)
@@ -148,7 +156,7 @@ module Micronaut
     end
 
     def self.run(reporter)
-      return true if examples.empty?
+      return true if examples_to_run.empty?
 
       reporter.add_behaviour(self)
       
@@ -156,7 +164,7 @@ module Micronaut
       eval_before_alls(group)
       success = true
 
-      examples.each do |ex|
+      examples_to_run.each do |ex|
         reporter.example_started(ex)
 
         execution_error = nil

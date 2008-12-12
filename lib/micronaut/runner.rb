@@ -17,8 +17,8 @@ module Micronaut
 
     def run(args = [])
       @verbose = args.delete('-v')
-
-       total_examples = Micronaut::World.behaviour_groups.inject(0) { |sum, eg| sum + eg.examples.size }
+       behaviours_to_run = Micronaut::World.behaviours_to_run
+       total_examples = behaviours_to_run.inject(0) { |sum, eg| sum + eg.examples_to_run.size }
        
        old_sync, options.formatter.output.sync = options.formatter.output.sync, true if options.formatter.output.respond_to?(:sync=)
               
@@ -27,7 +27,7 @@ module Micronaut
        suite_success = true
       
        starts_at = Time.now
-       Micronaut::World.behaviour_groups.each do |example_group|
+       behaviours_to_run.each do |example_group|
          suite_success &= example_group.run(options.formatter)
        end
        duration = Time.now - starts_at

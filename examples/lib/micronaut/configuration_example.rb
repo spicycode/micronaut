@@ -40,12 +40,12 @@ describe Micronaut::Configuration do
     module FocusedSupport
       
       def fit(desc, options={}, &block)
-        it(desc, options.merge(:focused => true), &block)
+        it(desc, options.upd(:focused => true), &block)
       end
       
     end
     
-    it "should extend the given module into each behaviour group" do
+    focused "should extend the given module into each behaviour group" do
       Micronaut.configuration.extend(FocusedSupport)
       group = Micronaut::Behaviour.describe(FocusedSupport, 'the focused support ') { }
       group.should respond_to(:fit)

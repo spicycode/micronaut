@@ -8,7 +8,7 @@ describe Micronaut::World do
 
     it "should contain all defined behaviour groups" do
       behaviour_group = Micronaut::Behaviour.describe(Bar, 'Empty Behaviour Group') { }
-      Micronaut::World.behaviour_groups.should include(behaviour_group)       
+      Micronaut::World.behaviours.should include(behaviour_group)       
       remove_last_describe_from_world
     end
 
@@ -26,9 +26,9 @@ describe Micronaut::World do
     end
 
     after(:all) do
-      Micronaut::World.behaviour_groups.delete(@bg1)
-      Micronaut::World.behaviour_groups.delete(@bg2)
-      Micronaut::World.behaviour_groups.delete(@bg3)
+      Micronaut::World.behaviours.delete(@bg1)
+      Micronaut::World.behaviours.delete(@bg2)
+      Micronaut::World.behaviours.delete(@bg3)
     end
     
     it "should find no groups when given no search parameters" do
@@ -80,13 +80,13 @@ describe Micronaut::World do
   describe "reset" do
 
     it "should clear the list of behaviour groups" do
-      original_groups = Micronaut::World.behaviour_groups
+      original_groups = Micronaut::World.behaviours
 
-      Micronaut::World.behaviour_groups.should_not be_empty
+      Micronaut::World.behaviours.should_not be_empty
       Micronaut::World.reset
-      Micronaut::World.behaviour_groups.should be_empty
+      Micronaut::World.behaviours.should be_empty
 
-      Micronaut::World.behaviour_groups.concat(original_groups)
+      Micronaut::World.behaviours.concat(original_groups)
     end
 
   end

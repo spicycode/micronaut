@@ -1,36 +1,49 @@
 module Micronaut
 
   class World
-  
+
     def self.reset
-      @behaviour_groups = []
+      @behaviours = []
     end
 
     reset
-  
-    def self.behaviour_groups
-      @behaviour_groups
+
+    def self.behaviours
+      @behaviours
     end
     
-    def self.find(conditions={})
-      return [] if conditions.empty?
+    def self.examples_to_run(behaviour)
       
-      behaviour_groups.select do |group|
+    end
+
+    def self.behaviours_to_run
+      Micronaut.configuration.filters.each do |filter|
+        behaviours.each do |behaviour|
+          behaviour.examples_to_run.concat find(behaviour.examples, filter)
+        end
+      end
+      behaviours
+    end
+
+    def self.find(collection=behaviours, conditions={})
+      return collection if conditions.empty?
+
+      collection.select do |item|
         conditions.all? do |key, value|
           case value
           when Hash
-            value.all? { |k, v| group.metadata[key][k] == v }
+            value.all? { |k, v| item.metadata[key][k] == v }
           when Regexp
-            group.metadata[key] =~ value
+            item.metadata[key] =~ value
           when Proc
-            value.call(group.metadata[key]) rescue false
+            value.call(item.metadata[key]) rescue false
           else
-            group.metadata[key] == value
+            item.metadata[key] == value
           end
         end
       end
     end
-    
+
   end
-  
+
 end

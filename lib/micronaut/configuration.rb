@@ -1,7 +1,7 @@
 module Micronaut
 
   class Configuration
-    attr_reader :mock_framework, :backtrace_clean_patterns
+    attr_reader :mock_framework, :backtrace_clean_patterns, :behaviour_filters
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
@@ -66,6 +66,14 @@ module Micronaut
           end
         end
       end
+    end
+    
+    def filters
+      @filters ||= []
+    end
+    
+    def add_filter(options={})
+      filters << options
     end
     
     def before_and_afters
