@@ -14,19 +14,23 @@ module Micronaut
     def options
       Micronaut.configuration.options
     end
-    
-    def run(args = [])
-      args.inject([]) { |files, arg| files.concat(Dir[arg].map { |g| Dir.glob(g) }.flatten) }.each do |file|
+
+    def load_all_behaviours(files_from_args=[])
+      files_from_args.inject([]) { |files, arg| files.concat(Dir[arg].map { |g| Dir.glob(g) }.flatten) }.each do |file|
         load file
       end
+    end
+    
+    def run(args = [])
+      load_all_behaviours(args)
       
       behaviours_to_run = Micronaut::World.behaviours_to_run
 
-      total_behaviours = behaviours_to_run.inject(0) { |sum, b| sum + b.examples_to_run.size }
+      total_examples = behaviours_to_run.inject(0) { |sum, b| sum + b.examples_to_run.size }
 
       old_sync, options.formatter.output.sync = options.formatter.output.sync, true if options.formatter.output.respond_to?(:sync=)
 
-      options.formatter.start(total_behaviours)
+      options.formatter.start(total_examples)
 
       suite_success = true
 
@@ -39,7 +43,9 @@ module Micronaut
       options.formatter.start_dump
       options.formatter.dump_pending
       options.formatter.dump_failures
-      options.formatter.dump_summary(duration, total_behaviours, options.formatter.failed_examples.size, options.formatter.pending_examples.size)
+
+      # TODO: Stop passing in the last two items, the formatter knows this info
+      options.formatter.dump_summary(duration, total_examples, options.formatter.failed_examples.size, options.formatter.pending_examples.size)
 
       options.formatter.output.sync = old_sync if options.formatter.output.respond_to? :sync=
 
