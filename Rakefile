@@ -50,8 +50,9 @@ namespace :micronaut do
   desc 'Run all examples'
   task :examples do
     examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-    examples.map! {|f| %Q(require "#{f}")}
-    command = "-e '#{examples.join("; ")}'"
+    # examples.map! {|f| %Q(require "#{f}")}
+    command = "#{examples.join(" ")}"
+    puts command
     ruby command
   end
   

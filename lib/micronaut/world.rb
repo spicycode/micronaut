@@ -20,11 +20,13 @@ module Micronaut
         end
       end      
       
-      # if behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }.zero?
-      #   behaviours.each do |behaviour|
-      #     behaviour.examples_to_run.concat(behaviour.examples)
-      #   end
-      # end
+      number_of_behaviours_left = behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }
+
+      if number_of_behaviours_left.zero? && Micronaut.configuration.filters.size.zero?
+        behaviours.each do |behaviour|
+          behaviour.examples_to_run.concat(behaviour.examples)
+        end
+      end
       
       behaviours
     end
