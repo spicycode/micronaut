@@ -1,6 +1,7 @@
 module Micronaut
   module Matchers
     class SimpleMatcher
+
       attr_writer :failure_message, :negative_failure_message, :description
       
       def initialize(description, &match_block)
@@ -33,6 +34,7 @@ module Micronaut
       def explanation
         "No description provided. See RDoc for simple_matcher()"
       end
+      
     end
   
     # simple_matcher makes it easy for you to create your own custom matchers
@@ -128,5 +130,6 @@ module Micronaut
     def simple_matcher(description=nil, &match_block)
       SimpleMatcher.new(description, &match_block)
     end
+    
   end
 end

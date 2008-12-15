@@ -1,6 +1,7 @@
 module Micronaut
   module Matchers
     class OperatorMatcher
+
       def initialize(actual)
         @actual = actual
       end

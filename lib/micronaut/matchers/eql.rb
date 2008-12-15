@@ -21,5 +21,6 @@ module Micronaut
         actual.eql?(expected)
       end
     end
+
   end
 end

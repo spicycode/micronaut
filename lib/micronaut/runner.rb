@@ -21,7 +21,7 @@ module Micronaut
       end
       
       behaviours_to_run = Micronaut::World.behaviours_to_run
-      puts behaviours_to_run.inspect
+
       total_behaviours = behaviours_to_run.inject(0) { |sum, b| sum + b.examples_to_run.size }
 
       old_sync, options.formatter.output.sync = options.formatter.output.sync, true if options.formatter.output.respond_to?(:sync=)

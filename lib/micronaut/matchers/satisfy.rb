@@ -2,6 +2,7 @@ module Micronaut
   module Matchers
     
     class Satisfy #:nodoc:
+
       def initialize(&block)
         @block = block
       end
@@ -19,6 +20,7 @@ module Micronaut
       def negative_failure_message
         "expected #{@given} not to satisfy block"
       end
+
     end
     
     # :call-seq:
@@ -43,5 +45,6 @@ module Micronaut
     def satisfy(&block)
       Matchers::Satisfy.new(&block)
     end
+    
   end
 end

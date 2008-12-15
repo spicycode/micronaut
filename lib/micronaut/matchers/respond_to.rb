@@ -2,6 +2,7 @@ module Micronaut
   module Matchers
     
     class RespondTo #:nodoc:
+
       def initialize(*names)
         @names = names
         @names_not_responded_to = []
@@ -14,7 +15,7 @@ module Micronaut
             @names_not_responded_to << name
           end
         end
-        return @names_not_responded_to.empty?
+        @names_not_responded_to.empty?
       end
       
       def failure_message
@@ -29,6 +30,7 @@ module Micronaut
         # Ruby 1.9 returns the same thing for array.to_s as array.inspect, so just use array.inspect here
         "respond to #{@names.inspect}"
       end
+
     end
     
     # :call-seq:
@@ -43,5 +45,6 @@ module Micronaut
     def respond_to(*names)
       Matchers::RespondTo.new(*names)
     end
+
   end
 end

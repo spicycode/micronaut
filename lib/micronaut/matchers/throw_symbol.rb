@@ -2,6 +2,7 @@ module Micronaut
   module Matchers
     
     class ThrowSymbol #:nodoc:
+
       def initialize(expected_symbol = nil, expected_arg=nil)
         @expected_symbol = expected_symbol
         @expected_arg = expected_arg
@@ -27,7 +28,6 @@ module Micronaut
         rescue NameError, ArgumentError => e
           raise e unless e.message =~ /uncaught throw (`|\:)([a-zA-Z0-9_]*)(')?/
           @caught_symbol = $2.to_sym
-
         ensure
           if @expected_symbol.nil?
             return !@caught_symbol.nil?
@@ -41,6 +41,7 @@ module Micronaut
             end
           end
         end
+
       end
 
       def failure_message
@@ -102,5 +103,6 @@ module Micronaut
     def throw_symbol(sym=nil)
       Matchers::ThrowSymbol.new(sym)
     end
+
   end
 end

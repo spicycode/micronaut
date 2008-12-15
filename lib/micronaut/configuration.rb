@@ -18,7 +18,11 @@ module Micronaut
     def mock_with(make_a_mockery_with=nil)
       @mock_framework = case make_a_mockery_with
                         when :mocha
+                          require 'micronaut/mocking/with_mocha'
                           Micronaut::Mocking::WithMocha
+                        when :rr
+                          require 'micronaut/mocking/with_rr'
+                          Micronaut::Mocking::WithRR
                         else
                           Micronaut::Mocking::WithAbsolutelyNothing
                         end 

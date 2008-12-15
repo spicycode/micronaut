@@ -4,7 +4,7 @@ require 'rubygems/specification'
 require 'date'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.2"
+GEM_VERSION = "0.1.3"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -50,10 +50,7 @@ namespace :micronaut do
   desc 'Run all examples'
   task :examples do
     examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-    # examples.map! {|f| %Q(require "#{f}")}
-    command = "#{examples.join(" ")}"
-    puts command
-    ruby command
+    ruby examples.join(" ")
   end
   
   desc "List files that don't have examples"

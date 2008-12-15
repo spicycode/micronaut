@@ -17,5 +17,6 @@ module Micronaut
         (actual - expected).abs < delta
       end
     end
+
   end
 end

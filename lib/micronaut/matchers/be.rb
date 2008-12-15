@@ -199,5 +199,6 @@ it reads really poorly.
     def be(*args)
       Matchers::Be.new(*args)
     end
+
   end
 end

@@ -22,7 +22,7 @@ module Micronaut
         return (@before + @amount == @after) if @amount
         return ((@after - @before) >= @minimum) if @minimum
         return ((@after - @before) <= @maximum) if @maximum        
-        return @before != @after
+        @before != @after
       end
       
       def raise_block_syntax_error

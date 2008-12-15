@@ -31,7 +31,7 @@ module Micronaut
         raise not_a_collection if @given.nil?
         return @given >= @expected if @relativity == :at_least
         return @given <= @expected if @relativity == :at_most
-        return @given == @expected
+        @given == @expected
       end
       
       def not_a_collection

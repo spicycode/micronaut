@@ -21,5 +21,6 @@ module Micronaut
         actual.equal?(expected)
       end
     end
+
   end
 end
