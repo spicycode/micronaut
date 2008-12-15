@@ -30,6 +30,6 @@ end
 Micronaut.configure do |config|
   config.mock_with :mocha
   config.options = Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
-  config.add_filter :options => { :focused => true }
+  # config.add_filter :options => { :focused => true }
   config.autorun!
 end
