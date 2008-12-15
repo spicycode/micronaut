@@ -1,5 +1,4 @@
 require 'micronaut/matchers'
-require 'micronaut/expectations/errors'
 require 'micronaut/expectations/extensions'
 require 'micronaut/expectations/handler'
 require 'micronaut/expectations/wrap_expectation'
@@ -31,6 +30,8 @@ module Micronaut
   # Micronaut ships with a standard set of useful matchers, and writing your own
   # matchers is quite simple. See Micronaut::Matchers for details.
   module Expectations
+
+    class ExpectationNotMetError < ::StandardError; end
   
     def self.fail_with(message, expected=nil, target=nil) # :nodoc:
       if Array === message && message.length == 3
