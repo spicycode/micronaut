@@ -17,7 +17,7 @@ require 'micronaut/matchers/operator_matcher'
 
 module Micronaut
 
-  # We ship (courtesy of OSS and Micronaut) with a number of useful Expression Matchers. An Expression Matcher
+  # We ship (courtesy of RSpec and Micronaut) with a number of useful Expression Matchers. An Expression Matcher
   # is any object that responds to the following methods:
   #
   #   matches?(actual)

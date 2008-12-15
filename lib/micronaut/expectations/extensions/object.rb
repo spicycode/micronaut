@@ -1,7 +1,6 @@
 module Micronaut
   module Expectations
-    # rspec adds #should and #should_not to every Object (and,
-    # implicitly, every Class).
+    # rspec adds #should and #should_not to every Object (and, implicitly, every Class).
     module ObjectExpectations
       # :call-seq:
       #   should(matcher)
