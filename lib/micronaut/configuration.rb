@@ -2,9 +2,11 @@ module Micronaut
 
   class Configuration
     attr_reader :mock_framework, :backtrace_clean_patterns, :behaviour_filters
+    attr_accessor :profile_examples
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
+      @profile_examples = false
     end
     
     def cleaned_from_backtrace?(line)
@@ -40,6 +42,7 @@ module Micronaut
     end
     
     def options
+      # Do we need this?
       @options ||= Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
     end
     

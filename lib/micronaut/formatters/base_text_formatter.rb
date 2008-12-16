@@ -9,6 +9,19 @@ module Micronaut
         super
         @pending_examples = []
         @failed_examples = []
+        @example_profiling_info = []
+      end
+            
+      def example_passed(example)
+        super
+        # Why && @start_time
+        if profile_examples? && @start_time
+          @example_profiling_info << [example, Time.now - @start_time] 
+        end
+      end
+      
+      def example_started(example)
+        @start_time = Time.now
       end
 
       def example_pending(example, message)
@@ -55,6 +68,15 @@ module Micronaut
         else
           @output.puts red(summary)
         end
+        
+        if profile_examples?  
+          sorted_examples = @example_profiling_info.sort_by { |desc, time| time }
+          @output.puts "\nTop 10 slowest examples:\n"        
+          sorted_examples.last(10).reverse.each do |desc, time|
+            @output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
+          end
+        end
+        
         @output.flush
       end
 

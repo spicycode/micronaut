@@ -8,6 +8,10 @@ module Micronaut
         @options, @output = options, output_to
         @total_example_failed, @total_example_pending = 0, 0
       end
+      
+      def profile_examples?
+        Micronaut.configuration.profile_examples
+      end
 
       # This method is invoked before any examples are run, right after
       # they have all been collected. This can be useful for special
@@ -28,6 +32,7 @@ module Micronaut
 
       # This method is invoked when an +example+ starts.
       def example_started(example)
+
       end
 
       # This method is invoked when an +example+ passes.
