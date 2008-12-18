@@ -1,10 +1,9 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 require 'rubygems/specification'
-require 'date'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.3"
+GEM_VERSION = "0.1.3.1"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -72,7 +71,13 @@ namespace :micronaut do
     system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-report --sort coverage --no-validator-links #{examples.join(' ')}"
   end
   
+  desc "Delete coverage artifacts" 
+  task :clean_coverage do
+    rm_rf Dir["coverage/**/*"]
+  end
+  
 end
 
 task :default => 'micronaut:coverage'
+task :clobber_package => 'micronaut:clean_coverage'
 
