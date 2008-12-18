@@ -2,11 +2,12 @@ module Micronaut
 
   class Configuration
     attr_reader :mock_framework, :backtrace_clean_patterns, :behaviour_filters
-    attr_accessor :profile_examples
+    attr_accessor :profile_examples, :run_all_when_everything_filtered
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
       @profile_examples = false
+      @run_all_when_everything_filtered = true
     end
     
     def cleaned_from_backtrace?(line)
@@ -83,6 +84,10 @@ module Micronaut
       filters << options
     end
     
+    def run_all_when_everything_filtered?
+      @run_all_when_everything_filtered
+    end
+          
     def before_and_afters
       @before_and_afters ||= []
     end

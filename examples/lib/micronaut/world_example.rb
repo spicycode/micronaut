@@ -91,5 +91,12 @@ describe Micronaut::World do
     end
 
   end
+  
+  describe "filter_behaviours_to_run" do
+    
+    it "does nothing if there are no filters"
+      # how do you spec this kind of behavior?  It feels like we need to be able to create new instances of Micronaut to properly spec 
+      # this kind of thing, so we can mock/stub or interrogate state without affecting the actual running instance.
+  end
 
 end
