@@ -43,4 +43,10 @@ describe Micronaut::Example do
     
   end
   
+  describe "accessing metadata within a running example" do
+    
+    it "should be able to get the current example object"
+    
+  end
+  
 end

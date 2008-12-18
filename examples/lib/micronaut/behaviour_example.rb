@@ -171,16 +171,22 @@ describe Micronaut::Behaviour do
 
   end
 
-  before { @wee = 1 }
+  describe Foo, "describing nested behaviours" do 
 
-  describe "nested describes" do
-
-    before { @wee += 5 }
+    describe "nested describes" do
     
-    it "should set the described type to the parent described type (if it is not given)"
+      it "should set the described type to the parent described type if no described type is given" do
+        self.class.described_type.should == Foo
+      end
+      
+      it "should set the description to the first parameter if no described type is given" do
+        self.class.description.should == 'nested describes'
+      end
 
-    it "should have all of the parent before blocks" do
-      @wee.should == 6
+      it "should have access to all of it's ancestors before blocks" 
+      
+      it "should have access to all of it's ancestors after blocks"
+
     end
 
   end
