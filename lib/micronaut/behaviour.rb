@@ -45,7 +45,7 @@ module Micronaut
     end
 
     def self.it(desc=nil, options={}, &block)
-      examples << Micronaut::Example.new(self, desc, options, block)
+      examples << Micronaut::Example.new(self, desc, options.update(:caller => caller[0]), block)
     end
     
     def self.focused(desc=nil, options={}, &block)

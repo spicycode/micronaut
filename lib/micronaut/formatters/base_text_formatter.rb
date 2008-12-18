@@ -33,7 +33,7 @@ module Micronaut
         @failed_examples << [example, exception]
       end
 
-      def dump_failures        
+      def dump_failures
         @output.puts
         @failed_examples.each_with_index do |examples_with_exception, index|
           example, exception = examples_with_exception.first, examples_with_exception.last
@@ -74,6 +74,7 @@ module Micronaut
           @output.puts "\nTop 10 slowest examples:\n"        
           sorted_examples.last(10).reverse.each do |desc, time|
             @output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
+            @output.puts grey("   # #{desc.options[:caller]}")
           end
         end
         
@@ -86,6 +87,7 @@ module Micronaut
           @output.puts "Pending:"
           @pending_examples.each do |pending_example, message|
             @output.puts "\n  #{pending_example.behaviour}\n  - #{pending_example.description}"
+            @output.puts grey("    # #{pending_example.options[:caller]}")
           end
         end
         @output.flush
@@ -139,6 +141,10 @@ module Micronaut
 
       def blue(text)
         color(text, "\e[34m")
+      end
+      
+      def grey(text)
+        color(text, "\e[90m")
       end
 
     end

@@ -4,7 +4,7 @@ require 'rubygems/specification'
 require 'date'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.3"
+GEM_VERSION = "0.1.4"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"

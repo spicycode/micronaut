@@ -6,12 +6,12 @@ describe Micronaut::Configuration do
     
     it "should include the mocha adapter when called with :mocha" do
       Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithMocha)
-      Micronaut::Configuration.new.mock_with :mocha
+      Micronaut.configuration.mock_with :mocha
     end
   
     it "should include the do absolutely nothing mocking adapter for all other cases" do
       Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
-      Micronaut::Configuration.new.mock_with
+      Micronaut.configuration.mock_with
     end
     
   end
@@ -37,18 +37,18 @@ describe Micronaut::Configuration do
 
   describe "#extend" do
     
-    module FocusedSupport
+    module ThatThingISentYou
       
-      def fit(desc, options={}, &block)
-        it(desc, options.update(:focused => true), &block)
+      def that_thing(desc, options={}, &block)
+        it(desc, options.update(:that_thing => true), &block)
       end
       
     end
     
-    focused "should extend the given module into each behaviour group" do
-      Micronaut.configuration.extend(FocusedSupport)
-      group = Micronaut::Behaviour.describe(FocusedSupport, 'the focused support ') { }
-      group.should respond_to(:fit)
+    focused "should extend the given module into each behaviour" do
+      Micronaut.configuration.extend(ThatThingISentYou)
+      group = Micronaut::Behaviour.describe(ThatThingISentYou, 'that thing i sent you') { }
+      group.should respond_to(:that_thing)
       remove_last_describe_from_world
     end
     
