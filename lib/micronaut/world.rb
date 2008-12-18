@@ -13,8 +13,8 @@ module Micronaut
     end
 
     def self.behaviours_to_run
-      filter_behaviours_to_run
-      number_of_behaviours_left = behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }
+      filter_behaviours
+      number_of_behaviours_left = sum_behaviours
       
       if number_of_behaviours_left.zero?
         if Micronaut.configuration.filters.empty?
@@ -30,13 +30,17 @@ module Micronaut
       behaviours
     end
     
+    def self.sum_behaviours
+      behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }
+    end
+    
     def self.add_all_examples
       behaviours.each do |behaviour|
         behaviour.examples_to_run.concat(behaviour.examples)
       end
     end
     
-    def self.filter_behaviours_to_run
+    def self.filter_behaviours
       return unless Micronaut.configuration.filters.any?
       Micronaut.configuration.filters.each do |filter|
         puts "  Run filtered using: #{filter.inspect}"
