@@ -1,7 +1,7 @@
 module Micronaut
 
   class Configuration
-    attr_reader :mock_framework, :backtrace_clean_patterns, :behaviour_filters
+    attr_reader :mock_framework, :backtrace_clean_patterns
     attr_accessor :profile_examples, :run_all_when_everything_filtered
     
     def initialize
