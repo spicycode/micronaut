@@ -37,12 +37,19 @@ module Micronaut
         @output.puts
         @failed_examples.each_with_index do |examples_with_exception, index|
           example, exception = examples_with_exception.first, examples_with_exception.last
+          padding = '    '
           @output.puts "#{index.next}) #{example}"
-          @output.puts colorise(exception.message, exception)
-          @output.puts format_backtrace(exception.backtrace)
+          # @output.puts "#{padding}failing statement:  #{read_failed_line(example.options[:caller])}\n"
+          @output.puts "#{padding}#{colorise(exception.message, exception).strip}"
+          @output.puts grey("#{padding}# #{format_backtrace(exception.backtrace)}")
           @output.puts 
           @output.flush
         end
+      end
+      
+      def read_failed_line(file_path_with_line_number)
+        file_path, line_number = file_path_with_line_number.split(':')
+        open(file_path, 'r') { |f| f.readlines[line_number.to_i + 1].strip }
       end
 
       def colorise(s, failure)
@@ -101,8 +108,8 @@ module Micronaut
 
       def format_backtrace(backtrace)
         return "" if backtrace.nil?
-        cleansed = backtrace.map { |line| backtrace_line(line) }.compact.join("\n")
-        cleansed.empty? ? backtrace : cleansed
+        cleansed = backtrace.map { |line| backtrace_line(line) }.compact
+        cleansed.empty? ? backtrace.join("\n") : cleansed.first
       end
 
       protected
