@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.3.1"
+GEM_VERSION = "0.1.3.2"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -38,7 +38,7 @@ task :install => [:package] do
 end
 
 desc "create a gemspec file"
-task :make_spec do
+task :make_gemspec do
   File.open("#{GEM}.gemspec", "w") do |file|
     file.puts spec.to_ruby
   end
