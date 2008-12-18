@@ -41,11 +41,10 @@ module Micronaut
       duration = Time.now - starts_at
 
       options.formatter.start_dump
-      options.formatter.dump_pending
       options.formatter.dump_failures
-
       # TODO: Stop passing in the last two items, the formatter knows this info
       options.formatter.dump_summary(duration, total_examples, options.formatter.failed_examples.size, options.formatter.pending_examples.size)
+      options.formatter.dump_pending
 
       options.formatter.output.sync = old_sync if options.formatter.output.respond_to? :sync=
 

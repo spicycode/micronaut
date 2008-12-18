@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 
 class Bar; end
+class Foo; end
 
 describe Micronaut::World do
 
@@ -23,13 +24,25 @@ describe Micronaut::World do
       @bg1 = Micronaut::Behaviour.describe(Bar, "find group-1", options_1) { }
       @bg2 = Micronaut::Behaviour.describe(Bar, "find group-2", options_2) { }
       @bg3 = Micronaut::Behaviour.describe(Bar, "find group-3", options_3) { }
-      @behaviours = [@bg1, @bg2, @bg3]
+      @bg4 = Micronaut::Behaviour.describe(Foo, "find these examples") do
+        it('I have no options') {}
+        it("this is awesome", :awesome => true) {}
+        it("this is too", :awesome => true) {}
+        it("not so awesome", :awesome => false) {}
+        it("I also have no options") {}
+      end
+      @behaviours = [@bg1, @bg2, @bg3, @bg4]
     end
 
     after(:all) do
       Micronaut::World.behaviours.delete(@bg1)
       Micronaut::World.behaviours.delete(@bg2)
       Micronaut::World.behaviours.delete(@bg3)
+      Micronaut::World.behaviours.delete(@bg4)
+    end
+    
+    it "should find awesome examples" do
+      Micronaut::World.find(@bg4.examples, :options => {:awesome => true}).should == [@bg4.examples[1], @bg4.examples[2]]
     end
     
     it "should find no groups when given no search parameters" do
@@ -90,6 +103,13 @@ describe Micronaut::World do
       Micronaut::World.behaviours.concat(original_groups)
     end
 
+  end
+  
+  describe "filter_behaviours_to_run" do
+    
+    it "does nothing if there are no filters"
+      # how do you spec this kind of behavior?  It feels like we need to be able to create new instances of Micronaut to properly spec 
+      # this kind of thing, so we can mock/stub or interrogate state without affecting the actual running instance.
   end
 
 end

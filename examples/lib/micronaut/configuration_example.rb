@@ -45,13 +45,26 @@ describe Micronaut::Configuration do
       
     end
     
-    focused "should extend the given module into each behaviour" do
-      Micronaut.configuration.extend(ThatThingISentYou)
-      group = Micronaut::Behaviour.describe(ThatThingISentYou, 'that thing i sent you') { }
-      group.should respond_to(:that_thing)
+    it "should extend the given module into each behaviour group" do
+      Micronaut.configuration.extend(FocusedSupport)
+      group = Micronaut::Behaviour.describe(FocusedSupport, 'the focused support ') { }
+      group.should respond_to(:fit)
       remove_last_describe_from_world
     end
     
+  end
+  
+  describe "#run_all_when_everything_filtered" do
+    
+    it "defaults to true" do
+      Micronaut::Configuration.new.run_all_when_everything_filtered.should == true
+    end
+    
+    it "can be queried with question method" do
+      config = Micronaut::Configuration.new
+      config.run_all_when_everything_filtered = false
+      config.run_all_when_everything_filtered?.should == false
+    end
   end
   
 end

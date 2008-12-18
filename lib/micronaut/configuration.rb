@@ -1,12 +1,31 @@
 module Micronaut
 
   class Configuration
-    attr_reader :mock_framework, :backtrace_clean_patterns, :behaviour_filters
+    # Destired mocking framework - expects the symbol name of the framework
+    # Currently supported: :mocha, :rr, or nothing (the default if this is not set at all)
+    attr_reader :mock_framework
+    
+    # Array of regular expressions to scrub from backtrace
+    attr_reader :backtrace_clean_patterns
+    
+    # An array of arrays to store before and after blocks
+    attr_reader :before_and_afters
+
+    # Filters allow you to exclude or include certain examples from running based on options you pass in 
+    attr_reader :filters
+    
+    # When this is true, if you have filters enabled and no examples match, all examples are added and run - defaults to true
+    attr_accessor :run_all_when_everything_filtered
+
+    # Enable profiling of the top 10 slowest examples - defaults to false
     attr_accessor :profile_examples
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
       @profile_examples = false
+      @run_all_when_everything_filtered = true
+      @filters = []
+      @before_and_afters = []
     end
     
     def cleaned_from_backtrace?(line)
@@ -75,18 +94,14 @@ module Micronaut
       end
     end
     
-    def filters
-      @filters ||= []
-    end
-    
     def add_filter(options={})
       filters << options
     end
     
-    def before_and_afters
-      @before_and_afters ||= []
+    def run_all_when_everything_filtered?
+      @run_all_when_everything_filtered
     end
-    
+          
     def before(type=:each, options={}, &block)
       before_and_afters << [:before, :each, options, block]
     end

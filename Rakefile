@@ -1,10 +1,9 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 require 'rubygems/specification'
-require 'date'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.4"
+GEM_VERSION = "0.1.4.1"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -39,7 +38,7 @@ task :install => [:package] do
 end
 
 desc "create a gemspec file"
-task :make_spec do
+task :make_gemspec do
   File.open("#{GEM}.gemspec", "w") do |file|
     file.puts spec.to_ruby
   end
@@ -72,7 +71,12 @@ namespace :micronaut do
     system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-report --sort coverage --no-validator-links #{examples.join(' ')}"
   end
   
+  desc "Delete coverage artifacts" 
+  task :clean_coverage do
+    rm_rf Dir["coverage/**/*"]
+  end
+  
 end
 
 task :default => 'micronaut:coverage'
-
+task :clobber_package => 'micronaut:clean_coverage'
