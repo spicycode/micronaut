@@ -46,9 +46,9 @@ describe Micronaut::Configuration do
     end
     
     it "should extend the given module into each behaviour group" do
-      Micronaut.configuration.extend(FocusedSupport)
-      group = Micronaut::Behaviour.describe(FocusedSupport, 'the focused support ') { }
-      group.should respond_to(:fit)
+      Micronaut.configuration.extend(ThatThingISentYou)
+      group = Micronaut::Behaviour.describe(ThatThingISentYou, 'the focused support ') { }
+      group.should respond_to(:that_thing)
       remove_last_describe_from_world
     end
     

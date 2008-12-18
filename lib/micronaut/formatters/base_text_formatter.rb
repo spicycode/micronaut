@@ -63,7 +63,7 @@ module Micronaut
       def dump_summary(duration, example_count, failure_count, pending_count)
         @output.puts "\nFinished in #{duration} seconds\n"
 
-        summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failure#{'s' unless failure_count == 1}"
+        summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failures"
         summary << ", #{pending_count} pending" if pending_count > 0  
 
         if failure_count == 0
