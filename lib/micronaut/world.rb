@@ -20,10 +20,10 @@ module Micronaut
         if Micronaut.configuration.filters.empty?
           add_all_examples
         elsif Micronaut.configuration.run_all_when_everything_filtered?
-          puts "  Filter(s) produced no matches - running everything"
+          puts "Filters produced no matches - running everything"
           add_all_examples
         else
-          puts "  Filter(s) matched no specs - your world is empty, desolate, and alone."
+          puts "Filters matched no specs - your world is empty, desolate, and alone."
         end
       end
       
@@ -43,7 +43,6 @@ module Micronaut
     def self.filter_behaviours
       return unless Micronaut.configuration.filters.any?
       Micronaut.configuration.filters.each do |filter|
-        puts "  Run filtered using: #{filter.inspect}"
         behaviours.each do |behaviour|
           behaviour.examples_to_run.concat find(behaviour.examples, filter)
         end
