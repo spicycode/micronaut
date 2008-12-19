@@ -68,7 +68,7 @@ namespace :micronaut do
   desc "Run all examples using rcov"
   task :coverage do
     examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-    result = system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-report --sort coverage --no-validator-links #{examples.join(' ')}"
+    result = system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links #{examples.join(' ')}"
     fail_build unless result
   end
   
