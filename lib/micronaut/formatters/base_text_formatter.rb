@@ -77,9 +77,9 @@ module Micronaut
         end
         
         if profile_examples?  
-          sorted_examples = @example_profiling_info.sort_by { |desc, time| time }
-          @output.puts "\nTop 10 slowest examples:\n"        
-          sorted_examples.last(10).reverse.each do |desc, time|
+          sorted_examples = @example_profiling_info.sort_by { |desc, time| time }.last(5)
+          @output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
+          sorted_examples.reverse.each do |desc, time|
             @output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
             @output.puts grey("   # #{desc.options[:caller]}")
           end
@@ -87,6 +87,11 @@ module Micronaut
         
         @output.flush
       end
+      
+      # def textmate_link_backtrace(path)
+      #   file, line = path.split(':')
+      #   "txmt://open/?url=file://#{File.expand_path(file)}&line=#{line}"
+      # end
 
       def dump_pending
         unless @pending_examples.empty?
