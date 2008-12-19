@@ -88,11 +88,15 @@ describe Micronaut::World do
 
   end
   
-  describe "filter_behaviours_to_run" do
+  describe '#filter_behaviours' do
     
-    it "does nothing if there are no filters"
-      # how do you spec this kind of behavior?  It feels like we need to be able to create new instances of Micronaut to properly spec 
-      # this kind of thing, so we can mock/stub or interrogate state without affecting the actual running instance.
+    it "should return immediately if there are no filters" do
+      filters = stub('filters', :any? => false)
+      filters.expects(:each).never
+      Micronaut.configuration.stubs(:filters).returns(filters)
+      Micronaut.world.filter_behaviours
+    end
+
   end
 
 end

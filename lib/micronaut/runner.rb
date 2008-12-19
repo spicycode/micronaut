@@ -16,6 +16,7 @@ module Micronaut
     end
 
     def load_all_behaviours(files_from_args=[])
+      # TODO: Make this horrid looking line more readable by at least some humans
       files_from_args.inject([]) { |files, arg| files.concat(Dir[arg].map { |g| Dir.glob(g) }.flatten) }.each do |file|
         load file
       end
