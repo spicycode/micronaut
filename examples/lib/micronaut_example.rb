@@ -20,4 +20,20 @@ describe Micronaut do
     
   end
   
+  describe "world" do
+    
+    it "should return the Micronaut::World instance the current run is using" do
+      Micronaut.world.should be_instance_of(Micronaut::World)
+    end
+    
+  end
+  
+  describe "InstallDirectory" do
+    
+    it "should be the expanded version of the install directory" do
+      Micronaut::InstallDirectory.should == File.expand_path(File.dirname(__FILE__) + "/../../lib")
+    end
+    
+  end
+  
 end

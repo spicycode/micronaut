@@ -17,7 +17,7 @@ describe Micronaut::Formatters::ProgressFormatter do
 
   it "should produce standard summary without pending when pending has a 0 count" do
     @formatter.dump_summary(3, 2, 1, 0)
-    @io.string.should == "\nFinished in 3 seconds\n2 examples, 1 failures\n"
+    @io.string.should =~ /\nFinished in 3 seconds\n2 examples, 1 failures\n/i
   end
   
   it "should produce standard summary" do
@@ -29,7 +29,7 @@ describe Micronaut::Formatters::ProgressFormatter do
     @formatter.example_pending(example, "message")
     @io.rewind
     @formatter.dump_summary(3, 2, 1, 1)
-    @io.string.should == "\nFinished in 3 seconds\n2 examples, 1 failures, 1 pending\n"
+    @io.string.should =~ /\nFinished in 3 seconds\n2 examples, 1 failures, 1 pending\n/i
   end
 
   it "should push green dot for passing spec" do

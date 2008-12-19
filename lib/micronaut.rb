@@ -34,4 +34,8 @@ module Micronaut
     yield configuration
   end
   
+  def self.world
+    @world ||= Micronaut::World.new
+  end
+  
 end

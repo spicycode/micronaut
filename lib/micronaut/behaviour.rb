@@ -1,10 +1,12 @@
 module Micronaut
   class Behaviour
     include Micronaut::Matchers 
-
+    
+    attr_accessor :running_example
+    
     def self.inherited(klass)
       super
-      Micronaut::World.behaviours << klass
+      Micronaut.world.behaviours << klass
     end
     
     def self.extended_modules #:nodoc:
@@ -165,6 +167,7 @@ module Micronaut
       success = true
 
       examples_to_run.each do |ex|
+        group.running_example = ex
         reporter.example_started(ex)
 
         execution_error = nil
@@ -190,6 +193,7 @@ module Micronaut
         success &= execution_error.nil?
       end
       eval_after_alls(group)
+      group.running_example = nil
       success
     end
 

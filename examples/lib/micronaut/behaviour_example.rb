@@ -172,8 +172,13 @@ describe Micronaut::Behaviour do
   end
 
   describe Foo, "describing nested behaviours" do 
+    
+    before { "before_each_1" }
+    before(:all) { "before_all_1" }
+    after { "after_each_1" }
+    after(:all) { "after_all_1" }
 
-    describe "nested describes" do
+    describe "nested describes", :just_testing => 'yep' do
     
       it "should set the described type to the parent described type if no described type is given" do
         self.class.described_type.should == Foo
@@ -182,10 +187,14 @@ describe Micronaut::Behaviour do
       it "should set the description to the first parameter if no described type is given" do
         self.class.description.should == 'nested describes'
       end
-
-      it "should have access to all of it's ancestors before blocks" 
       
-      it "should have access to all of it's ancestors after blocks"
+      it "should set the options to the last parameter if it is a hash" do
+        self.class.options.should include(:just_testing => 'yep')
+      end
+      
+      it "should have the caller in the options hash" do
+        self.class.options.should include(:caller)
+      end
 
     end
 

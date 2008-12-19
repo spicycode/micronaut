@@ -44,9 +44,11 @@ describe Micronaut::Example do
   end
   
   describe "accessing metadata within a running example" do
-    
-    it "should be able to get the current example object"
-    
+
+    it "should have a reference to itself when running" do
+      running_example.description.should == "should have a reference to itself when running"
+    end
+  
   end
   
 end

@@ -24,7 +24,7 @@ module Micronaut
     def run(args = [])
       load_all_behaviours(args)
       
-      behaviours_to_run = Micronaut::World.behaviours_to_run
+      behaviours_to_run = Micronaut.world.behaviours_to_run
 
       total_examples = behaviours_to_run.inject(0) { |sum, b| sum + b.examples_to_run.size }
 
