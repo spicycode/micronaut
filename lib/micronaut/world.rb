@@ -2,8 +2,6 @@ module Micronaut
 
   class World
     
-    attr_reader :behaviours
-    
     def behaviours
       @behaviours ||= []
     end

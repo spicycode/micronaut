@@ -1,7 +1,7 @@
 module Micronaut
   class RunnerOptions
     
-    attr_accessor :color, :formatter
+    attr_accessor :color
     
     def initialize(options={})
       @color = options.delete(:color)
