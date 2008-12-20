@@ -90,12 +90,6 @@ describe Micronaut::World do
   
   describe '#filter_behaviours' do
     
-    it "should return immediately if there are no filters" do
-      @world.stubs(:filters).returns([])
-      @world.expects(:find).never
-      @world.filter_behaviours
-    end
-
   end
 
 end

@@ -158,7 +158,7 @@ module Micronaut
     end
 
     def self.run(reporter)
-      return true if examples_to_run.empty?
+      return true if examples.size == 0
 
       reporter.add_behaviour(self)
       
@@ -166,7 +166,7 @@ module Micronaut
       eval_before_alls(group)
       success = true
 
-      examples_to_run.each do |ex|
+      examples.each do |ex|
         group.running_example = ex
         reporter.example_started(ex)
 

@@ -1,51 +1,45 @@
 module Micronaut
 
   class World
-    
-    attr_reader :behaviours, :filters
-    
+
+    attr_reader :behaviours
+
     def initialize
       @behaviours = []
-      @filters = Micronaut.configuration.filters
     end
-    
+
+    def filter
+      Micronaut.configuration.filter
+    end
+
     def behaviours_to_run
-      filter_behaviours
-      number_of_behaviours_left = sum_behaviours
-      
-      if number_of_behaviours_left.zero?
-        if filters.empty?
-          add_all_examples
-        elsif Micronaut.configuration.run_all_when_everything_filtered?
-          puts "Filters produced no matches - running everything"
-          add_all_examples
-        else
-          puts "Filters matched no specs - your world is empty, desolate, and alone."
+      return @behaviours_to_run if @behaviours_to_run
+
+      if filter
+        @behaviours_to_run = filter_behaviours
+        puts "\nRun filtered using #{filter.inspect}"
+        if @behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
+          puts "No behaviours where matched, running all"
+          # reset the behaviour list to all behaviours, and add back all examples
+          @behaviours_to_run = @behaviours
+          @behaviours.each { |b| b.examples_to_run.replace(b.examples) }
         end
-      end
-      
-      behaviours
+      else
+        @behaviours_to_run = @behaviours
+      end      
+
+      @behaviours_to_run
     end
-    
-    def sum_behaviours
-      behaviours.inject(0) { |sum, b| sum += b.examples_to_run.size }
+
+    def total_examples_to_run
+      @total_examples_to_run ||= behaviours_to_run.inject(0) { |sum, b| sum += b.examples_to_run.size }
     end
-    
-    def add_all_examples
-      behaviours.each do |behaviour|
-        behaviour.examples_to_run.concat(behaviour.examples)
-      end
-    end
-    
+
     def filter_behaviours
-      return if filters.size == 0
-      
-      filters.each do |filter|
-        behaviours.each do |behaviour|
-          behaviour.examples_to_run.concat find(behaviour.examples, filter)
-        end
-      end
-      behaviours      
+      behaviours.inject([]) do |list, b|
+        b.examples_to_run.replace(find(b.examples, filter))
+        list << (b.examples_to_run.size == 0 ? nil : b)
+      end.compact
     end
 
     def find(collection, conditions={})

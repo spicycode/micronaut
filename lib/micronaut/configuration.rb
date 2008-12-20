@@ -11,8 +11,8 @@ module Micronaut
     # An array of arrays to store before and after blocks
     attr_reader :before_and_afters
 
-    # Filters allow you to exclude or include certain examples from running based on options you pass in 
-    attr_reader :filters
+    # Adding a filter allows you to exclude or include certain examples from running based on options you pass in 
+    attr_reader :filter
     
     # When this is true, if you have filters enabled and no examples match, 
     # all examples are added and run - defaults to true
@@ -26,7 +26,7 @@ module Micronaut
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
       @profile_examples = false
       @run_all_when_everything_filtered = true
-      @filters = []
+      @filter = nil
       @before_and_afters = []
     end
     
@@ -114,8 +114,8 @@ module Micronaut
       end
     end
     
-    def add_filter(options={})
-      filters << options
+    def filter_run(options={})
+      @filter = options
     end
     
     def run_all_when_everything_filtered?
