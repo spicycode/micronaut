@@ -3,18 +3,6 @@ module Micronaut
   module Formatters
 
     class BaseTextFormatter < BaseFormatter
-      
-      def example_profiling_info
-        @example_profiling_info ||= []
-      end
-      
-      def pending_examples
-        @pending_examples ||= []
-      end
-      
-      def failed_examples
-        @failed_examples ||= []
-      end
             
       def example_passed(example)
         super
@@ -49,11 +37,6 @@ module Micronaut
           output.puts 
           output.flush
         end
-      end
-      
-      def read_failed_line(file_path_with_line_number)
-        file_path, line_number = file_path_with_line_number.split(':')
-        open(file_path, 'r') { |f| f.readlines[line_number.to_i + 1].strip }
       end
 
       def colorise(s, failure)
@@ -115,20 +98,7 @@ module Micronaut
         end
       end
 
-      def format_backtrace(backtrace)
-        return "" if backtrace.nil?
-        cleansed = backtrace.map { |line| backtrace_line(line) }.compact
-        cleansed.empty? ? backtrace.join("\n") : cleansed.first
-      end
-
       protected
-
-      def backtrace_line(line)
-        return nil if configuration.cleaned_from_backtrace?(line)
-        line.sub!(/\A([^:]+:\d+)$/, '\\1')
-        return nil if line == '-e:1'
-        line
-      end
 
       def color(text, color_code)
         return text unless color_enabled?

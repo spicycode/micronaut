@@ -31,6 +31,18 @@ module Micronaut
       def total_example_pending
         @total_example_pending
       end
+      
+      def example_profiling_info
+        @example_profiling_info ||= []
+      end
+      
+      def pending_examples
+        @pending_examples ||= []
+      end
+      
+      def failed_examples
+        @failed_examples ||= []
+      end
 
       # This method is invoked before any examples are run, right after
       # they have all been collected. This can be useful for special
@@ -95,6 +107,27 @@ module Micronaut
       # This method is invoked at the very end. Allows the formatter to clean up, like closing open streams.
       def close
       end
+      
+      def format_backtrace(backtrace)
+        return "" if backtrace.nil?
+        cleansed = backtrace.map { |line| backtrace_line(line) }.compact
+        cleansed.empty? ? backtrace.join("\n") : cleansed.first
+      end
+      
+      protected
+
+      def backtrace_line(line)
+        return nil if configuration.cleaned_from_backtrace?(line)
+        line.sub!(/\A([^:]+:\d+)$/, '\\1')
+        return nil if line == '-e:1'
+        line
+      end
+      
+      def read_failed_line(file_path_with_line_number)
+        file_path, line_number = file_path_with_line_number.split(':')
+        open(file_path, 'r') { |f| f.readlines[line_number.to_i + 1].strip }
+      end
+      
     end
     
   end
