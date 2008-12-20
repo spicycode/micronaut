@@ -19,17 +19,12 @@ module Micronaut
       Micronaut.configuration.formatter
     end
     
-    # This method takes command line args like examples/**/*_example.rb and
-    # uses globbing to grab all the files specified and load them
-    def load_all_behaviours(files_from_args=[])
-      # TODO: Make this horrid looking line more readable by at least some humans
-      files_from_args.inject([]) { |files, arg| files.concat(Dir[arg].map { |g| Dir.glob(g) }.flatten) }.each do |file|
-        load file
-      end
+    def require_all_behaviours(files_from_args=[])
+      files_from_args.each { |file| require file }
     end
     
     def run(args = [])
-      load_all_behaviours(args)
+      require_all_behaviours(args)
       
       behaviours_to_run = Micronaut.world.behaviours_to_run
 

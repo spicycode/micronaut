@@ -2,12 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 
 describe Micronaut::Behaviour do
 
-  class Foo
-
-  end  
-
   def empty_behaviour_group
-    group = Micronaut::Behaviour.describe(Foo, 'Empty Behaviour Group') { }
+    group = Micronaut::Behaviour.describe(Object, 'Empty Behaviour Group') { }
     remove_last_describe_from_world
   end
 
@@ -28,7 +24,7 @@ describe Micronaut::Behaviour do
       end
 
       it "should call to_s on the first parameter in case it is a constant" do
-        Micronaut::Behaviour.describe(Foo) { }.name.should == 'Foo'
+        Micronaut::Behaviour.describe(Object) { }.name.should == 'Object'
       end
 
     end
@@ -36,7 +32,7 @@ describe Micronaut::Behaviour do
     describe '#described_type' do
 
       it "should be the first parameter when it is a constant" do
-        Micronaut::Behaviour.describe(Foo) { }.described_type.should == Foo
+        Micronaut::Behaviour.describe(Object) { }.described_type.should == Object
       end
 
       it "should be nil when the first parameter is a string" do
@@ -48,11 +44,11 @@ describe Micronaut::Behaviour do
     describe '#description' do
 
       it "should expose the second parameter as description" do
-        Micronaut::Behaviour.describe(Foo, "my desc") { }.description.should == 'my desc'
+        Micronaut::Behaviour.describe(Object, "my desc") { }.description.should == 'my desc'
       end
 
       it "should allow the second parameter to be nil" do
-        Micronaut::Behaviour.describe(Foo, nil) { }.description.size.should == 0
+        Micronaut::Behaviour.describe(Object, nil) { }.description.size.should == 0
       end
 
     end
@@ -60,11 +56,11 @@ describe Micronaut::Behaviour do
     describe '#options' do
 
       it "should expose the third parameter as options" do
-        Micronaut::Behaviour.describe(Foo, nil, 'foo' => 'bar') { }.options.should == { "foo" => 'bar' }
+        Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.options.should == { "foo" => 'bar' }
       end
 
       it "should be an empty hash if no options are supplied" do
-        Micronaut::Behaviour.describe(Foo, nil) { }.options.should == {}
+        Micronaut::Behaviour.describe(Object, nil) { }.options.should == {}
       end
 
     end
@@ -171,29 +167,20 @@ describe Micronaut::Behaviour do
 
   end
 
-  describe Foo, "describing nested behaviours" do 
-    
-    before { "before_each_1" }
-    before(:all) { "before_all_1" }
-    after { "after_each_1" }
-    after(:all) { "after_all_1" }
+  describe Object, "describing nested behaviours" do 
 
-    describe "nested describes", :just_testing => 'yep' do
+    describe "A sample nested describe", :just_testing => 'yep' do
     
-      it "should set the described type to the parent described type if no described type is given" do
-        self.class.described_type.should == Foo
+      it "should set the described type to the constant Object" do
+        running_example.behaviour.described_type.should == Object
       end
       
-      it "should set the description to the first parameter if no described type is given" do
-        self.class.description.should == 'nested describes'
+      it "should set the description to 'A sample nested describe'" do
+        running_example.behaviour.description.should == 'A sample nested describe'
       end
       
-      it "should set the options to the last parameter if it is a hash" do
-        self.class.options.should include(:just_testing => 'yep')
-      end
-      
-      it "should have the caller in the options hash" do
-        self.class.options.should include(:caller)
+      it "should have :just_testing => 'yep' in the options" do
+        running_example.behaviour.options.should include(:just_testing => 'yep')
       end
 
     end

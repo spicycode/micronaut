@@ -2,6 +2,7 @@ lib_path = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 
 require 'micronaut'
+require 'rubygems'
 gem :mocha
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
@@ -34,8 +35,8 @@ end
 Micronaut.configure do |config|
   config.mock_with :mocha
   config.color_enabled = use_color?
-  config.formatter = :documentation
+  config.formatter = :progress
   config.profile_examples = true
-  config.add_filter :options => { :focused => true }
+  # config.add_filter :options => { :focused => true }
   config.autorun!
 end
