@@ -15,15 +15,15 @@ describe Micronaut::Formatters::ProgressFormatter do
   end
 
   it "should produce standard summary without pending when pending has a 0 count" do
-    @formatter.dump_summary(3, 2, 1, 0)
-    @output.string.should =~ /Finished in 3 seconds\n2 examples, 1 failures/i
+    @formatter.dump_summary(3, 2)
+    @output.string.should =~ /Finished in 3 seconds\n2 examples/i
   end
   
   it "should produce standard summary" do
     @formatter.example_pending(running_example, "message")
     @output.rewind
-    @formatter.dump_summary(3, 2, 1, 1)
-    @output.string.should =~ /Finished in 3 seconds\n2 examples, 1 failures, 1 pending/i
+    @formatter.dump_summary(3, 2)
+    @output.string.should =~ /Finished in 3 seconds\n2 examples/i
   end
   
   describe "when color is enabled" do

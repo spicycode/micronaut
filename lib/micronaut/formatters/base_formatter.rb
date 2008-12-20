@@ -97,7 +97,7 @@ module Micronaut
       end
 
       # This method is invoked after the dumping of examples and failures.
-      def dump_summary(duration, example_count, failure_count, pending_count)
+      def dump_summary(duration, example_count)
       end
 
       # This gets invoked after the summary if option is set to do so.

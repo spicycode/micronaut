@@ -37,6 +37,6 @@ Micronaut.configure do |config|
   config.color_enabled = use_color?
   config.formatter = :progress
   config.profile_examples = false
-  config.filter_run :options => { :focused => true, :using_mocks => true }
+  config.filter_run :options => { :focused => true }
   config.autorun!
 end

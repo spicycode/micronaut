@@ -166,7 +166,7 @@ module Micronaut
       eval_before_alls(group)
       success = true
 
-      examples.each do |ex|
+      examples_to_run.each do |ex|
         group.running_example = ex
         reporter.example_started(ex)
 

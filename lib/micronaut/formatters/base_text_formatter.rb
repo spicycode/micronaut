@@ -47,7 +47,10 @@ module Micronaut
         end
       end
 
-      def dump_summary(duration, example_count, failure_count, pending_count)
+      def dump_summary(duration, example_count)
+        failure_count = failed_examples.size
+        pending_count = pending_examples.size
+
         output.puts "\nFinished in #{duration} seconds\n"
 
         summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failures"
