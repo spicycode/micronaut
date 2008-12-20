@@ -4,8 +4,9 @@ describe Micronaut::Configuration do
 
   describe "#mock_with" do
     
-    it "should include the mocha adapter when called with :mocha" do
-      Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithMocha)
+    it "should require and include the mocha adapter when called with :mocha" do
+      Micronaut.configuration.expects(:require).with('micronaut/mocking/with_mocha')
+      Micronaut::Behaviour.expects(:send)
       Micronaut.configuration.mock_with :mocha
     end
   

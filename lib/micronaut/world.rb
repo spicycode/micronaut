@@ -2,14 +2,13 @@ module Micronaut
 
   class World
     
-    def behaviours
-      @behaviours ||= []
+    attr_reader :behaviours, :filters
+    
+    def initialize
+      @behaviours = []
+      @filters = Micronaut.configuration.filters
     end
     
-    def filters
-      Micronaut.configuration.filters
-    end
-
     def behaviours_to_run
       filter_behaviours
       number_of_behaviours_left = sum_behaviours

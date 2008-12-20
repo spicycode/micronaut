@@ -15,12 +15,10 @@ describe Micronaut::Matchers do
     end
 
     it "should fail if target does not respond to #has_sym?" do
-      lambda {
-        Object.new.should have_key(:a)
-      }.should raise_error(NoMethodError)
+      lambda { Object.new.should have_key(:a) }.should raise_error(NoMethodError)
     end
   
-    it "should reraise an exception thrown in #has_sym?(*args)" do
+    it "should re-raise an exception thrown in #has_sym?(*args)" do
       o = Object.new
       def o.has_sym?(*args)
         raise "Funky exception"

@@ -11,7 +11,7 @@ describe Micronaut::Formatters::ProgressFormatter do
 
   it "should produce line break on start dump" do
     @formatter.start_dump
-    @output.string.should eql("\n")
+    @output.string.should == "\n"
   end
 
   it "should produce standard summary without pending when pending has a 0 count" do

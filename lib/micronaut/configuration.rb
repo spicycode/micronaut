@@ -54,7 +54,7 @@ module Micronaut
     end
     
     def autorun!
-      Micronaut::Runner.autorun unless Micronaut::Runner.installed_at_exit?      
+      Micronaut::Runner.autorun
     end
     
     # Determines whether or not any output should include ANSI color codes,
