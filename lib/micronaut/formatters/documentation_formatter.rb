@@ -5,7 +5,7 @@ module Micronaut
 
       attr_reader :previous_nested_behaviours
 
-      def initialize(options, output_to)
+      def initialize
         super
         @previous_nested_behaviours = []
       end
@@ -33,11 +33,12 @@ module Micronaut
           "#{current_indentation}#{example.description} (ERROR)"
         end
 
-        @output.puts(expectation_not_met ? red(message) : magenta(message))
-        @output.flush
+        output.puts(expectation_not_met ? red(message) : magenta(message))
+        output.flush
       end
 
       def example_passed(example)
+        super
         output.puts green("#{current_indentation}#{example.description}")
         output.flush
       end
