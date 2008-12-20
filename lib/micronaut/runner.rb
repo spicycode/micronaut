@@ -35,18 +35,15 @@ module Micronaut
       formatter_supports_sync = formatter.output.respond_to?(:sync=)
       old_sync, formatter.output.sync = formatter.output.sync, true if formatter_supports_sync
 
-      formatter.start(total_examples_to_run)
-
-      starts_at = Time.now
+      formatter.start(total_examples_to_run) # start the clock
+      start = Time.now
       Micronaut.world.behaviours_to_run.each do |behaviour|
         suite_success &= behaviour.run(formatter)
       end
-      duration = Time.now - starts_at
-
-      formatter.start_dump
+      formatter.start_dump(Time.now - start)
+      
       formatter.dump_failures
-      # TODO: Stop passing in the last two items, the formatter knows this info
-      formatter.dump_summary(duration, total_examples_to_run)
+      formatter.dump_summary
       formatter.dump_pending
       formatter.close
       

@@ -84,16 +84,16 @@ describe Micronaut::Formatters::BaseFormatter do
     @formatter.should have_interface_for(:example_pending).with(2).arguments
   end
 
-  it "should have start_dump as an interface with zero arguments" do
-    @formatter.should have_interface_for(:start_dump).with(0).arguments
+  it "should have start_dump as an interface with 1 arguments" do
+    @formatter.should have_interface_for(:start_dump).with(1).arguments
   end
 
   it "should have dump_failures as an interface with no arguments" do
     @formatter.should have_interface_for(:dump_failures).with(0).arguments
   end
 
-  it "should have dump_summary as an interface with 2 arguments" do
-    @formatter.should have_interface_for(:dump_summary).with(2).arguments
+  it "should have dump_summary as an interface with zero arguments" do
+    @formatter.should have_interface_for(:dump_summary).with(0).arguments
   end
 
   it "should have dump_pending as an interface with zero arguments" do

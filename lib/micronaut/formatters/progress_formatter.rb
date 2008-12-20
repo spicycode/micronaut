@@ -21,7 +21,8 @@ module Micronaut
         output.flush
       end
 
-      def start_dump
+      def start_dump(duration)
+        super
         output.puts
         output.flush
       end

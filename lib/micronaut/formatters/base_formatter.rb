@@ -2,10 +2,12 @@ module Micronaut
   module Formatters
 
     class BaseFormatter
-      attr_accessor :behaviour
+      attr_accessor :behaviour, :total_example_failed, :total_example_pending
+      attr_reader :example_count, :duration
       
       def initialize
-        @total_example_failed, @total_example_pending, @behaviour = 0, 0, nil
+        @total_example_failed, @total_example_pending, @example_count = 0, 0, 0
+        @behaviour = nil
       end
       
       def configuration
@@ -22,14 +24,6 @@ module Micronaut
       
       def color_enabled?
         configuration.color_enabled?
-      end
-      
-      def total_example_failed
-        @total_example_failed
-      end
-      
-      def total_example_pending
-        @total_example_pending
       end
       
       def example_profiling_info
@@ -51,6 +45,7 @@ module Micronaut
       # This method will only be invoked once, and the next one to be invoked
       # is #add_behaviour
       def start(example_count)
+        @example_count = example_count
       end
 
       # This method is invoked at the beginning of the execution of each behaviour.
@@ -89,7 +84,8 @@ module Micronaut
 
       # This method is invoked after all of the examples have executed. The next method
       # to be invoked after this one is #dump_failure (once for each failed example),
-      def start_dump
+      def start_dump(duration)
+        @duration = duration
       end
 
       # Dumps detailed information about each example failure.
@@ -97,7 +93,7 @@ module Micronaut
       end
 
       # This method is invoked after the dumping of examples and failures.
-      def dump_summary(duration, example_count)
+      def dump_summary
       end
 
       # This gets invoked after the summary if option is set to do so.

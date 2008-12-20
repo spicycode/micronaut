@@ -47,7 +47,7 @@ module Micronaut
         end
       end
 
-      def dump_summary(duration, example_count)
+      def dump_summary
         failure_count = failed_examples.size
         pending_count = pending_examples.size
 
