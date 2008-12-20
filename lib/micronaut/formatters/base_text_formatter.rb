@@ -63,7 +63,8 @@ module Micronaut
           output.puts red(summary)
         end
         
-        if profile_examples?  
+        # Don't print out profiled info if there are failures, it just clutters the output
+        if profile_examples? && failure_count == 0
           sorted_examples = example_profiling_info.sort_by { |desc, time| time }.last(10)
           output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
           sorted_examples.reverse.each do |desc, time|

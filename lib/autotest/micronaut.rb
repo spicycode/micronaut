@@ -38,10 +38,9 @@ class Autotest::Micronaut < Autotest
   end
 
   def make_test_cmd(files_to_test)
-    return '' if files_to_test.empty?
+    return '' if files_to_test.size == 0
     
     examples = files_to_test.keys.flatten
-    
 
     "#{ruby} #{examples.join(" ")}"
   end

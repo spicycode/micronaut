@@ -5,13 +5,17 @@ module Micronaut
     def behaviours
       @behaviours ||= []
     end
+    
+    def filters
+      Micronaut.configuration.filters
+    end
 
     def behaviours_to_run
       filter_behaviours
       number_of_behaviours_left = sum_behaviours
       
       if number_of_behaviours_left.zero?
-        if Micronaut.configuration.filters.empty?
+        if filters.empty?
           add_all_examples
         elsif Micronaut.configuration.run_all_when_everything_filtered?
           puts "Filters produced no matches - running everything"
@@ -35,8 +39,9 @@ module Micronaut
     end
     
     def filter_behaviours
-      return unless Micronaut.configuration.filters.any?
-      Micronaut.configuration.filters.each do |filter|
+      return if filters.size == 0
+      
+      filters.each do |filter|
         behaviours.each do |behaviour|
           behaviour.examples_to_run.concat find(behaviour.examples, filter)
         end
