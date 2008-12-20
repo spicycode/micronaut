@@ -1,7 +1,7 @@
 module Micronaut
 
   class Configuration
-    # Destired mocking framework - expects the symbol name of the framework
+    # Desired mocking framework - expects the symbol name of the framework
     # Currently supported: :mocha, :rr, or nothing (the default if this is not set at all)
     attr_reader :mock_framework
     
@@ -14,11 +14,13 @@ module Micronaut
     # Filters allow you to exclude or include certain examples from running based on options you pass in 
     attr_reader :filters
     
-    # When this is true, if you have filters enabled and no examples match, all examples are added and run - defaults to true
+    # When this is true, if you have filters enabled and no examples match, 
+    # all examples are added and run - defaults to true
     attr_accessor :run_all_when_everything_filtered
 
     # Enable profiling of the top 10 slowest examples - defaults to false
     attr_accessor :profile_examples
+    
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
@@ -55,16 +57,34 @@ module Micronaut
       Micronaut::Runner.autorun unless Micronaut::Runner.installed_at_exit?      
     end
     
-    def options=(new_options)
-      raise ArguementError unless new_options.is_a?(Micronaut::RunnerOptions)
-      @options = new_options
+    # Determines whether or not any output should include ANSI color codes,
+    # defaults to true
+    def color_enabled?
+      @color_enabled || true
     end
     
-    def options
-      # Do we need this?
-      @options ||= Micronaut::RunnerOptions.new(:color => true, :formatter => :documentation)
+    def color_enabled=(on_or_off)
+      @color_enabled = on_or_off
     end
     
+    # The formatter to use.  Defaults to the documentation formatter
+    def formatter=(formatter_to_use)
+      @formatter_to_use = formatter_to_use.to_s
+    end
+    
+    def formatter
+      @formatter ||= case @formatter_to_use
+                     when 'documentation'
+                       Micronaut::Formatters::DocumentationFormatter.new
+                     else
+                       Micronaut::Formatters::ProgressFormatter.new
+                     end
+    end
+    
+    def output
+      $stdout
+    end
+        
     def extra_modules
       @extra_modules ||= []
     end

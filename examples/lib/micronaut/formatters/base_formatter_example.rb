@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 describe Micronaut::Formatters::BaseFormatter do
   
   before(:all) do
-    @formatter = Micronaut::Formatters::BaseFormatter.new(nil, nil)    
+    @formatter = Micronaut::Formatters::BaseFormatter.new 
   end
 
   class HaveInterfaceMatcher

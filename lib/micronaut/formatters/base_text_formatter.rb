@@ -3,20 +3,24 @@ module Micronaut
   module Formatters
 
     class BaseTextFormatter < BaseFormatter
-      attr_reader :pending_examples, :failed_examples
-
-      def initialize(options, output_to)
-        super
-        @pending_examples = []
-        @failed_examples = []
-        @example_profiling_info = []
+      
+      def example_profiling_info
+        @example_profiling_info ||= []
+      end
+      
+      def pending_examples
+        @pending_examples ||= []
+      end
+      
+      def failed_examples
+        @failed_examples ||= []
       end
             
       def example_passed(example)
         super
         # Why && @start_time
         if profile_examples? && @start_time
-          @example_profiling_info << [example, Time.now - @start_time] 
+          example_profiling_info << [example, Time.now - @start_time] 
         end
       end
       
@@ -25,25 +29,25 @@ module Micronaut
       end
 
       def example_pending(example, message)
-        @pending_examples << [example, message]
+        pending_examples << [example, message]
       end
 
       def example_failed(example, exception)
         super
-        @failed_examples << [example, exception]
+        failed_examples << [example, exception]
       end
 
       def dump_failures
-        @output.puts
-        @failed_examples.each_with_index do |examples_with_exception, index|
+        output.puts
+        failed_examples.each_with_index do |examples_with_exception, index|
           example, exception = examples_with_exception.first, examples_with_exception.last
           padding = '    '
-          @output.puts "#{index.next}) #{example}"
-          # @output.puts "#{padding}failing statement:  #{read_failed_line(example.options[:caller])}\n"
-          @output.puts "#{padding}#{colorise(exception.message, exception).strip}"
-          @output.puts grey("#{padding}# #{format_backtrace(exception.backtrace)}")
-          @output.puts 
-          @output.flush
+          output.puts "#{index.next}) #{example}"
+          # output.puts "#{padding}failing statement:  #{read_failed_line(example.options[:caller])}\n"
+          output.puts "#{padding}#{colorise(exception.message, exception).strip}"
+          output.puts grey("#{padding}# #{format_backtrace(exception.backtrace)}")
+          output.puts 
+          output.flush
         end
       end
       
@@ -61,31 +65,31 @@ module Micronaut
       end
 
       def dump_summary(duration, example_count, failure_count, pending_count)
-        @output.puts "\nFinished in #{duration} seconds\n"
+        output.puts "\nFinished in #{duration} seconds\n"
 
         summary = "#{example_count} example#{'s' unless example_count == 1}, #{failure_count} failures"
         summary << ", #{pending_count} pending" if pending_count > 0  
 
         if failure_count == 0
           if pending_count > 0
-            @output.puts yellow(summary)
+            output.puts yellow(summary)
           else
-            @output.puts green(summary)
+            output.puts green(summary)
           end
         else
-          @output.puts red(summary)
+          output.puts red(summary)
         end
         
         if profile_examples?  
-          sorted_examples = @example_profiling_info.sort_by { |desc, time| time }.last(5)
-          @output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
+          sorted_examples = example_profiling_info.sort_by { |desc, time| time }.last(5)
+          output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
           sorted_examples.reverse.each do |desc, time|
-            @output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
-            @output.puts grey("   # #{desc.options[:caller]}")
+            output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
+            output.puts grey("   # #{desc.options[:caller]}")
           end
         end
         
-        @output.flush
+        output.flush
       end
       
       # def textmate_link_backtrace(path)
@@ -94,20 +98,20 @@ module Micronaut
       # end
 
       def dump_pending
-        unless @pending_examples.empty?
-          @output.puts
-          @output.puts "Pending:"
-          @pending_examples.each do |pending_example, message|
-            @output.puts "\n  #{pending_example.behaviour}\n  - #{pending_example.description}"
-            @output.puts grey("    # #{pending_example.options[:caller]}")
+        unless pending_examples.empty?
+          output.puts
+          output.puts "Pending:"
+          pending_examples.each do |pending_example, message|
+            output.puts "\n  #{pending_example.behaviour}\n  - #{pending_example.description}"
+            output.puts grey("    # #{pending_example.options[:caller]}")
           end
         end
-        @output.flush
+        output.flush
       end
 
       def close
-        if IO === @output && @output != $stdout
-          @output.close 
+        if IO === output && output != $stdout
+          output.close 
         end
       end
 
@@ -119,10 +123,6 @@ module Micronaut
 
       protected
 
-      def enable_color_in_output?
-        @options.enable_color_in_output?
-      end
-
       def backtrace_line(line)
         return nil if Micronaut.configuration.cleaned_from_backtrace?(line)
         line.sub!(/\A([^:]+:\d+)$/, '\\1')
@@ -131,7 +131,7 @@ module Micronaut
       end
 
       def color(text, color_code)
-        return text unless enable_color_in_output?
+        return text unless color_enabled?
         "#{color_code}#{text}\e[0m"
       end
 

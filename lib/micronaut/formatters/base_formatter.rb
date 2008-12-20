@@ -1,16 +1,35 @@
 module Micronaut
   module Formatters
-    # Baseclass for formatters that implements all required methods as no-ops. 
+
     class BaseFormatter
-      attr_accessor :behaviour, :options, :output, :total_example_failed, :total_example_pending
+      attr_accessor :behaviour
       
-      def initialize(options, output_to)
-        @options, @output = options, output_to
-        @total_example_failed, @total_example_pending = 0, 0
+      def initialize
+        @total_example_failed, @total_example_pending, @behaviour = 0, 0, nil
+      end
+      
+      def configuration
+        Micronaut.configuration
+      end
+      
+      def output
+        Micronaut.configuration.output
       end
       
       def profile_examples?
         Micronaut.configuration.profile_examples
+      end
+      
+      def color_enabled?
+        configuration.color_enabled?
+      end
+      
+      def total_example_failed
+        @total_example_failed
+      end
+      
+      def total_example_pending
+        @total_example_pending
       end
 
       # This method is invoked before any examples are run, right after

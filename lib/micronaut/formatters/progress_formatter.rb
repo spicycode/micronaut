@@ -5,25 +5,25 @@ module Micronaut
       
       def example_failed(example, exception)
         super
-        @output.print colorise('F', exception)
-        @output.flush
+        output.print colorise('F', exception)
+        output.flush
       end
 
       def example_passed(example)
         super
-        @output.print green('.')
-        @output.flush
+        output.print green('.')
+        output.flush
       end
 
       def example_pending(example, message)
         super
-        @output.print yellow('*')
-        @output.flush
+        output.print yellow('*')
+        output.flush
       end
 
       def start_dump
-        @output.puts
-        @output.flush
+        output.puts
+        output.flush
       end
 
       def method_missing(sym, *args)
