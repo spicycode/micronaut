@@ -60,7 +60,7 @@ module Micronaut
     # Determines whether or not any output should include ANSI color codes,
     # defaults to true
     def color_enabled?
-      @color_enabled || true
+      @color_enabled
     end
     
     def color_enabled=(on_or_off)

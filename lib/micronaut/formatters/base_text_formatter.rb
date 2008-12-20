@@ -81,7 +81,7 @@ module Micronaut
         end
         
         if profile_examples?  
-          sorted_examples = example_profiling_info.sort_by { |desc, time| time }.last(5)
+          sorted_examples = example_profiling_info.sort_by { |desc, time| time }.last(10)
           output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
           sorted_examples.reverse.each do |desc, time|
             output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
@@ -124,7 +124,7 @@ module Micronaut
       protected
 
       def backtrace_line(line)
-        return nil if Micronaut.configuration.cleaned_from_backtrace?(line)
+        return nil if configuration.cleaned_from_backtrace?(line)
         line.sub!(/\A([^:]+:\d+)$/, '\\1')
         return nil if line == '-e:1'
         line

@@ -27,9 +27,13 @@ def dummy_reporter
   DummyFormatter.new({}, StringIO.new)
 end
 
+def use_color?
+  !ENV.has_key?('TM_MODE')
+end
+
 Micronaut.configure do |config|
   config.mock_with :mocha
-  config.color_enabled = true
+  config.color_enabled = use_color?
   config.formatter = :progress
   config.profile_examples = true
   config.add_filter :options => { :focused => true }
