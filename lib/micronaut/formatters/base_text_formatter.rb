@@ -31,9 +31,11 @@ module Micronaut
           example, exception = examples_with_exception.first, examples_with_exception.last
           padding = '    '
           output.puts "#{index.next}) #{example}"
-          # output.puts "#{padding}failing statement:  #{read_failed_line(example.options[:caller])}\n"
-          output.puts "#{padding}#{colorise(exception.message, exception).strip}"
-          output.puts grey("#{padding}# #{format_backtrace(exception.backtrace)}")
+          output.puts "#{padding}#{colorise(exception.message, exception).strip}\n\n"
+          output.puts "#{padding}failing statement: #{read_failed_line(exception.backtrace[4]).strip}"
+          format_backtrace(exception.backtrace).each do |backtrace_info|
+            output.puts grey("#{padding}# #{backtrace_info}")
+          end
           output.puts 
           output.flush
         end

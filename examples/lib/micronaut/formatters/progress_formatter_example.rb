@@ -57,12 +57,12 @@ describe Micronaut::Formatters::ProgressFormatter do
      @output.string.should == ""
    end
    
-   it "should ensure two ':' in the first backtrace" do
+   it "should ensure ':' in the first backtrace" do
      backtrace = ["/tmp/x.rb:1", "/tmp/x.rb:2", "/tmp/x.rb:3"]
-     @formatter.format_backtrace(backtrace).should == "/tmp/x.rb:1"
+     @formatter.format_backtrace(backtrace).should == backtrace
    
      backtrace = ["/tmp/x.rb:1: message", "/tmp/x.rb:2", "/tmp/x.rb:3"]
-     @formatter.format_backtrace(backtrace).should == "/tmp/x.rb:1: message"
+     @formatter.format_backtrace(backtrace).first.should == "/tmp/x.rb:1: message"
    end
    
 end

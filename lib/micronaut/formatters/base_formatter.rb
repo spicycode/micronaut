@@ -107,7 +107,7 @@ module Micronaut
       def format_backtrace(backtrace)
         return "" if backtrace.nil?
         cleansed = backtrace.map { |line| backtrace_line(line) }.compact
-        cleansed.empty? ? backtrace.join("\n") : cleansed.first
+        cleansed.empty? ? backtrace : cleansed
       end
       
       protected
@@ -121,7 +121,7 @@ module Micronaut
       
       def read_failed_line(file_path_with_line_number)
         file_path, line_number = file_path_with_line_number.split(':')
-        open(file_path, 'r') { |f| f.readlines[line_number.to_i + 1].strip }
+        open(file_path, 'r') { |f| f.readlines[line_number.to_i - 1] }
       end
       
     end

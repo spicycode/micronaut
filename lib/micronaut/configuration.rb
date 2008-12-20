@@ -23,7 +23,7 @@ module Micronaut
     
     
     def initialize
-      @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/]
+      @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/]
       @profile_examples = false
       @run_all_when_everything_filtered = true
       @filter = nil
@@ -31,7 +31,7 @@ module Micronaut
     end
     
     def cleaned_from_backtrace?(line)
-      return true if line.starts_with?(::Micronaut::InstallDirectory)
+      return true if line =~ /#{::Micronaut::InstallDirectory}/
       
       @backtrace_clean_patterns.any? do |pattern|
         line =~ pattern
