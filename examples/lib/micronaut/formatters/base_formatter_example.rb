@@ -100,8 +100,20 @@ describe Micronaut::Formatters::BaseFormatter do
     @formatter.should have_interface_for(:dump_pending).with(0).arguments
   end
 
-  it "should have close  as an interface with zero arguments" do
+  it "should have close as an interface with zero arguments" do
     @formatter.should have_interface_for(:close).with(0).arguments
+  end
+  
+  describe 'dealing with backtrace' do
+    
+    it "should ensure ':' in the first backtrace" do
+      backtrace = ["/tmp/x.rb:1", "/tmp/x.rb:2", "/tmp/x.rb:3"]
+      @formatter.format_backtrace(backtrace).should == backtrace
+
+      backtrace = ["/tmp/x.rb:1: message", "/tmp/x.rb:2", "/tmp/x.rb:3"]
+      @formatter.format_backtrace(backtrace).first.should == "/tmp/x.rb:1: message"
+    end
+    
   end
   
 end

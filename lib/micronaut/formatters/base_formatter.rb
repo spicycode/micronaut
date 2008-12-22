@@ -119,8 +119,14 @@ module Micronaut
         line
       end
       
-      def read_failed_line(file_path_with_line_number)
-        file_path, line_number = file_path_with_line_number.split(':')
+      def read_failed_line(exception, example)
+        original_file = example.options[:caller].split(':').first.strip
+        matching_line = exception.backtrace.find do |line|
+          line.split(':').first.downcase == original_file.downcase
+        end
+        return "Unable to find matching line from backtrace" if matching_line.nil?
+        
+        file_path, line_number = matching_line.split(':')
         open(file_path, 'r') { |f| f.readlines[line_number.to_i - 1] }
       end
       
