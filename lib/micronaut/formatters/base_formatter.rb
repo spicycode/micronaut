@@ -104,9 +104,15 @@ module Micronaut
       def close
       end
       
-      def format_backtrace(backtrace)
+      def format_backtrace(backtrace, example)
         return "" if backtrace.nil?
         cleansed = backtrace.map { |line| backtrace_line(line) }.compact
+        original_file = example.behaviour.metadata[:file_path].split(':').first.strip
+        # cleansed = cleansed.select do |line|
+        #   line.split(':').first.downcase == original_file.downcase
+        # end
+        # we really just want it to remove the last line if there are more than 1 lines, as it is always
+        # junk
         cleansed.empty? ? backtrace : cleansed
       end
       

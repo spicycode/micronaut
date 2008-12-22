@@ -67,7 +67,8 @@ module Micronaut
       metadata[:described_type] = args.first.is_a?(String) ? self.superclass.described_type : args.shift
       metadata[:description] = args.shift || ''
       metadata[:name] = "#{metadata[:described_type]} #{metadata[:description]}".strip
-      
+      metadata[:describe_block] = metadata[:options].delete(:describe_block)
+      metadata[:file_path] = eval("caller(0)[0]", metadata[:describe_block].binding)
       Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
         if include_or_extend == :extend
           send(:extend, mod) unless extended_modules.include?(mod)
@@ -100,6 +101,8 @@ module Micronaut
     def self.describe(*args, &describe_block)
       raise ArgumentError if args.empty? || describe_block.nil?
       subclass('NestedLevel') do
+        args << {} unless args.last.is_a?(Hash)
+        args.last.update(:describe_block => describe_block)
         set_it_up(*args)
         module_eval(&describe_block)
       end
