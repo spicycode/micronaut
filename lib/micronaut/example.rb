@@ -14,14 +14,6 @@ module Micronaut
       options.each do |k,v|
         @metadata[k] = v
       end
-          #       
-          # if @metadata[:options].has_key?(:focused)
-          #   puts "self.inspect => #{self.inspect}"
-          #   puts "@metadata[:description] => #{@metadata[:description]}"
-          #   puts "@options.has_key?(:focused) => #{@options.has_key?(:focused)}"
-          #   puts "@metadata[:options].has_key?(:focused) => #{@metadata[:options].has_key?(:focused)}"
-          #   puts
-          # end
     end
 
     def inspect
