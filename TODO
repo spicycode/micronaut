@@ -1,2 +1,6 @@
 * Track if a behaviour inherits it's described type in metadata
 * Track example output in metadata
+* Allow turning off backtrace filter at the instance level (ie: it "does something that needs full trace", :full_trace => true do....)
+* Setup lighthouse
+* How to unhook transactional test helper stuff for unit suites with UnitRecord
+* TextMate issues (on the BAM and rob's MBP)
