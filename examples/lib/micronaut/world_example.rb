@@ -39,7 +39,7 @@ describe Micronaut::World do
     end
 
     it "should find awesome examples" do
-      @world.find(@bg4.examples, :options => {:awesome => true}).should == [@bg4.examples[1], @bg4.examples[2]]
+      @world.find(@bg4.examples, :awesome => true).should == [@bg4.examples[1], @bg4.examples[2]]
     end
     
     it "should find no groups when given no search parameters" do
@@ -62,28 +62,28 @@ describe Micronaut::World do
       @world.find(@behaviours, :description => /find group/).should == [@bg1, @bg2, @bg3]
     end
     
-    it "should find one group when searching for :options => { :foo => 1 }" do
-      @world.find(@behaviours, :options => { :foo => 1 }).should == [@bg1]
+    it "should find one group when searching for :foo => 1" do
+      @world.find(@behaviours, :foo => 1 ).should == [@bg1]
     end
     
-    it "should find one group when searching for :options => { :pending => true }" do
-      @world.find(@behaviours, :options => { :pending => true }).should == [@bg2]
+    it "should find one group when searching for :pending => true" do
+      @world.find(@behaviours, :pending => true ).should == [@bg2]
     end
 
-    it "should find one group when searching for :options => { :array => [1,2,3,4] }" do
-      @world.find(@behaviours, :options => { :array => [1,2,3,4] }).should == [@bg3]
+    it "should find one group when searching for :array => [1,2,3,4]" do
+      @world.find(@behaviours, :array => [1,2,3,4]).should == [@bg3]
     end
 
-    it "should find no group when searching for :options => { :array => [4,3,2,1] }" do
-      @world.find(@behaviours, :options => { :array => [4,3,2,1] }).should be_empty
+    it "should find no group when searching for :array => [4,3,2,1]" do
+      @world.find(@behaviours, :array => [4,3,2,1]).should be_empty
     end    
 
-    it "should find two groups when searching for :options => { :color => 'blue' }" do
-      @world.find(@behaviours, :options => { :color => 'blue' }).should == [@bg1, @bg3]
+    it "should find two groups when searching for :color => 'blue'" do
+      @world.find(@behaviours, :color => 'blue').should == [@bg1, @bg3]
     end
 
-    it "should find two groups when searching for :options => { :feature => 'reporting' }" do
-      @world.find(@behaviours, :options => { :feature => 'reporting' }).should == [@bg1, @bg2]
+    it "should find two groups when searching for :feature => 'reporting' }" do
+      @world.find(@behaviours, :feature => 'reporting').should == [@bg1, @bg2]
     end
 
   end

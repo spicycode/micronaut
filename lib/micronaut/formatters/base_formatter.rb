@@ -126,7 +126,7 @@ module Micronaut
       end
       
       def read_failed_line(exception, example)
-        original_file = example.options[:caller].split(':').first.strip
+        original_file = example.metadata[:caller].split(':').first.strip
         matching_line = exception.backtrace.find do |line|
           line.split(':').first.downcase == original_file.downcase
         end

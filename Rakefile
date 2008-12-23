@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.5.2"
+GEM_VERSION = "0.1.6"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
@@ -44,48 +44,45 @@ task :make_gemspec do
   end
 end
 
-namespace :micronaut do
-  
-  desc 'Run all examples'
-  task :examples do
-    examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-    ruby examples.join(" ")
-  end
-  
-  desc "List files that don't have examples"
-  task :untested do
-    code = Dir["lib/**/*.rb"].map { |g| Dir.glob(g) }.flatten
-    examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-    examples.map! { |f| f =~ /examples\/(.*)_example/; "#{$1}.rb" }
-    missing_examples = (code - examples)
-    puts
-    puts "The following files seem to be missing their examples:"
-    missing_examples.each do |missing|
-      puts "  #{missing}"
-    end
-  end
-  
-  desc "Run all examples using rcov"
-  task :coverage do
-    examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-    result = system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links #{examples.join(' ')}"
-    fail_build unless result
-  end
-  
-  def fail_build
-    puts
-    puts "-" * 79
-    puts "Build Failed"
-    puts "-" * 79
-    abort
-  end
-    
-  desc "Delete coverage artifacts" 
-  task :clean_coverage do
-    rm_rf Dir["coverage/**/*"]
-  end
-  
+desc 'Run all examples'
+task :examples do
+  examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
+  ruby examples.join(" ")
 end
 
-task :default => 'micronaut:coverage'
-task :clobber_package => 'micronaut:clean_coverage'
+desc "List files that don't have examples"
+task :untested do
+  code = Dir["lib/**/*.rb"].map { |g| Dir.glob(g) }.flatten
+  examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
+  examples.map! { |f| f =~ /examples\/(.*)_example/; "#{$1}.rb" }
+  missing_examples = (code - examples)
+  puts
+  puts "The following files seem to be missing their examples:"
+  missing_examples.each do |missing|
+    puts "  #{missing}"
+  end
+end
+
+desc "Run all examples using rcov"
+task :coverage do
+  examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
+  result = system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links #{examples.join(' ')}"
+  fail_build unless result
+end
+
+def fail_build
+  puts
+  puts "-" * 79
+  puts "Build Failed"
+  puts "-" * 79
+  abort
+end
+
+desc "Delete coverage artifacts" 
+task :clean_coverage do
+  rm_rf Dir["coverage/**/*"]
+end
+
+
+task :default => 'coverage'
+task :clobber_package => 'clean_coverage'

@@ -9,12 +9,12 @@ describe Micronaut::Behaviour do
 
   describe "describing behaviour with #describe" do
 
-    it "should raise an ArgumentError if no name is given" do
-      lambda { Micronaut::Behaviour.describe() {} }.should raise_error(ArgumentError)
+    example "an ArgumentError is raised if no name is given" do
+      lambda { Micronaut::Behaviour.describe() {} }.should raise_error(ArgumentError, "No arguments given.  You must a least supply a type or description")
     end
 
-    it "should raise an ArgumentError if no block is given" do
-      lambda { Micronaut::Behaviour.describe('foo') }.should raise_error(ArgumentError)
+    example "an ArgumentError is raised if no block is given" do
+      lambda { Micronaut::Behaviour.describe('foo') }.should raise_error(ArgumentError, "You must supply a block when calling describe")
     end
 
     describe '#name' do
@@ -46,23 +46,19 @@ describe Micronaut::Behaviour do
       it "should expose the second parameter as description" do
         Micronaut::Behaviour.describe(Object, "my desc") { }.description.should == 'my desc'
       end
-
+      
       it "should allow the second parameter to be nil" do
         Micronaut::Behaviour.describe(Object, nil) { }.description.size.should == 0
       end
 
     end
 
-    describe '#options' do
-
-      it "should expose the third parameter as options" do
-        Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.options.should == { "foo" => 'bar' }
+    describe '#metadata' do
+      
+      it "should add the third parameter to the metadata" do
+        Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.metadata.should include({ "foo" => 'bar' })
       end
-
-      it "should be an empty hash if no options are supplied" do
-        Micronaut::Behaviour.describe(Object, nil) { }.options.should == {}
-      end
-
+      
     end
 
     describe "adding before and after hooks" do
@@ -179,8 +175,8 @@ describe Micronaut::Behaviour do
         running_example.behaviour.description.should == 'A sample nested describe'
       end
       
-      it "should have :just_testing => 'yep' in the options" do
-        running_example.behaviour.options.should include(:just_testing => 'yep')
+      it "should have :just_testing => 'yep' in the metadata" do
+        running_example.behaviour.metadata.should include(:just_testing => 'yep')
       end
 
     end

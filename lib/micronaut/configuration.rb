@@ -20,8 +20,7 @@ module Micronaut
 
     # Enable profiling of the top 10 slowest examples - defaults to false
     attr_accessor :profile_examples
-    
-    
+      
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/]
       @profile_examples = false
@@ -30,6 +29,10 @@ module Micronaut
       @before_and_afters = []
     end
     
+    def alias_example_to(new_name, extra_options={})
+      Micronaut::Behaviour.alias_example_to(new_name, extra_options)
+    end
+        
     def cleaned_from_backtrace?(line)
       return true if line =~ /#{::Micronaut::InstallDirectory}/
       

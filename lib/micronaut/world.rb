@@ -37,7 +37,7 @@ module Micronaut
 
     def filter_behaviours
       behaviours.inject([]) do |list, b|
-        b.examples_to_run.replace(find(b.examples, filter))
+        b.examples_to_run.replace(find(b.examples, filter).uniq)
         list << (b.examples_to_run.size == 0 ? nil : b)
       end.compact
     end

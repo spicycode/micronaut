@@ -46,14 +46,24 @@ module Micronaut
       afters[type] << [options, block]
     end
 
-    def self.it(desc=nil, options={}, &block)
+    def self.example(desc=nil, options={}, &block)
       examples << Micronaut::Example.new(self, desc, options.update(:caller => caller[0]), block)
     end
-    
-    def self.focused(desc=nil, options={}, &block)
-      it(desc, options.update(:focused => true), &block)
-    end
 
+    def self.alias_example_to(new_alias, extra_options={})
+      new_alias = <<-END_RUBY
+                    def self.#{new_alias}(desc=nil, options={}, &block)
+                      updated_options = options.update(:caller => caller[0])
+                      updated_options.update(#{extra_options.inspect})
+                      examples << Micronaut::Example.new(self, desc, updated_options, block)
+                    end
+                  END_RUBY
+      module_eval(new_alias, __FILE__, __LINE__)
+    end
+    
+    alias_example_to :it
+    alias_example_to :focused, :focused => true
+ 
     def self.examples
       @_examples ||= []
     end
@@ -62,13 +72,23 @@ module Micronaut
       @_examples_to_run ||= []
     end
 
+    # This method is friggin' gigantic, and must be stopped
+    # 
     def self.set_it_up(*args)
-      metadata[:options] = args.last.is_a?(Hash) ? args.pop : {}
-      metadata[:described_type] = args.first.is_a?(String) ? self.superclass.described_type : args.shift
-      metadata[:description] = args.shift || ''
-      metadata[:name] = "#{metadata[:described_type]} #{metadata[:description]}".strip
-      metadata[:describe_block] = metadata[:options].delete(:describe_block)
-      metadata[:file_path] = eval("caller(0)[0]", metadata[:describe_block].binding)
+      @metadata = {}
+      extra_metadata = args.last.is_a?(Hash) ? args.pop : {}
+      if args.first.is_a?(String)
+        @metadata[:described_type] = self.superclass.metadata && self.superclass.metadata[:described_type]
+      else
+        @metadata[:described_type] = args.shift
+      end
+      @metadata[:description] = args.shift || ''
+      @metadata[:name] = "#{@metadata[:described_type]} #{@metadata[:description]}".strip
+      extra_metadata.each do |k,v|
+        @metadata[k] = v unless @metadata.has_key?(k)
+      end
+      @metadata[:file_path] = eval("caller(0)[0]", @metadata[:describe_block].binding)
+
       Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
         if include_or_extend == :extend
           send(:extend, mod) unless extended_modules.include?(mod)
@@ -79,27 +99,25 @@ module Micronaut
     end
 
     def self.metadata
-      @_metadata ||= {}
+      @metadata
     end
 
     def self.name
-      metadata[:name]
+      @metadata[:name]
     end
 
     def self.described_type
-      metadata[:described_type]
+      @metadata[:described_type]
     end
 
     def self.description
-      metadata[:description]
+      @metadata[:description]
     end
-
-    def self.options
-      metadata[:options]
-    end
-
+   
     def self.describe(*args, &describe_block)
-      raise ArgumentError if args.empty? || describe_block.nil?
+      raise(ArgumentError, "No arguments given.  You must a least supply a type or description") if args.empty? 
+      raise(ArgumentError, "You must supply a block when calling describe") if describe_block.nil?
+      
       subclass('NestedLevel') do
         args << {} unless args.last.is_a?(Hash)
         args.last.update(:describe_block => describe_block)

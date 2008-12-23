@@ -74,9 +74,9 @@ module Micronaut
         if profile_examples? && failure_count == 0
           sorted_examples = example_profiling_info.sort_by { |desc, time| time }.last(10)
           output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
-          sorted_examples.reverse.each do |desc, time|
-            output.puts "  (#{sprintf("%.7f", time)} seconds) #{desc}"
-            output.puts grey("   # #{desc.options[:caller]}")
+          sorted_examples.reverse.each do |ex, time|
+            output.puts "  (#{sprintf("%.7f", time)} seconds) #{ex}"
+            output.puts grey("   # #{ex.metadata[:caller]}")
           end
         end
         
