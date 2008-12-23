@@ -75,19 +75,20 @@ module Micronaut
     # This method is friggin' gigantic, and must be stopped
     # 
     def self.set_it_up(*args)
-      @metadata = {}
+      @metadata = {:behaviour => {}}
       extra_metadata = args.last.is_a?(Hash) ? args.pop : {}
       if args.first.is_a?(String)
-        @metadata[:described_type] = self.superclass.metadata && self.superclass.metadata[:described_type]
+        @metadata[:behaviour][:describes] = self.superclass.metadata && self.superclass.metadata[:behaviour][:describes]
       else
-        @metadata[:described_type] = args.shift
+        @metadata[:behaviour][:describes] = args.shift
       end
-      @metadata[:description] = args.shift || ''
-      @metadata[:name] = "#{@metadata[:described_type]} #{@metadata[:description]}".strip
-      extra_metadata.each do |k,v|
-        @metadata[k] = v unless @metadata.has_key?(k)
-      end
-      @metadata[:file_path] = eval("caller(0)[0]", @metadata[:describe_block].binding)
+      @metadata[:behaviour][:description] = args.shift || ''
+      @metadata[:behaviour][:name] = "#{describes} #{description}".strip
+      @metadata[:behaviour][:block] = extra_metadata.delete(:behaviour_block)
+
+      extra_metadata.each { |k, v| @metadata[k] = v unless @metadata.has_key?(k) }
+
+      @metadata[:behaviour][:file_path] = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
 
       Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
         if include_or_extend == :extend
@@ -103,26 +104,26 @@ module Micronaut
     end
 
     def self.name
-      @metadata[:name]
+      @metadata[:behaviour][:name]
     end
 
-    def self.described_type
-      @metadata[:described_type]
+    def self.describes
+      @metadata[:behaviour][:describes]
     end
 
     def self.description
-      @metadata[:description]
+      @metadata[:behaviour][:description]
     end
    
-    def self.describe(*args, &describe_block)
+    def self.describe(*args, &behaviour_block)
       raise(ArgumentError, "No arguments given.  You must a least supply a type or description") if args.empty? 
-      raise(ArgumentError, "You must supply a block when calling describe") if describe_block.nil?
+      raise(ArgumentError, "You must supply a block when calling describe") if behaviour_block.nil?
       
       subclass('NestedLevel') do
         args << {} unless args.last.is_a?(Hash)
-        args.last.update(:describe_block => describe_block)
+        args.last.update(:behaviour_block => behaviour_block)
         set_it_up(*args)
-        module_eval(&describe_block)
+        module_eval(&behaviour_block)
       end
     end
 

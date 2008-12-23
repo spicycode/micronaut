@@ -46,20 +46,20 @@ describe Micronaut::World do
       @world.find([]).should == []
     end
   
-    it "should find three groups when searching for :described_type => Bar" do
-      @world.find(@behaviours, :described_type => Bar).should == [@bg1, @bg2, @bg3]
+    it "should find three groups when searching for :behaviour_describes => Bar" do
+      @world.find(@behaviours, :behaviour => { :describes => Bar }).should == [@bg1, @bg2, @bg3]
     end
     
     it "should find one group when searching for :description => 'find group-1'" do
-      @world.find(@behaviours, :description => 'find group-1').should == [@bg1]
+      @world.find(@behaviours, :behaviour => { :description => 'find group-1' }).should == [@bg1]
     end
     
     it "should find two groups when searching for :description => lambda { |v| v.include?('-1') || v.include?('-3') }" do
-      @world.find(@behaviours, :description => lambda { |v| v.include?('-1') || v.include?('-3') }).should == [@bg1, @bg3]
+      @world.find(@behaviours, :behaviour => { :description => lambda { |v| v.include?('-1') || v.include?('-3') } }).should == [@bg1, @bg3]
     end
     
     it "should find three groups when searching for :description => /find group/" do
-      @world.find(@behaviours, :description => /find group/).should == [@bg1, @bg2, @bg3]
+      @world.find(@behaviours, :behaviour => { :description => /find group/ }).should == [@bg1, @bg2, @bg3]
     end
     
     it "should find one group when searching for :foo => 1" do
@@ -86,10 +86,6 @@ describe Micronaut::World do
       @world.find(@behaviours, :feature => 'reporting').should == [@bg1, @bg2]
     end
 
-  end
-  
-  describe '#filter_behaviours' do
-    
   end
 
 end

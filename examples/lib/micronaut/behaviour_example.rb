@@ -29,14 +29,14 @@ describe Micronaut::Behaviour do
 
     end
 
-    describe '#described_type' do
+    describe '#describes' do
 
       it "should be the first parameter when it is a constant" do
-        Micronaut::Behaviour.describe(Object) { }.described_type.should == Object
+        Micronaut::Behaviour.describe(Object) { }.describes.should == Object
       end
 
       it "should be nil when the first parameter is a string" do
-        Micronaut::Behaviour.describe("i'm a computer") { }.described_type.should be_nil
+        Micronaut::Behaviour.describe("i'm a computer") { }.describes.should be_nil
       end
 
     end
@@ -168,7 +168,7 @@ describe Micronaut::Behaviour do
     describe "A sample nested describe", :just_testing => 'yep' do
     
       it "should set the described type to the constant Object" do
-        running_example.behaviour.described_type.should == Object
+        running_example.behaviour.describes.should == Object
       end
       
       it "should set the description to 'A sample nested describe'" do

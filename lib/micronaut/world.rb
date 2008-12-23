@@ -43,21 +43,21 @@ module Micronaut
     end
 
     def find(collection, conditions={})
-      return [] if conditions.empty?
-
       collection.select do |item|
-        conditions.all? do |key, value|
-          case value
-          when Hash
-            value.all? { |k, v| item.metadata[key][k] == v }
-          when Regexp
-            item.metadata[key] =~ value
-          when Proc
-            value.call(item.metadata[key]) rescue false
-          else
-            item.metadata[key] == value
-          end
-        end
+        conditions.all? { |filter_on, filter| apply_condition(filter_on, filter, item.metadata) }
+      end
+    end
+
+    def apply_condition(filter_on, filter, metadata)
+      case filter
+      when Hash
+        filter.all? { |k, v| apply_condition(k, v, metadata[filter_on]) }
+      when Regexp
+        metadata[filter_on] =~ filter
+      when Proc
+        filter.call(metadata[filter_on]) rescue false
+      else
+        metadata[filter_on] == filter
       end
     end
 

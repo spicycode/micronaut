@@ -6,14 +6,9 @@ module Micronaut
   
     def initialize(behaviour, desc, options, example_block=nil)
       @behaviour, @description, @options, @example_block = behaviour, desc, options, example_block
-      @metadata = {}
-      behaviour.metadata.each do |k, v|
-        @metadata[k] = v
-      end
+      @metadata = @behaviour.metadata.dup
       @metadata[:description] = description
-      options.each do |k,v|
-        @metadata[k] = v
-      end
+      @metadata.update(options)
     end
 
     def inspect

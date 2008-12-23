@@ -107,7 +107,7 @@ module Micronaut
       def format_backtrace(backtrace, example)
         return "" if backtrace.nil?
         cleansed = backtrace.map { |line| backtrace_line(line) }.compact
-        original_file = example.behaviour.metadata[:file_path].split(':').first.strip
+        original_file = example.behaviour.metadata[:behaviour][:file_path].split(':').first.strip
         # cleansed = cleansed.select do |line|
         #   line.split(':').first.downcase == original_file.downcase
         # end
@@ -131,9 +131,12 @@ module Micronaut
           line.split(':').first.downcase == original_file.downcase
         end
         return "Unable to find matching line from backtrace" if matching_line.nil?
-        
         file_path, line_number = matching_line.split(':')
-        open(file_path, 'r') { |f| f.readlines[line_number.to_i - 1] }
+        if File.exist?(file_path)
+          open(file_path, 'r') { |f| f.readlines[line_number.to_i - 1] }
+        else
+          "Unable to find #{file_path} to read failed line"
+        end
       end
       
     end
