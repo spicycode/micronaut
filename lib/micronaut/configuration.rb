@@ -102,21 +102,12 @@ module Micronaut
     
     def find_modules(group)
       extra_modules.select do |include_or_extend, mod, options|
-        options.all? do |key, value|
-          case value
-          when Hash
-            value.all? { |k, v| group.metadata[key][k] == v }
-          when Regexp
-            group.metadata[key] =~ value
-          when Proc
-            value.call(group.metadata[key]) rescue false
-          else
-            group.metadata[key] == value
-          end
+        options.all? do |filter_on, filter|
+          Micronaut.world.apply_condition(filter_on, filter, group.metadata)
         end
       end
     end
-    
+      
     def filter_run(options={})
       @filter = options
     end
@@ -135,18 +126,10 @@ module Micronaut
     
     def find_before_or_after(desired_type, desired_each_or_all, group)
       before_and_afters.select do |type, each_or_all, options, block|
-        type == desired_type && each_or_all == desired_each_or_all &&
-        options.all? do |key, value|
-          case value
-          when Hash
-            value.all? { |k, v| group.metadata[key][k] == v }
-          when Regexp
-            group.metadata[key] =~ value
-          when Proc
-            value.call(group.metadata[key]) rescue false
-          else
-            group.metadata[key] == value
-          end
+        type == desired_type && 
+        each_or_all == desired_each_or_all &&
+        options.all? do |filter_on, filter|
+          Micronaut.world.apply_condition(filter_on, filter, group.metadata)
         end
       end.map { |type, each_or_all, options, block| block }
     end
