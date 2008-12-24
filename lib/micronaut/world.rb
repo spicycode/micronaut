@@ -19,7 +19,7 @@ module Micronaut
         @behaviours_to_run = filter_behaviours
         puts "\nRun filtered using #{filter.inspect}"
         if @behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
-          puts "No behaviours where matched, running all"
+          puts "No behaviours were matched, running all"
           # reset the behaviour list to all behaviours, and add back all examples
           @behaviours_to_run = @behaviours
           @behaviours.each { |b| b.examples_to_run.replace(b.examples) }
