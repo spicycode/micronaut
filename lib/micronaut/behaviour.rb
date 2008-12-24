@@ -85,11 +85,14 @@ module Micronaut
       @metadata[:behaviour][:description] = args.shift || ''
       @metadata[:behaviour][:name] = "#{describes} #{description}".strip
       @metadata[:behaviour][:block] = extra_metadata.delete(:behaviour_block)
-
-      extra_metadata.each { |k, v| @metadata[k] = v unless @metadata.has_key?(k) }
-
       @metadata[:behaviour][:file_path] = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
+      
+      extra_metadata.delete(:behaviour) # Remove it if it is present
+      @metadata.update(extra_metadata)
 
+      # should this be here?  I think it should be in the runner, the only possible 
+      # point of contention is whether or not inserted/extended modules should be 
+      # allowed to participate in adding metadata.  If they can, then earlier is better
       Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
         if include_or_extend == :extend
           send(:extend, mod) unless extended_modules.include?(mod)
