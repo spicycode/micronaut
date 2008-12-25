@@ -50,6 +50,8 @@ module Micronaut
     end
 
     def apply_condition(filter_on, filter, metadata)
+      return false if metadata.nil?
+
       case filter
       when Hash
         filter.all? { |k, v| apply_condition(k, v, metadata[filter_on]) }
