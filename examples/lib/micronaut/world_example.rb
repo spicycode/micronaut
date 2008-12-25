@@ -37,6 +37,13 @@ describe Micronaut::World do
       end
       @behaviours = [@bg1, @bg2, @bg3, @bg4]
     end
+    
+    after(:all) do
+      Micronaut.world.behaviours.delete(@bg1)
+      Micronaut.world.behaviours.delete(@bg2)
+      Micronaut.world.behaviours.delete(@bg3)
+      Micronaut.world.behaviours.delete(@bg4)
+    end
 
     it "should find awesome examples" do
       @world.find(@bg4.examples, :awesome => true).should == [@bg4.examples[1], @bg4.examples[2]]
