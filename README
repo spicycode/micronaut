@@ -5,7 +5,7 @@
 == DESCRIPTION:
 
 Micronaut is an ultra light-weight BDD test framework.   For the moment think of it is a prototype of
-RSpec lite.  Definitely pre alpha at the moment.
+RSpec lite.  Definitely alpha at the moment.
 
 == REQUIREMENTS:
 
