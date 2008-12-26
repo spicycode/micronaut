@@ -67,6 +67,11 @@ describe Micronaut::Behaviour do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == "#{__FILE__}"
       end
       
+      it "should add a reader for file_path to the behaviour for easy access" do
+        Micronaut::Behaviour.describe(Object) { }.file_path.should == "#{__FILE__}"
+      end
+      
+      
       it "should add the line_number of the current behavior to metadata" do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
       end

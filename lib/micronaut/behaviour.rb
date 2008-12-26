@@ -120,6 +120,10 @@ module Micronaut
     def self.description
       @metadata[:behaviour][:description]
     end
+    
+    def self.file_path
+      @metadata[:behaviour][:file_path]
+    end
    
     def self.describe(*args, &behaviour_block)
       raise(ArgumentError, "No arguments given.  You must a least supply a type or description") if args.empty? 

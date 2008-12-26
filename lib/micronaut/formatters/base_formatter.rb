@@ -109,7 +109,7 @@ module Micronaut
         cleansed = backtrace.map { |line| backtrace_line(line) }.compact
         
         cleansed = cleansed.select do |line|
-          line.split(':').first.downcase == example.behaviour.metadata[:behaviour][:file_path].downcase
+          line.split(':').first.downcase == example.behaviour.file_path.downcase
         end
 
         cleansed.empty? ? backtrace : cleansed
@@ -125,7 +125,7 @@ module Micronaut
       end
       
       def read_failed_line(exception, example)
-        original_file = example.behaviour.metadata[:behaviour][:file_path].downcase
+        original_file = example.behaviour.file_path.downcase
         matching_line = exception.backtrace.find do |line|
           line.split(':').first.downcase == original_file.downcase
         end
