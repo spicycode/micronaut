@@ -15,7 +15,9 @@ module Micronaut
 
         described_behaviour_chain.each_with_index do |nested_behaviour, i|
           unless nested_behaviour == previous_nested_behaviours[i]
-            desc_or_name = (i == 0) ? nested_behaviour.name : nested_behaviour.description
+            at_root_level = (i == 0)
+            desc_or_name = at_root_level ? nested_behaviour.name : nested_behaviour.description
+            output.puts if at_root_level
             output.puts "#{'  ' * i}#{desc_or_name}"
           end
         end
