@@ -8,6 +8,10 @@ require 'micronaut/example'
 require 'micronaut/behaviour'
 require 'micronaut/kernel_extensions'
 require 'micronaut/formatters'
+begin 
+  require 'log_buddy'
+  LogBuddy.init
+rescue nil; end
 
 module Micronaut
   file = if RUBY_VERSION =~ /^1\.9/ then  # bt's expanded, but __FILE__ isn't :(

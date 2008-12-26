@@ -106,6 +106,12 @@ describe Micronaut::Formatters::BaseFormatter do
   
   describe 'dealing with backtrace' do
     
+    it "should allow displaying the full backtrace with an option", :pending => true do
+      backtrace = ["/tmp/x.rb:1", "foo/vendor/rails/x.rb:1"]
+      result = @formatter.format_backtrace(backtrace, running_example)
+      result.should == backtrace
+    end
+    
     it "should ensure ':' in the first backtrace" do
       backtrace = ["/tmp/x.rb:1", "/tmp/x.rb:2", "/tmp/x.rb:3"]
       @formatter.format_backtrace(backtrace, running_example).should == backtrace
