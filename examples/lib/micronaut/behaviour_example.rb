@@ -71,9 +71,19 @@ describe Micronaut::Behaviour do
         Micronaut::Behaviour.describe(Object) { }.file_path.should == "#{__FILE__}"
       end
       
-      
       it "should add the line_number of the current behavior to metadata" do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
+      end
+      
+      it "should add file path and line number metadata for arbitrarily nested describes" do
+        Micronaut::Behaviour.describe(Object) do
+          Micronaut::Behaviour.describe("foo") do
+
+            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path_with_line_number].should == "#{__FILE__}:#{__LINE__}"
+            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
+            
+          end
+        end
       end
       
     end
