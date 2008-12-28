@@ -187,6 +187,8 @@ module Micronaut
       after_ancestors.each do |ancestor|
         ancestor.after_eachs.each { |opts, blk| example.instance_eval(&blk) }
       end
+    rescue Exception => e # TODO not sure what to do about this case?
+      nil
     end
 
     def self.run(reporter)
@@ -214,11 +216,11 @@ module Micronaut
           else
             reporter.example_pending(ex, 'Not yet implemented')
           end
-          eval_after_eachs(group)
         rescue Exception => e
           reporter.example_failed(ex, e)
           execution_error ||= e
         ensure
+          eval_after_eachs(group)
           group._teardown_mocks
         end
 
