@@ -212,9 +212,9 @@ describe Micronaut::Behaviour do
   
   describe "#run" do
 
-    pending "should run after(:each) even if the example fails" 
+    it "should run after(:each) even if the example fails" 
 
-    pending "should run after(:each) even if the example raises an Exception" 
+    it "should run after(:each) even if the example raises an Exception" 
     
   end
 
