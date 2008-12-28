@@ -8,16 +8,12 @@ module Micronaut
       @behaviours = []
     end
 
-    def filter
-      Micronaut.configuration.filter
-    end
-
     def behaviours_to_run
       return @behaviours_to_run if @behaviours_to_run
 
-      if filter
+      if Micronaut.configuration.filter_run
         @behaviours_to_run = filter_behaviours
-        puts "\nRun filtered using #{filter.inspect}"
+        puts "\nRun filtered using #{Micronaut.configuration.filter_run.inspect}"
         if @behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
           puts "No behaviours were matched, running all"
           # reset the behaviour list to all behaviours, and add back all examples
@@ -37,8 +33,8 @@ module Micronaut
 
     def filter_behaviours
       behaviours.inject([]) do |list, b|
-        b.examples_to_run.replace(find(b.examples, filter).uniq)
-        # Don't add behaviours with no examples to run onto the suite run
+        b.examples_to_run.replace(find(b.examples, Micronaut.configuration.filter_run).uniq)
+        # Do not add behaviours with 0 examples to run
         list << (b.examples_to_run.size == 0 ? nil : b)
       end.compact
     end
@@ -47,6 +43,10 @@ module Micronaut
       collection.select do |item|
         conditions.all? { |filter_on, filter| apply_condition(filter_on, filter, item.metadata) }
       end
+    end
+    
+    def find_behaviours(conditions={})
+      find(behaviours, conditions)
     end
 
     def apply_condition(filter_on, filter, metadata)

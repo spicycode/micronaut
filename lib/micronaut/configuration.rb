@@ -1,48 +1,46 @@
 module Micronaut
 
   class Configuration
-    # Desired mocking framework - expects the symbol name of the framework
-    # Currently supported: :mocha, :rr, or nothing (the default if this is not set at all)
-    attr_reader :mock_framework
-    
-    # Array of regular expressions to scrub from backtrace
+    # Regex patterns to scrub backtrace with
     attr_reader :backtrace_clean_patterns
     
-    # An array of arrays to store before and after blocks
+    # All of the defined before/after blocks setup in the configuration
     attr_reader :before_and_afters
-
-    # Adding a filter allows you to exclude or include certain examples from running based on options you pass in 
-    attr_reader :filter
     
-    # When this is true, if you have filters enabled and no examples match, 
-    # all examples are added and run - defaults to true
+    # Allows you to control what examples are ran by filtering 
+    attr_reader :filter_run
+    
+    # Modules that will be included or extended based on given filters
+    attr_reader :include_or_extend_modules
+    
+    # Run all examples if the run is filtered, and no examples were found - defaults to true
     attr_accessor :run_all_when_everything_filtered
 
-    # Enable profiling of the top 10 slowest examples - defaults to false
+    # Enable profiling of example run - defaults to false
     attr_accessor :profile_examples
-      
+    
     def initialize
-      @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/]
+      @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/, /#{::Micronaut::InstallDirectory}/]
       @profile_examples = false
       @run_all_when_everything_filtered = true
-      @filter = nil
-      @before_and_afters = []
+      @color_enabled = false
+      @before_and_afters = { :before => { :each => [], :all => [] }, :after => { :each => [], :all => [] } }
+      @include_or_extend_modules = []
+      @formatter_to_use = Micronaut::Formatters::ProgressFormatter
     end
     
+    # E.g. alias_example_to :crazy_slow, :speed => 'crazy_slow' defines
+    # crazy_slow as an example variant that has the crazy_slow speed option
     def alias_example_to(new_name, extra_options={})
       Micronaut::Behaviour.alias_example_to(new_name, extra_options)
     end
         
     def cleaned_from_backtrace?(line)
-      return true if line =~ /#{::Micronaut::InstallDirectory}/
-      
-      @backtrace_clean_patterns.any? do |pattern|
-        line =~ pattern
-      end
+      @backtrace_clean_patterns.any? { |regex| line =~ regex }
     end
     
     def mock_with(make_a_mockery_with=nil)
-      @mock_framework = case make_a_mockery_with
+      mock_framework = case make_a_mockery_with
                         when :mocha
                           require 'micronaut/mocking/with_mocha'
                           Micronaut::Mocking::WithMocha
@@ -50,88 +48,89 @@ module Micronaut
                           require 'micronaut/mocking/with_rr'
                           Micronaut::Mocking::WithRR
                         else
+                          require 'micronaut/mocking/with_absolutely_nothing'
                           Micronaut::Mocking::WithAbsolutelyNothing
                         end 
 
-      Micronaut::Behaviour.send(:include, @mock_framework)
+      Micronaut::Behaviour.send(:include, mock_framework)
     end
     
     def autorun!
       Micronaut::Runner.autorun
     end
-    
-    # Determines whether or not any output should include ANSI color codes,
-    # defaults to true
-    def color_enabled?
-      @color_enabled
-    end
-    
+       
     def color_enabled=(on_or_off)
       @color_enabled = on_or_off
     end
     
-    # The formatter to use.  Defaults to the documentation formatter
-    def formatter=(formatter_to_use)
-      @formatter_to_use = formatter_to_use.to_s
+    # Output with ANSI color enabled? Defaults to false
+    def color_enabled?
+      @color_enabled
     end
     
-    def formatter
-      @formatter ||= case @formatter_to_use
-                     when 'documentation'
-                       Micronaut::Formatters::DocumentationFormatter.new
-                     else
-                       Micronaut::Formatters::ProgressFormatter.new
-                     end
-    end
-    
-    def output
-      $stdout
-    end
-        
-    def extra_modules
-      @extra_modules ||= []
-    end
-        
-    def include(module_to_include, options={})
-      extra_modules << [:include, module_to_include, options]
-    end
-    
-    def extend(module_to_extend, options={})
-      extra_modules << [:extend, module_to_extend, options]
-    end
-    
-    def find_modules(group)
-      extra_modules.select do |include_or_extend, mod, options|
-        options.all? do |filter_on, filter|
-          Micronaut.world.apply_condition(filter_on, filter, group.metadata)
-        end
-      end
-    end
-      
     def filter_run(options={})
-      @filter = options
+      @filter_run = options
     end
     
     def run_all_when_everything_filtered?
       @run_all_when_everything_filtered
     end
-          
-    def before(type=:each, options={}, &block)
-      before_and_afters << [:before, :each, options, block]
+    
+    def formatter=(formatter_to_use)
+      @formatter_to_use = case formatter_to_use.to_s
+                          when 'documentation' then Micronaut::Formatters::DocumentationFormatter
+                          when 'progress' then Micronaut::Formatters::ProgressFormatter
+                          end
     end
     
-    def after(type=:each, options={}, &block)
-      before_and_afters << [:after, :each, options, block]
+    # The formatter all output should use.  Defaults to the progress formatter
+    def formatter
+      @formatter ||= @formatter_to_use.new
     end
     
-    def find_before_or_after(desired_type, desired_each_or_all, group)
-      before_and_afters.select do |type, each_or_all, options, block|
-        type == desired_type && 
-        each_or_all == desired_each_or_all &&
+    # Where does output go? For now $stdout
+    def output
+      $stdout
+    end
+
+    def include(mod, options={})
+      if options.empty?
+        Micronaut::Behaviour.send(:include, mod)
+      else
+        include_or_extend_modules << [:include, mod, options]
+      end
+    end
+    
+    def extend(mod, options={})
+      if options.empty?
+        Micronaut::Behaviour.send(:extend, mod)
+      else
+        include_or_extend_modules << [:extend, mod, options]
+      end
+    end
+    
+    def find_modules(group)
+      include_or_extend_modules.select do |include_or_extend, mod, options|
         options.all? do |filter_on, filter|
           Micronaut.world.apply_condition(filter_on, filter, group.metadata)
         end
-      end.map { |type, each_or_all, options, block| block }
+      end
+    end
+          
+    def before(each_or_all=:each, options={}, &block)
+      before_and_afters[:before][each_or_all] << [options, block]
+    end
+    
+    def after(each_or_all=:each, options={}, &block)
+      before_and_afters[:after][each_or_all] << [options, block]
+    end
+    
+    def find_before_or_after(desired_type, desired_each_or_all, group)
+      before_and_afters[desired_type][desired_each_or_all].select do |options, block|
+        options.all? do |filter_on, filter|
+          Micronaut.world.apply_condition(filter_on, filter, group.metadata)
+        end
+      end.map { |options, block| block }
     end
     
   end

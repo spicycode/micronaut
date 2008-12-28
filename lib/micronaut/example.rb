@@ -12,7 +12,7 @@ module Micronaut
     end
 
     def inspect
-      "#{behaviour.name} - #{description}"
+      "#{@metadata[:behaviour][:name]} - #{@metadata[:description]}"
     end
     
     def to_s

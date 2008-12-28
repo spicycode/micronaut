@@ -9,7 +9,7 @@ describe Micronaut::Behaviour do
 
   describe "describing behaviour with #describe" do
 
-    example "an ArgumentError is raised if no name is given" do
+    example "an ArgumentError is raised if no type or description is given" do
       lambda { Micronaut::Behaviour.describe() {} }.should raise_error(ArgumentError, "No arguments given.  You must a least supply a type or description")
     end
 
@@ -59,26 +59,26 @@ describe Micronaut::Behaviour do
         Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.metadata.should include({ "foo" => 'bar' })
       end
       
-      it "should add the file_path_with_line_number of the current behaviour to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path_with_line_number].should == "#{__FILE__}:#{__LINE__}"
+      it "should add the caller to metadata" do
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller].should == "#{__FILE__}:#{__LINE__}"
       end
       
-      it "should add the the file_path of the current behaviour to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == "#{__FILE__}"
+      it "should add the the file_path to metadata" do
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == __FILE__
       end
       
-      it "should add a reader for file_path to the behaviour for easy access" do
-        Micronaut::Behaviour.describe(Object) { }.file_path.should == "#{__FILE__}"
+      it "should have a reader for file_path" do
+        Micronaut::Behaviour.describe(Object) { }.file_path.should == __FILE__
       end
       
-      it "should add the line_number of the current behavior to metadata" do
+      it "should add the line_number to metadata" do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
       end
       
       it "should add file path and line number metadata for arbitrarily nested describes" do
         Micronaut::Behaviour.describe(Object) do
           Micronaut::Behaviour.describe("foo") do
-            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path_with_line_number].should == "#{__FILE__}:#{__LINE__}"
+            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller].should == "#{__FILE__}:#{__LINE__}"
             Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
           end
         end
@@ -209,8 +209,8 @@ describe Micronaut::Behaviour do
   end
   
   describe "#run" do
-
-    pending "should run after(:each) when the example fails" 
+    
+    pending "should run after(:each) when the example fails"
 
     pending "should run after(:each) when the example raises an Exception" 
     

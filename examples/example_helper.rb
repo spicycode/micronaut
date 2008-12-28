@@ -23,21 +23,8 @@ def remove_last_describe_from_world
   Micronaut.world.behaviours.pop
 end
 
-class DummyFormatter <  Micronaut::Formatters::BaseTextFormatter; end
-
-def dummy_reporter
-  DummyFormatter.new({}, StringIO.new)
-end
-
-def use_color?
-  !ENV.has_key?('TM_MODE')
-end
-
-Micronaut.configure do |config|
-  config.mock_with :mocha
-  config.color_enabled = use_color?
-  config.formatter = :documentation
-  config.profile_examples = false
-  config.filter_run :focused => true
-  config.autorun!
+Micronaut.configure do |c|
+  c.mock_with :mocha
+  c.color_enabled = !ENV.has_key?('TM_MODE')
+  c.filter_run :focused => true
 end

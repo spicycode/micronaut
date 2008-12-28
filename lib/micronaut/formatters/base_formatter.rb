@@ -105,13 +105,10 @@ module Micronaut
       end
       
       def format_backtrace(backtrace, example)
-        return "" if backtrace.nil?
-        cleansed = backtrace.map { |line| backtrace_line(line) }.compact
-        
-        cleansed = cleansed.select do |line|
-          line.split(':').first.downcase == example.behaviour.file_path.downcase
-        end
+        return "" unless backtrace
+        return backtrace if example.metadata[:full_backtrace] == true
 
+        cleansed = backtrace.select { |line| backtrace_line(line) }
         cleansed.empty? ? backtrace : cleansed
       end
       
@@ -126,10 +123,10 @@ module Micronaut
       
       def read_failed_line(exception, example)
         original_file = example.behaviour.file_path.downcase
-        matching_line = exception.backtrace.find do |line|
-          line.split(':').first.downcase == original_file.downcase
-        end
+        matching_line = exception.backtrace.detect { |line| line.split(':').first.downcase == original_file.downcase }
+
         return "Unable to find matching line from backtrace" if matching_line.nil?
+        
         file_path, line_number = matching_line.split(':')
         if File.exist?(file_path)
           open(file_path, 'r') { |f| f.readlines[line_number.to_i - 1] }

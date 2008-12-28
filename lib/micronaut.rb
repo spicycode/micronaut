@@ -1,4 +1,4 @@
-require 'micronaut/mocking'
+require 'micronaut/mocking/with_absolutely_nothing'
 require 'micronaut/matchers'
 require 'micronaut/expectations'
 require 'micronaut/world'
@@ -31,6 +31,7 @@ module Micronaut
 
   def self.configure
     yield configuration
+    configuration.autorun!
   end
   
   def self.world

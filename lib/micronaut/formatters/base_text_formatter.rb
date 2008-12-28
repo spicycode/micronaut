@@ -93,8 +93,8 @@ module Micronaut
           output.puts
           output.puts "Pending:"
           pending_examples.each do |pending_example, message|
-            output.puts "\n  #{pending_example.behaviour}\n  - #{pending_example.description}"
-            output.puts grey("    # #{pending_example.metadata[:caller]}")
+            output.puts "  #{pending_example}"
+            output.puts grey("   # #{pending_example.metadata[:caller]}")
           end
         end
         output.flush

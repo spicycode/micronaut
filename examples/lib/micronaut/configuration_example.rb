@@ -25,9 +25,9 @@ describe Micronaut::Configuration do
       end
     end
 
-    it "should include the given module into each behaviour group" do
-      Micronaut.configuration.include(InstanceLevelMethods)
-      group = Micronaut::Behaviour.describe(Object, 'does like, stuff and junk') { }
+    it "should include the given module into each matching behaviour" do
+      Micronaut.configuration.include(InstanceLevelMethods, :magic_key => :include)
+      group = Micronaut::Behaviour.describe(Object, 'does like, stuff and junk', :magic_key => :include) { }
       group.should_not respond_to(:you_call_this_a_blt?)
       remove_last_describe_from_world
 
@@ -45,9 +45,10 @@ describe Micronaut::Configuration do
 
     end
 
-    it "should extend the given module into each behaviour group" do
-      Micronaut.configuration.extend(ThatThingISentYou)
-      group = Micronaut::Behaviour.describe(ThatThingISentYou) { }
+    it "should extend the given module into each matching behaviour" do
+      Micronaut.configuration.extend(ThatThingISentYou, :magic_key => :extend)      
+      group = Micronaut::Behaviour.describe(ThatThingISentYou, :magic_key => :extend) { }
+      
       group.should respond_to(:that_thing)
       remove_last_describe_from_world
     end

@@ -104,20 +104,20 @@ describe Micronaut::Formatters::BaseFormatter do
     @formatter.should have_interface_for(:close).with(0).arguments
   end
   
-  describe 'dealing with backtrace' do
+  describe '#format_backtrace' do
     
-    it "should allow displaying the full backtrace with an option", :pending => true do
-      backtrace = ["/tmp/x.rb:1", "foo/vendor/rails/x.rb:1"]
-      result = @formatter.format_backtrace(backtrace, running_example)
-      result.should == backtrace
+    before do
+      @full_backtrace = ["examples/lib/micronaut/formatters/base_formatter_example.rb:118", "vendor/rails/x.rb:1", "/bin/micronaut"]
     end
-    
-    it "should ensure ':' in the first backtrace" do
-      backtrace = ["/tmp/x.rb:1", "/tmp/x.rb:2", "/tmp/x.rb:3"]
-      @formatter.format_backtrace(backtrace, running_example).should == backtrace
 
-      backtrace = ["/tmp/x.rb:1: message", "/tmp/x.rb:2", "/tmp/x.rb:3"]
-      @formatter.format_backtrace(backtrace, running_example).first.should == "/tmp/x.rb:1: message"
+    it "should display the full backtrace when the example is given the :full_backtrace => true option", :full_backtrace => true do
+      running_example.metadata[:full_backtrace].should be_true
+      @formatter.format_backtrace(@full_backtrace, running_example).should ==  @full_backtrace
+    end
+
+    it "should clean the backtrace when the full_backtrace option is not given" do
+      running_example.metadata[:full_backtrace].should be_nil
+      @formatter.format_backtrace(@full_backtrace, running_example).should ==  ["examples/lib/micronaut/formatters/base_formatter_example.rb:118"]
     end
     
   end

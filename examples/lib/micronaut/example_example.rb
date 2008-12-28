@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 describe Micronaut::Example do
 
   before do
-    behaviour = stub('behaviour', :name => 'behaviour_name', :metadata => {})
+    behaviour = stub('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})
     @example = Micronaut::Example.new(behaviour, 'description', {}, (lambda {}))
   end
   

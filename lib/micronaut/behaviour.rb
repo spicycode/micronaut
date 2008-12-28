@@ -75,36 +75,28 @@ module Micronaut
       @_examples_to_run ||= []
     end
 
-    # This method is friggin' gigantic, and must be stopped
-    # 
     def self.set_it_up(*args)
-      @metadata = {:behaviour => {}}
+      @metadata = { :behaviour => {} }
       extra_metadata = args.last.is_a?(Hash) ? args.pop : {}
-      if args.first.is_a?(String)
-        @metadata[:behaviour][:describes] = self.superclass.metadata && self.superclass.metadata[:behaviour][:describes]
-      else
-        @metadata[:behaviour][:describes] = args.shift
-      end
+      extra_metadata.delete(:behaviour) # Remove it when present to prevent it clobbering the one we setup
+      
+      @metadata[:behaviour][:describes] = args.shift unless args.first.is_a?(String)
+      @metadata[:behaviour][:describes] ||= self.superclass.metadata && self.superclass.metadata[:behaviour][:describes]
       @metadata[:behaviour][:description] = args.shift || ''
       @metadata[:behaviour][:name] = "#{describes} #{description}".strip
       @metadata[:behaviour][:block] = extra_metadata.delete(:behaviour_block)
-      file_path_with_line_num = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
-      @metadata[:behaviour][:file_path_with_line_number] = file_path_with_line_num
-      @metadata[:behaviour][:file_path] = file_path_with_line_num.split(":")[0].strip
-      @metadata[:behaviour][:line_number] = file_path_with_line_num.split(":")[1].to_i
+      @metadata[:behaviour][:caller] = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
+      @metadata[:behaviour][:file_path] = @metadata[:behaviour][:caller].split(":")[0].strip
+      @metadata[:behaviour][:line_number] = @metadata[:behaviour][:caller].split(":")[1].to_i
       
-      extra_metadata.delete(:behaviour) # Remove it if it is present
       @metadata.update(extra_metadata)
-
-      # should this be here?  I think it should be in the runner, the only possible 
-      # point of contention is whether or not inserted/extended modules should be 
-      # allowed to participate in adding metadata.  If they can, then earlier is better
-      Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|
-        if include_or_extend == :extend
-          send(:extend, mod) unless extended_modules.include?(mod)
-        else
-          send(:include, mod) unless included_modules.include?(mod)
-        end
+      
+      Micronaut.configuration.find_modules(self).each do |include_or_extend, mod, opts|                                                                                                                                                                               
+        if include_or_extend == :extend                                                                                                                                                                                                                               
+          send(:extend, mod) unless extended_modules.include?(mod)                                                                                                                                                                                                    
+        else                                                                                                                                                                                                                                                          
+          send(:include, mod) unless included_modules.include?(mod)                                                                                                                                                                                                   
+        end                                                                                                                                                                                                                                                           
       end
     end
 
@@ -245,7 +237,7 @@ module Micronaut
     end
 
     def self.to_s
-      self == Micronaut::Behaviour ? 'Micronaut::Behaviour' : name
+      self == Micronaut::Behaviour ? 'Micronaut::Behaviour' : @metadata[:behaviour][:name]
     end
     
   end

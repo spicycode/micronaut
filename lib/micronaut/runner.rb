@@ -7,8 +7,9 @@ module Micronaut
     end
 
     def self.autorun
-      at_exit { Micronaut::Runner.new.run(ARGV) ? exit(0) : exit(1) } unless installed_at_exit?
+      return if installed_at_exit?
       @installed_at_exit = true
+      at_exit { Micronaut::Runner.new.run(ARGV) ? exit(0) : exit(1) } 
     end
 
     def configuration
