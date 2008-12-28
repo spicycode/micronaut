@@ -78,10 +78,8 @@ describe Micronaut::Behaviour do
       it "should add file path and line number metadata for arbitrarily nested describes" do
         Micronaut::Behaviour.describe(Object) do
           Micronaut::Behaviour.describe("foo") do
-
             Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path_with_line_number].should == "#{__FILE__}:#{__LINE__}"
             Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
-            
           end
         end
       end
@@ -212,9 +210,9 @@ describe Micronaut::Behaviour do
   
   describe "#run" do
 
-    pending "should run after(:each) even if the example fails" 
+    pending "should run after(:each) when the example fails" 
 
-    pending "should run after(:each) even if the example raises an Exception" 
+    pending "should run after(:each) when the example raises an Exception" 
     
   end
 
