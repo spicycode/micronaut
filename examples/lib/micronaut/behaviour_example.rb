@@ -59,6 +59,33 @@ describe Micronaut::Behaviour do
         Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.metadata.should include({ "foo" => 'bar' })
       end
       
+      it "should add the file_path_with_line_number of the current behaviour to metadata" do
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path_with_line_number].should == "#{__FILE__}:#{__LINE__}"
+      end
+      
+      it "should add the the file_path of the current behaviour to metadata" do
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == "#{__FILE__}"
+      end
+      
+      it "should add a reader for file_path to the behaviour for easy access" do
+        Micronaut::Behaviour.describe(Object) { }.file_path.should == "#{__FILE__}"
+      end
+      
+      it "should add the line_number of the current behavior to metadata" do
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
+      end
+      
+      it "should add file path and line number metadata for arbitrarily nested describes" do
+        Micronaut::Behaviour.describe(Object) do
+          Micronaut::Behaviour.describe("foo") do
+
+            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path_with_line_number].should == "#{__FILE__}:#{__LINE__}"
+            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
+            
+          end
+        end
+      end
+      
     end
 
     describe "adding before and after hooks" do
@@ -181,6 +208,14 @@ describe Micronaut::Behaviour do
 
     end
 
+  end
+  
+  describe "#run" do
+
+    it "should run after(:each) even if the example fails" 
+
+    it "should run after(:each) even if the example raises an Exception" 
+    
   end
 
 end
