@@ -4,10 +4,6 @@ $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 require 'micronaut'
 require 'rubygems'
 gem :mocha
-begin
-  require 'log_buddy'; LogBuddy.init
-rescue nil
-end
 
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
