@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../example_helper")
 
 describe Micronaut do
 
-  describe "configuration" do
+  describe "#configuration" do
     
     it "should return an instance of Micronaut::Configuration" do
       Micronaut.configuration.should be_an_instance_of(Micronaut::Configuration)
@@ -10,7 +10,7 @@ describe Micronaut do
     
   end
   
-  describe "configure" do
+  describe "#configure" do
     
     it "should yield the current configuration" do
       Micronaut.configure do |config|
@@ -20,7 +20,7 @@ describe Micronaut do
     
   end
   
-  describe "world" do
+  describe "#world" do
     
     it "should return the Micronaut::World instance the current run is using" do
       Micronaut.world.should be_instance_of(Micronaut::World)

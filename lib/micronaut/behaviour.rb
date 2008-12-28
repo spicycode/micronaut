@@ -55,6 +55,7 @@ module Micronaut
                     def self.#{new_alias}(desc=nil, options={}, &block)
                       updated_options = options.update(:caller => caller[0])
                       updated_options.update(#{extra_options.inspect})
+                      block = nil if updated_options[:pending] == true || updated_options[:disabled] == true
                       examples << Micronaut::Example.new(self, desc, updated_options, block)
                     end
                   END_RUBY
@@ -63,7 +64,9 @@ module Micronaut
     
     alias_example_to :it
     alias_example_to :focused, :focused => true
- 
+    alias_example_to :disabled, :disabled => true
+    alias_example_to :pending, :pending => true
+    
     def self.examples
       @_examples ||= []
     end
@@ -85,7 +88,10 @@ module Micronaut
       @metadata[:behaviour][:description] = args.shift || ''
       @metadata[:behaviour][:name] = "#{describes} #{description}".strip
       @metadata[:behaviour][:block] = extra_metadata.delete(:behaviour_block)
-      @metadata[:behaviour][:file_path] = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
+      file_path_with_line_num = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
+      @metadata[:behaviour][:file_path_with_line_number] = file_path_with_line_num
+      @metadata[:behaviour][:file_path] = file_path_with_line_num.split(":")[0].strip
+      @metadata[:behaviour][:line_number] = file_path_with_line_num.split(":")[1].to_i
       
       extra_metadata.delete(:behaviour) # Remove it if it is present
       @metadata.update(extra_metadata)
@@ -116,6 +122,10 @@ module Micronaut
 
     def self.description
       @metadata[:behaviour][:description]
+    end
+    
+    def self.file_path
+      @metadata[:behaviour][:file_path]
     end
    
     def self.describe(*args, &behaviour_block)
