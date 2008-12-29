@@ -19,6 +19,8 @@ module Micronaut
     # Enable profiling of example run - defaults to false
     attr_accessor :profile_examples
     
+    attr_reader :mock_framework
+    
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/, /#{::Micronaut::InstallDirectory}/]
       @profile_examples = false
@@ -41,19 +43,20 @@ module Micronaut
     end
     
     def mock_with(make_a_mockery_with=nil)
-      mock_framework = case make_a_mockery_with
-                        when :mocha
-                          require 'micronaut/mocking/with_mocha'
-                          Micronaut::Mocking::WithMocha
-                        when :rr
-                          require 'micronaut/mocking/with_rr'
-                          Micronaut::Mocking::WithRR
-                        else
-                          require 'micronaut/mocking/with_absolutely_nothing'
-                          Micronaut::Mocking::WithAbsolutelyNothing
-                        end 
+      @mock_framework = make_a_mockery_with
+      mock_framework_class = case make_a_mockery_with.to_s
+                             when /mocha/i
+                               require 'micronaut/mocking/with_mocha'
+                               Micronaut::Mocking::WithMocha
+                             when /rr/i
+                               require 'micronaut/mocking/with_rr'
+                               Micronaut::Mocking::WithRR
+                             else
+                               require 'micronaut/mocking/with_absolutely_nothing'
+                               Micronaut::Mocking::WithAbsolutelyNothing
+                             end 
 
-      Micronaut::Behaviour.send(:include, mock_framework)
+      Micronaut::Behaviour.send(:include, mock_framework_class)
     end
     
     def autorun!
