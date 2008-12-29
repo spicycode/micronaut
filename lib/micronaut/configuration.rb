@@ -8,7 +8,7 @@ module Micronaut
     attr_reader :before_and_afters
     
     # Allows you to control what examples are ran by filtering 
-    attr_reader :filter_run
+    attr_reader :filter
     
     # Modules that will be included or extended based on given filters
     attr_reader :include_or_extend_modules
@@ -27,6 +27,7 @@ module Micronaut
       @before_and_afters = { :before => { :each => [], :all => [] }, :after => { :each => [], :all => [] } }
       @include_or_extend_modules = []
       @formatter_to_use = Micronaut::Formatters::ProgressFormatter
+      @filter = nil
     end
     
     # E.g. alias_example_to :crazy_slow, :speed => 'crazy_slow' defines
@@ -69,7 +70,7 @@ module Micronaut
     end
     
     def filter_run(options={})
-      @filter_run = options
+      @filter = options
     end
     
     def run_all_when_everything_filtered?

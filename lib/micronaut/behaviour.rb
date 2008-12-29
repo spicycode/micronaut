@@ -187,7 +187,7 @@ module Micronaut
     end
 
     def self.run(reporter)
-      return true if examples.size == 0
+      return true if examples.empty?
 
       reporter.add_behaviour(self)
       

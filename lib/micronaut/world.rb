@@ -7,21 +7,28 @@ module Micronaut
     def initialize
       @behaviours = []
     end
+    
+    def filter
+      Micronaut.configuration.filter
+    end
 
     def behaviours_to_run
       return @behaviours_to_run if @behaviours_to_run
-
-      if Micronaut.configuration.filter_run
+      
+      if filter
         @behaviours_to_run = filter_behaviours
-        puts "\nRun filtered using #{Micronaut.configuration.filter_run.inspect}"
+        behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
         if @behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
-          puts "No behaviours were matched, running all"
+          puts "No behaviours were matched by #{filter.inspect}, running all"
           # reset the behaviour list to all behaviours, and add back all examples
           @behaviours_to_run = @behaviours
           @behaviours.each { |b| b.examples_to_run.replace(b.examples) }
+        else
+          puts "Run filtered using #{filter.inspect}"          
         end
       else
         @behaviours_to_run = @behaviours
+        @behaviours.each { |b| b.examples_to_run.replace(b.examples) }
       end      
 
       @behaviours_to_run
@@ -33,7 +40,7 @@ module Micronaut
 
     def filter_behaviours
       behaviours.inject([]) do |list, b|
-        b.examples_to_run.replace(find(b.examples, Micronaut.configuration.filter_run).uniq)
+        b.examples_to_run.replace(find(b.examples, filter).uniq)
         # Do not add behaviours with 0 examples to run
         list << (b.examples_to_run.size == 0 ? nil : b)
       end.compact
