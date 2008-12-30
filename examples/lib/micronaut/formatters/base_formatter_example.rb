@@ -127,7 +127,7 @@ describe Micronaut::Formatters::BaseFormatter do
     
     it "is false by default" do
       @formatter.behaviour = Micronaut::Behaviour.describe("foo") {}
-      @formatter.trace?.should be(false)
+      @formatter.trace?.should == false
     end
     
     it "is true if configuration.trace is true" do
