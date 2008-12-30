@@ -24,11 +24,14 @@ Micronaut is a light-weight BDD test framework.
 		end	
 
 		describe Foo do
-			it "autotest will only run this spec, even if your whole suite loads", :focused => true do
+			it "this spec will run", :focused => true do
 			end
 			
 			# equivalent to:
-			focused "is an example_alias to pass in the :focused => true metadata" do
+			focused "so will this one (this is an alias for :focused => true)" do
+			end
+			
+			it "this spec will not run, until the focused ones are removed" do
 			end
 		end
 		
