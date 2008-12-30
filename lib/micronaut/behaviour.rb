@@ -155,19 +155,19 @@ module Micronaut
     end
 
     def self.eval_before_alls(example)
-      Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| example.instance_eval(&blk) }
-      
       before_ancestors.each do |ancestor| 
         ancestor.before_alls.each { |opts, blk| example.instance_eval(&blk) }
       end
+      
+      Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| example.instance_eval(&blk) }
     end
         
     def self.eval_before_eachs(example)
-      Micronaut.configuration.find_before_or_after(:before, :each, self).each { |blk| example.instance_eval(&blk) }
-      
       before_ancestors.each do |ancestor| 
         ancestor.before_eachs.each { |opts, blk| example.instance_eval(&blk) }
       end
+      
+      Micronaut.configuration.find_before_or_after(:before, :each, self).each { |blk| example.instance_eval(&blk) }
     end
 
     def self.eval_after_alls(example)

@@ -1,7 +1,7 @@
 # Micronaut
 
 * [Codes - http://github.com/spicycode/micronaut](http://github.com/spicycode/micronaut)
-* [Specs - http://runcoderun.com/spicycode/micronaut](http://runcoderun.com/spicycode/micronaut)
+* [Examples - http://runcoderun.com/spicycode/micronaut](http://runcoderun.com/spicycode/micronaut)
 * [Rails - http://github.com/spicycode/micronaut-rails](http://github.com/spicycode/micronaut-rails)
 
 ## DESCRIPTION:
@@ -17,21 +17,21 @@ Micronaut is a light-weight BDD test framework.
 * Each example has its own metadata, and you can add filters or modules to run/disable/enhance examples based on that metadata at run time
 * A Real-world example of the power the metadata gives you:
 
-* "Focused specs".  Never drop out of Autotest again - just focus on the spec(s) and ignore the rest:
+* "Focused examples".  Never drop out of Autotest again - just focus on the example(s) and ignore the rest:
 
-		Micronaut.configure do |c| # in your spec_helper
+		Micronaut.configure do |c| # in your example_helper
 		  c.filter_run :focused => true
 		end	
 
 		describe Foo do
-			it "this spec will run", :focused => true do
+			it "this example will run", :focused => true do
 			end
 			
 			# equivalent to:
 			focused "so will this one (this is an alias for :focused => true)" do
 			end
 			
-			it "this spec will not run, until the focused ones are removed" do
+			it "this example will not run, until the focused ones are removed" do
 			end
 		end
 		
@@ -41,7 +41,7 @@ Micronaut is a light-weight BDD test framework.
 
 ## REQUIREMENTS:
 
-+ Ruby 1.8.5+
++ Ruby 1.8.6+
 
 ## CREDITS:
 
