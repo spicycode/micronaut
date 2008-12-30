@@ -25,7 +25,7 @@ module Micronaut
           @behaviours_to_run = @behaviours
           @behaviours.each { |b| b.examples_to_run.replace(b.examples) }
         else
-          puts "Run filtered using #{filter.inspect}"          
+          Micronaut.configuration.output "Run filtered using #{filter.inspect}"          
         end
       else
         @behaviours_to_run = @behaviours
