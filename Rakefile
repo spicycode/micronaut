@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.7.4"
+GEM_VERSION = "0.1.8.0"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://spicycode.com"
