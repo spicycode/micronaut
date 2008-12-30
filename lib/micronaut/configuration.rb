@@ -19,12 +19,16 @@ module Micronaut
     # Enable profiling of example run - defaults to false
     attr_accessor :profile_examples
     
+    # Enable verbose interal logging of the framework - defaults to false
+    attr_accessor :trace
+    
     attr_reader :mock_framework
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/, /#{::Micronaut::InstallDirectory}/]
-      @profile_examples = false
       @run_all_when_everything_filtered = true
+      @trace = false
+      @profile_examples = false
       @color_enabled = false
       @before_and_afters = { :before => { :each => [], :all => [] }, :after => { :each => [], :all => [] } }
       @include_or_extend_modules = []

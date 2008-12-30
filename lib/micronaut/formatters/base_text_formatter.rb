@@ -13,6 +13,7 @@ module Micronaut
       end
       
       def example_started(example)
+        super
         @start_time = Time.now
       end
 
