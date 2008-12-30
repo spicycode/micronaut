@@ -3,10 +3,10 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.8.0"
+GEM_VERSION = "0.1.8.1"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
-HOMEPAGE = "http://spicycode.com"
+HOMEPAGE = "http://github.com/spicycode/micronaut"
 SUMMARY = "An excellent replacement for the wheel..."
 
 spec = Gem::Specification.new do |s|
@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
   s.version = GEM_VERSION
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
-  s.extra_rdoc_files = ["README", "LICENSE", "RSPEC-LICENSE"]
+  s.extra_rdoc_files = ["README.markdown", "LICENSE", "RSPEC-LICENSE"]
   s.summary = SUMMARY
   s.description = s.summary
   s.author = AUTHOR
@@ -25,7 +25,7 @@ spec = Gem::Specification.new do |s|
   s.executables = ["micronaut"]
   s.require_path = 'lib'
   s.autorequire = GEM
-  s.files = %w(LICENSE README RSPEC-LICENSE Rakefile) + Dir.glob("{lib,examples}/**/*")
+  s.files = %w(LICENSE README.markdown RSPEC-LICENSE Rakefile) + Dir.glob("{lib,examples}/**/*")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
