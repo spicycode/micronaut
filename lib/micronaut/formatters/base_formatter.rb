@@ -18,15 +18,13 @@ module Micronaut
         Micronaut.configuration.output
       end
       
-      def trace(str)
-        return unless trace?
-        Micronaut.configuration.output.puts("[TRACE] #{str}")
+      def trace(&blk)
+        Micronaut.configuration.trace(trace_override_flag, &blk)
       end
       
-      # If true, Micronaut will provide detailed trace output of its self as it runs.
-      # Can be turned on at the global (configuration) level or at the individual behaviour (describe) level.
-      def trace?
-        Micronaut.configuration.trace || behaviour.metadata[:trace] == true
+      # Allow setting trace at the behaviour level as well globally
+      def trace_override_flag
+        behaviour && behaviour.metadata[:trace]
       end
       
       def profile_examples?
@@ -69,12 +67,12 @@ module Micronaut
 
       # This method is invoked when an +example+ starts.
       def example_started(example)
-        trace "Starting example: #{example}"
+        trace { "Starting example: #{example}" }
       end
 
       # This method is invoked when an +example+ passes.
       def example_passed(example)
-        trace "Example passed: #{example}"
+        trace { "Example passed: #{example}" }
       end
 
       # This method is invoked when an +example+ fails, i.e. an exception occurred

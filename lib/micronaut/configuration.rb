@@ -100,6 +100,21 @@ module Micronaut
     def output
       $stdout
     end
+    
+    # Output some string for debugging/tracing assistance if trace is enabled
+    # The trace string should be sent as a block, which means it will only be interpolated if trace is actually enabled
+    # We allow an override here so that trace can be set at lower levels (such as the describe or example level)
+    def trace(override = false)
+      raise(ArgumentError, "Must yield a block with your string to trace.") unless block_given?
+      return unless trace? || override
+      Micronaut.configuration.output.puts("[TRACE] #{yield}")
+    end
+    
+    # If true, Micronaut will provide detailed trace output of its self as it runs.
+    # Can be turned on at the global (configuration) level or at the individual behaviour (describe) level.
+    def trace?
+      @trace == true
+    end
 
     # RJS I think we should rename include/extend so they don't conflict or confuse with the ruby builtin
     #  maybe register_include, setup_include, add_include, or just _include ?

@@ -122,27 +122,16 @@ describe Micronaut::Formatters::BaseFormatter do
     
   end
   
-  describe '#trace?' do
-    
-    it "is false by default" do
-      @formatter.behaviour = Micronaut::Behaviour.describe("foo") {}
-      @formatter.trace?.should == false
-    end
-    
-    it "is true if configuration.trace is true" do
-      begin
-        Micronaut.configuration.trace = true
-        @formatter.trace?.should == true
-      ensure
-        Micronaut.configuration.trace = false
-      end
-    end
-    
-    it "is true if behaviour metadata has trace flag" do
+  describe '#trace' do
+
+    it "outputs trace message if behaviour metadata has :trace => true" do
+      Micronaut.configuration.output.expects(:puts).with(includes("Starting example: example"))
       behaviour = Micronaut::Behaviour.describe("foo", :trace => true) {}
       @formatter.behaviour = behaviour
-      @formatter.trace?.should == true
+      @formatter.example_started("example")
     end
+    
   end
+  
   
 end

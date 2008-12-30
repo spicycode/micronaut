@@ -67,5 +67,44 @@ describe Micronaut::Configuration do
       config.run_all_when_everything_filtered?.should == false
     end
   end
+  
+  describe '#trace?' do
+    
+    it "is false by default" do
+      Micronaut::Configuration.new.trace?.should == false
+    end
+    
+    it "is true if configuration.trace is true", :full_backtrace => true do
+      config = Micronaut::Configuration.new
+      config.trace = true
+      config.trace?.should == true
+    end
+    
+  end
+  
+  describe '#trace' do
+    
+    it "requires a block" do
+      config = Micronaut::Configuration.new
+      config.trace = true
+      lambda { config.trace(true) }.should raise_error(ArgumentError)
+    end
+    
+    it "does nothing if trace is false" do
+      config = Micronaut::Configuration.new
+      config.trace = false
+      config.output.expects(:puts).never
+      config.trace { "my trace string is awesome" }
+    end
+    
+    it "allows overriding tracing an optional param" do
+      config = Micronaut::Configuration.new
+      config.trace = false
+      config.output.expects(:puts).with(includes("my trace string is awesome"))
+      config.trace(true) { "my trace string is awesome" }
+    end
+    
+    
+  end
 
 end
