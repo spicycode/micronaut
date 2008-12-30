@@ -32,6 +32,7 @@ describe Micronaut::Formatters::ProgressFormatter do
    describe "when color is enabled" do
      
      before do
+       @formatter.stubs(:trace?).returns(false)
        @formatter.stubs(:color_enabled?).returns(true)
      end
    

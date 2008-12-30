@@ -123,7 +123,6 @@ describe Micronaut::Formatters::BaseFormatter do
   end
   
   describe '#trace?' do
-    after { Micronaut.configuration.trace = false }
     
     it "is false by default" do
       @formatter.behaviour = Micronaut::Behaviour.describe("foo") {}
@@ -131,8 +130,12 @@ describe Micronaut::Formatters::BaseFormatter do
     end
     
     it "is true if configuration.trace is true" do
-      Micronaut.configuration.trace = true
-      @formatter.trace?.should == true
+      begin
+        Micronaut.configuration.trace = true
+        @formatter.trace?.should == true
+      ensure
+        Micronaut.configuration.trace = false
+      end
     end
     
     it "is true if behaviour metadata has trace flag" do
