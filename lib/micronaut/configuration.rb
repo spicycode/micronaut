@@ -97,6 +97,8 @@ module Micronaut
       $stdout
     end
 
+    # RJS I think we should rename include/extend so they don't conflict or confuse with the ruby builtin
+    #  maybe register_include, setup_include, add_include, or just _include ?
     def include(mod, options={})
       if options.empty?
         Micronaut::Behaviour.send(:include, mod)
