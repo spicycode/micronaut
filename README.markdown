@@ -1,8 +1,8 @@
 # Micronaut
 
-* Codes: http://github.com/spicycode/micronaut
-* Specs: http://runcoderun.com/spicycode/micronaut
-* Rails: http://github.com/spicycode/micronaut-rails
+* [Codes - http://github.com/spicycode/micronaut](http://github.com/spicycode/micronaut)
+* [Specs - http://runcoderun.com/spicycode/micronaut](http://runcoderun.com/spicycode/micronaut)
+* [Rails - http://github.com/spicycode/micronaut-rails](http://github.com/spicycode/micronaut-rails)
 
 ## DESCRIPTION:
 
@@ -36,11 +36,11 @@ Micronaut is a light-weight BDD test framework.
 		
 * Designed to be formatter compatible with RSpec (though this needs some real-world testing)
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
-+ Ruby 1.8
++ Ruby 1.8.5+
 
-== CREDITS:
+## CREDITS:
 
 * Mini/Unit for the great ideas and runner
 * RSpec for the great ideas, matchers, expectations and formatter ideas
