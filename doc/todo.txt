@@ -2,3 +2,21 @@
 * Track example output in metadata
 * Setup lighthouse
 * TextMate issues (on the BAM and rob's MBP) (Still an issue?)
+
+* make this sort of thing possible:
+
+		# in spec_helper
+		in_runcoderun = ENV["RUN_CODE_RUN"] # when this is true, run all normal specs PLUS the ":slow => true" specs
+		
+		Micronaut.configure do |c|
+			c.add_filter :slow => true, :run_if => { in_runcoderun }
+
+			# this would require changing focused to be something like this
+			c.add_filter :focused => true, :run_exclusive => true
+		end
+
+		# then...
+		describe FooSystem do
+		 	it "does a lot of slow testing", :slow => true do
+			end
+		end
