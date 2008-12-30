@@ -17,8 +17,6 @@ module Micronaut
       
       if filter
         @behaviours_to_run = filter_behaviours
-        # RJS the line below is very confusing and looks like a dupe of the line below it -- is it dead code or does it serve a purpose?
-        behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
         if @behaviours_to_run.size == 0 && Micronaut.configuration.run_all_when_everything_filtered?
           puts "No behaviours were matched by #{filter.inspect}, running all"
           # reset the behaviour list to all behaviours, and add back all examples

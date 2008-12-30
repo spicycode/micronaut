@@ -67,12 +67,10 @@ module Micronaut
 
       # This method is invoked when an +example+ starts.
       def example_started(example)
-        trace { "Starting example: #{example}" }
       end
 
       # This method is invoked when an +example+ passes.
       def example_passed(example)
-        trace { "Example passed: #{example}" }
       end
 
       # This method is invoked when an +example+ fails, i.e. an exception occurred
@@ -119,6 +117,8 @@ module Micronaut
         return backtrace if example.metadata[:full_backtrace] == true
 
         cleansed = backtrace.select { |line| backtrace_line(line) }
+        # Kick the describe stack info off the list, just keep the line the problem happened on from that file
+        cleansed = cleansed.detect { |line| line.split(':').first == example.metadata[:caller].split(':').first } if cleansed.size > 1 
         cleansed.empty? ? backtrace : cleansed
       end
       

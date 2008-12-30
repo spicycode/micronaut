@@ -103,8 +103,7 @@ describe Micronaut::Configuration do
       config.output.expects(:puts).with(includes("my trace string is awesome"))
       config.trace(true) { "my trace string is awesome" }
     end
-    
-    
+       
   end
 
 end

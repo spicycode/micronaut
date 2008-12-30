@@ -122,16 +122,4 @@ describe Micronaut::Formatters::BaseFormatter do
     
   end
   
-  describe '#trace' do
-
-    it "outputs trace message if behaviour metadata has :trace => true" do
-      Micronaut.configuration.output.expects(:puts).with(includes("Starting example: example"))
-      behaviour = Micronaut::Behaviour.describe("foo", :trace => true) {}
-      @formatter.behaviour = behaviour
-      @formatter.example_started("example")
-    end
-    
-  end
-  
-  
 end

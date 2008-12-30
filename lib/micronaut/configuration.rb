@@ -116,8 +116,6 @@ module Micronaut
       @trace == true
     end
 
-    # RJS I think we should rename include/extend so they don't conflict or confuse with the ruby builtin
-    #  maybe register_include, setup_include, add_include, or just _include ?
     def include(mod, options={})
       include_or_extend_modules << [:include, mod, options]
     end
