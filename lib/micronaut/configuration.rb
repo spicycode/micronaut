@@ -100,19 +100,11 @@ module Micronaut
     # RJS I think we should rename include/extend so they don't conflict or confuse with the ruby builtin
     #  maybe register_include, setup_include, add_include, or just _include ?
     def include(mod, options={})
-      if options.empty?
-        Micronaut::Behaviour.send(:include, mod)
-      else
-        include_or_extend_modules << [:include, mod, options]
-      end
+      include_or_extend_modules << [:include, mod, options]
     end
     
     def extend(mod, options={})
-      if options.empty?
-        Micronaut::Behaviour.send(:extend, mod)
-      else
-        include_or_extend_modules << [:extend, mod, options]
-      end
+      include_or_extend_modules << [:extend, mod, options]
     end
     
     def find_modules(group)
