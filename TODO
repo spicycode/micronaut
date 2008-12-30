@@ -1,6 +1,6 @@
 * Track if a behaviour inherits it's described type in metadata
 * Track example output in metadata
-* Allow turning off backtrace filter at the instance level (ie: it "does something that needs full trace", :full_trace => true do....)
 * Setup lighthouse
-* How to unhook transactional test helper stuff for unit suites with UnitRecord
+* How to unhook transactional test helper stuff for unit suites with UnitRecord?
 * TextMate issues (on the BAM and rob's MBP)
+* tweak micronaut-rails example_helper so it will detect being run in a vendor/rails context, and use micronaut from vendor/rails if its there...otherwise fall back to normal gem setup (i think will-paginate does this, check it for an example)
