@@ -7,7 +7,7 @@ describe Micronaut::KernelExtensions do
   end
   
   it "should add a describe method to Object" do
-    Object.methods.should include("describe")
+    Object.should respond_to(:describe)
   end
 
 end
