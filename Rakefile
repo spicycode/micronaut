@@ -44,10 +44,18 @@ task :make_gemspec do
   end
 end
 
+def ruby_command(command)
+  if RUBY_VERSION.include?("1.9")
+    system("ruby19 #{command}")
+  else
+    system("ruby #{command}")
+  end
+end
+
 desc 'Run all examples'
 task :examples do
   examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-  ruby examples.join(" ")
+  ruby_command examples.join(" ")
 end
 
 desc "List files that don't have examples"

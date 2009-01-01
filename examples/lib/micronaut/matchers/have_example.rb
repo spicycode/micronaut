@@ -345,50 +345,48 @@ EOF
     end
   end
 
-  module Micronaut
-    module Matchers
-      describe Have do
-        it "should have method_missing as private" do
-          # with_ruby '1.8' do
-            Have.private_instance_methods.should include("method_missing")
-          # end
-          # with_ruby '1.9' do
-          #   Have.private_instance_methods.should include(:method_missing)
-          # end
-        end
-      
-        describe "respond_to?" do
-          before :each do
-            @have = Have.new(:foo)
-            @a_method_which_have_defines = Have.instance_methods.first
-            @a_method_which_object_defines = Object.instance_methods.first
-          end
-        
-          it "should be true for a method which Have defines" do
-            @have.should respond_to(@a_method_which_have_defines)
-          end
-        
-          it "should be true for a method that it's superclass (Object) defines" do
-            @have.should respond_to(@a_method_which_object_defines)
-          end
-        
-          it "should be false for a method which neither Object nor nor Have defines" do
-            @have.should_not respond_to(:foo_bar_baz)
-          end
-        
-          it "should be false if the owner doesn't respond to the method" do
-            have = Have.new(99)
-            have.should_not respond_to(:problems)
-          end
-        
-          it "should be true if the owner responds to the method" do
-            have = Have.new(:a_symbol)
-            have.should respond_to(:to_sym)
-          end
-        end
+  describe Micronaut::Matchers::Have do
+    it "should have method_missing as private" do
+      with_ruby '1.8' do
+        Micronaut::Matchers::Have.private_instance_methods.should include("method_missing")
+      end
+      with_ruby '1.9' do
+        Have.private_instance_methods.should include(:method_missing)
       end
     end
   
-  end
+    describe "respond_to?" do
 
+      before do
+        @have = Micronaut::Matchers::Have.new(:foo)
+        @a_method_which_have_defines = Micronaut::Matchers::Have.instance_methods.first
+        @a_method_which_object_defines = Object.instance_methods.first
+      end
+    
+      it "should be true for a method which Have defines" do
+        @have.should respond_to(@a_method_which_have_defines)
+      end
+    
+      it "should be true for a method that it's superclass (Object) defines" do
+        @have.should respond_to(@a_method_which_object_defines)
+      end
+    
+      it "should be false for a method which neither Object nor nor Have defines" do
+        @have.should_not respond_to(:foo_bar_baz)
+      end
+    
+      it "should be false if the owner doesn't respond to the method" do
+        have = Micronaut::Matchers::Have.new(99)
+        have.should_not respond_to(:problems)
+      end
+    
+      it "should be true if the owner responds to the method" do
+        have = Micronaut::Matchers::Have.new(:a_symbol)
+        have.should respond_to(:to_sym)
+      end
+
+    end
+
+  end
+  
 end
