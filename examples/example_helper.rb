@@ -3,7 +3,7 @@ $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 
 require 'micronaut'
 require 'rubygems'
-#gem :mocha
+gem :mocha
 
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
