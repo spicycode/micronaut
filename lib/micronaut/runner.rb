@@ -38,9 +38,11 @@ module Micronaut
 
       formatter.start(total_examples_to_run) # start the clock
       start = Time.now
+
       Micronaut.world.behaviours_to_run.each do |behaviour|
         suite_success &= behaviour.run(formatter)
       end
+
       formatter.start_dump(Time.now - start)
       
       formatter.dump_failures

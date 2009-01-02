@@ -39,6 +39,22 @@ Micronaut is a light-weight BDD test framework.
 		
 * Designed to be formatter compatible with RSpec (though this needs some real-world testing)
 
+* Rake task for simple setup
+  
+   require 'rubygems'
+   require 'micronaut/rake_task'
+
+   desc "Run all micronaut examples"
+   Micronaut::RakeTask.new :examples do |t|
+     t.pattern = "examples/**/*_example.rb"
+   end
+
+   desc "Run all micronaut examples using rcov"
+   Micronaut::RakeTask.new :coverage do |t|
+     t.pattern = "examples/**/*_example.rb"
+     t.rcov = true
+     t.rcov_opts = "--exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links" 
+   end
 ## REQUIREMENTS:
 
 + Ruby 1.8.6+

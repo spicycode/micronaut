@@ -2,8 +2,7 @@ require 'autotest'
 
 Autotest.add_hook :initialize do |at|
   at.clear_mappings
-  # watch out: Ruby bug (1.8.6):
-  # %r(/) != /\//
+
   at.add_mapping(%r%^examples/.*_example.rb$%) { |filename, _| 
     filename 
   }
@@ -39,7 +38,7 @@ class Autotest::Micronaut < Autotest
 
   def make_test_cmd(files_to_test)
     return '' if files_to_test.size == 0
-    "bin/micronaut #{files_to_test.keys.join(' ')}"
+    "bin/micronaut #{files_to_test.keys.sort.join(' ')}"
   end
   
 end

@@ -27,11 +27,6 @@ module Micronaut
     #     end
     #   end
     #
-    # You might be wondering "why would I do this if I could just say"
-    # assert_eats_cheese?", a fair question, indeed. You might prefer
-    # to replace the word assert with something more aligned with the
-    # rest of your code examples. You are using rspec, after all.
-    #
     # The other benefit you get is that you can use the negative version
     # of the matcher:
     #

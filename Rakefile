@@ -1,9 +1,10 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 require 'rubygems/specification'
+require 'lib/micronaut/rake_task'
 
 GEM = "micronaut"
-GEM_VERSION = "0.1.8.2"
+GEM_VERSION = "0.1.8.3"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://github.com/spicycode/micronaut"
@@ -44,20 +45,6 @@ task :make_gemspec do
   end
 end
 
-def ruby_command(command)
-  if RUBY_VERSION.include?("1.9")
-    system("ruby19 #{command}")
-  else
-    system("ruby #{command}")
-  end
-end
-
-desc 'Run all examples'
-task :examples do
-  examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-  ruby_command examples.join(" ")
-end
-
 desc "List files that don't have examples"
 task :untested do
   code = Dir["lib/**/*.rb"].map { |g| Dir.glob(g) }.flatten
@@ -69,26 +56,20 @@ task :untested do
   end
 end
 
-desc "Run all examples using rcov"
-task :coverage do
-  examples = Dir["examples/**/*_example.rb"].map { |g| Dir.glob(g) }.flatten
-  result = system "rcov --exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links #{examples.join(' ')}"
-  fail_build unless result
+desc "Run all micronaut examples"
+Micronaut::RakeTask.new :examples do |t|
+  t.pattern = "examples/**/*_example.rb"
 end
 
-def fail_build
-  puts
-  puts "-" * 79
-  puts "Build Failed"
-  puts "-" * 79
-  abort
+namespace :examples do
+  
+  desc "Run all micronaut examples using rcov"
+  Micronaut::RakeTask.new :coverage do |t|
+    t.pattern = "examples/**/*_example.rb"
+    t.rcov = true
+    t.rcov_opts = "--exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links" 
+  end
+
 end
 
-desc "Delete coverage artifacts" 
-task :clean_coverage do
-  rm_rf Dir["coverage/**/*"]
-end
-
-
-task :default => 'coverage'
-task :clobber_package => 'clean_coverage'
+task :default => 'examples:coverage'
