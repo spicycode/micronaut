@@ -60,7 +60,7 @@ describe Micronaut::Behaviour do
       end
       
       it "should add the caller to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller].should == "#{__FILE__}:#{__LINE__}"
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller].should include("#{__FILE__}:#{__LINE__}")
       end
       
       it "should add the the file_path to metadata" do
@@ -78,7 +78,7 @@ describe Micronaut::Behaviour do
       it "should add file path and line number metadata for arbitrarily nested describes" do
         Micronaut::Behaviour.describe(Object) do
           Micronaut::Behaviour.describe("foo") do
-            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller].should == "#{__FILE__}:#{__LINE__}"
+            Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == __FILE__
             Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
           end
         end

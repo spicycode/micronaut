@@ -85,9 +85,9 @@ module Micronaut
       @metadata[:behaviour][:description] = args.shift || ''
       @metadata[:behaviour][:name] = "#{describes} #{description}".strip
       @metadata[:behaviour][:block] = extra_metadata.delete(:behaviour_block)
-      @metadata[:behaviour][:caller] = eval("caller(0)[0]", @metadata[:behaviour][:block].binding)
-      @metadata[:behaviour][:file_path] = @metadata[:behaviour][:caller].split(":")[0].strip
-      @metadata[:behaviour][:line_number] = @metadata[:behaviour][:caller].split(":")[1].to_i
+      @metadata[:behaviour][:caller] = caller(1)
+      @metadata[:behaviour][:file_path] = @metadata[:behaviour][:caller][4].split(":")[0].strip
+      @metadata[:behaviour][:line_number] = @metadata[:behaviour][:caller][4].split(":")[1].to_i
       
       @metadata.update(extra_metadata)
       
