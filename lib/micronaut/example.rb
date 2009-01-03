@@ -18,6 +18,55 @@ module Micronaut
     def to_s
       inspect
     end
+
+    def run_before_each
+      @behaviour_instance._setup_mocks
+      @behaviour.eval_before_eachs(@behaviour_instance)
+    end
+
+    def run_after_each
+      @behaviour.eval_after_eachs(@behaviour_instance)
+      @behaviour_instance._verify_mocks
+    ensure
+      @behaviour_instance._teardown_mocks
+    end
+
+    def run_example
+      if example_block
+        @behaviour_instance.instance_eval(&example_block)
+        @behaviour_instance._verify_mocks
+        @reporter.example_passed(self)
+      else
+        @reporter.example_pending(self, 'Not yet implemented')
+      end
+    end
+
+    def run(behaviour_instance, reporter)
+      @behaviour_instance, @reporter = behaviour_instance, reporter
+      @behaviour_instance.running_example = self
+      @reporter.example_started(self)
+
+      all_systems_nominal = true
+
+      begin
+        run_before_each
+        run_example
+      rescue Exception => e
+        @reporter.example_failed(self, e)
+        all_systems_nominal = false
+      end
+
+      begin
+        run_after_each
+      rescue Exception => e
+        @reporter.example_failed(self, e)
+        all_systems_nominal = false
+      ensure
+        @behaviour_instance.running_example = nil
+      end
+
+      all_systems_nominal
+    end
   
   end
   

@@ -2,7 +2,7 @@ module Micronaut
   class Behaviour
     include Micronaut::Matchers 
     
-    attr_accessor :running_example
+    attr_accessor :running_example, :reporter
     
     def self.inherited(klass)
       super
@@ -191,40 +191,12 @@ module Micronaut
     def self.run(reporter)
       return true if examples.empty?
 
+      behaviour_instance = new
       reporter.add_behaviour(self)
+      eval_before_alls(behaviour_instance)
+      success = examples_to_run.all? { |ex| ex.run(behaviour_instance, reporter) }
+      eval_after_alls(behaviour_instance)
       
-      group = new
-      eval_before_alls(group)
-      success = true
-
-      examples_to_run.each do |ex|
-        group.running_example = ex
-        reporter.example_started(ex)
-
-        execution_error = nil
-        begin
-          group._setup_mocks
-          eval_before_eachs(group)
-
-          if ex.example_block
-            group.instance_eval(&ex.example_block)
-            group._verify_mocks
-            reporter.example_passed(ex)
-          else
-            reporter.example_pending(ex, 'Not yet implemented')
-          end
-        rescue Exception => e
-          reporter.example_failed(ex, e)
-          execution_error ||= e
-        ensure
-          eval_after_eachs(group)
-          group._teardown_mocks
-        end
-
-        success &= execution_error.nil?
-      end
-      eval_after_alls(group)
-      group.running_example = nil
       success
     end
 
