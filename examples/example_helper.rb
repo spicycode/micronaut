@@ -3,8 +3,14 @@ $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 
 require 'micronaut'
 require 'rubygems'
-gem :mocha
 
+def with_ruby(version)
+  yield if RUBY_PLATFORM =~ Regexp.compile("^#{version}")
+end
+
+with_ruby("1.8") do
+  gem :mocha
+end
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
 module Micronaut
@@ -17,10 +23,6 @@ module Micronaut
       raise_error(::Micronaut::Expectations::ExpectationNotMetError, message)
     end
   end
-end
-
-def with_ruby(version)
-  yield if RUBY_PLATFORM =~ Regexp.compile("^#{version}")
 end
 
 def remove_last_describe_from_world
