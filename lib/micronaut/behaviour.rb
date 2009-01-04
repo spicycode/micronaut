@@ -103,23 +103,23 @@ module Micronaut
     end
 
     def self.metadata
-      @metadata
+      @metadata ||= { :behaviour => {} }
     end
 
     def self.name
-      @metadata[:behaviour][:name]
+      metadata[:behaviour][:name]
     end
 
     def self.describes
-      @metadata[:behaviour][:describes]
+      metadata[:behaviour][:describes]
     end
 
     def self.description
-      @metadata[:behaviour][:description]
+      metadata[:behaviour][:description]
     end
     
     def self.file_path
-      @metadata[:behaviour][:file_path]
+      metadata[:behaviour][:file_path]
     end
    
     def self.describe(*args, &behaviour_block)
@@ -211,7 +211,7 @@ module Micronaut
     end
 
     def self.to_s
-      self == Micronaut::Behaviour ? 'Micronaut::Behaviour' : @metadata[:behaviour][:name]
+      self == Micronaut::Behaviour ? 'Micronaut::Behaviour' : name
     end
     
   end
