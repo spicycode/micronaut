@@ -21,7 +21,7 @@ end
 class MicronautCommandError < StandardError; end
 
 class Autotest::Micronaut < Autotest
-  remove_method :consolidate_failures, :make_test_cmd
+  # remove_method :consolidate_failures, :make_test_cmd
 
   def consolidate_failures(failed)
     filters = new_hash_of_arrays
@@ -34,8 +34,13 @@ class Autotest::Micronaut < Autotest
   end
 
   def make_test_cmd(files_to_test)
-    return '' if files_to_test.size == 0
-    "bin/micronaut #{files_to_test.keys.sort.join(' ')}"
+    return '' if files_to_test.empty?
+    
+    examples = files_to_test.keys.flatten
+    
+    examples.map! {|f| %Q(require "#{f}")}
+
+    return "#{ruby} -e '#{examples.join("; ")}'"
   end
   
 end
