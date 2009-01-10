@@ -67,7 +67,7 @@ namespace :examples do
   Micronaut::RakeTask.new :coverage do |t|
     t.pattern = "examples/**/*_example.rb"
     t.rcov = true
-    t.rcov_opts = "--exclude \"examples/*,gems/*,db/*,/Library/Ruby/*,config/*\" --text-summary  --sort coverage --no-validator-links" 
+    t.rcov_opts = %[--exclude "examples/*,gems/*,db/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage --no-validator-links]
   end
 
 end
