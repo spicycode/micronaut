@@ -194,10 +194,15 @@ module Micronaut
       behaviour_instance = new
       reporter.add_behaviour(self)
       eval_before_alls(behaviour_instance)
-      success = examples_to_run.all? { |ex| ex.run(behaviour_instance, reporter) }
+      success = run_examples(behaviour_instance, reporter)
       eval_after_alls(behaviour_instance)
       
       success
+    end
+    
+    # Runs all examples, returning true only if all of them pass
+    def self.run_examples(behaviour_instance, reporter)
+      examples_to_run.map { |ex| ex.run(behaviour_instance, reporter) }.all?
     end
 
     def self.subclass(base_name, &body) # :nodoc:

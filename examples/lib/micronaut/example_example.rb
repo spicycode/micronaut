@@ -51,4 +51,13 @@ describe Micronaut::Example do
   
   end
   
+  describe "#run" do
+    
+    pending "should run after(:each) when the example fails"
+
+    pending "should run after(:each) when the example raises an Exception" 
+    
+  end
+  
+  
 end

@@ -208,12 +208,38 @@ describe Micronaut::Behaviour do
 
   end
   
-  describe "#run" do
+  describe "#run_examples" do
     
-    pending "should run after(:each) when the example fails"
+    def stub_behaviour
+      stub_everything('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})
+    end
 
-    pending "should run after(:each) when the example raises an Exception" 
+    it "should return true if all examples pass" do
+      passing_example1 = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+      passing_example2 = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+      Micronaut::Behaviour.stubs(:examples_to_run).returns([passing_example1, passing_example2])
+
+      Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should == true
+    end
+    
+    it "should return false if any of the examples return false" do
+      failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
+      passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+      Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
+
+      Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should == false
+    end
+    
+    it "should run all examples, regardless of any of them failing" do
+      failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
+      passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+      Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
+
+      passing_example.expects(:run)
+      
+      Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter'))
+    end
     
   end
-
+  
 end
