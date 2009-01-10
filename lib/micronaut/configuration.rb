@@ -88,6 +88,7 @@ module Micronaut
       @formatter_to_use = case formatter_to_use.to_s
                           when 'documentation' then Micronaut::Formatters::DocumentationFormatter
                           when 'progress' then Micronaut::Formatters::ProgressFormatter
+                          else raise(ArgumentError, "Formatter '#{formatter_to_use}' unknown - maybe you meant 'documentation' or 'progress'?.")
                           end
     end
     

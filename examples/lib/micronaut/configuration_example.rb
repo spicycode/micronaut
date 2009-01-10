@@ -105,5 +105,21 @@ describe Micronaut::Configuration do
     end
        
   end
+  
+  describe '#formatter' do
+
+    it "sets formatter_to_use based on name" do
+      config = Micronaut::Configuration.new
+      config.formatter = :documentation
+      config.instance_eval { @formatter_to_use.should == Micronaut::Formatters::DocumentationFormatter }
+      config.formatter = 'documentation'
+      config.instance_eval { @formatter_to_use.should == Micronaut::Formatters::DocumentationFormatter }
+    end
+    
+    it "raises ArgumentError if formatter is unknown" do
+      config = Micronaut::Configuration.new
+      lambda { config.formatter = :progresss }.should raise_error(ArgumentError)
+    end
+  end
 
 end

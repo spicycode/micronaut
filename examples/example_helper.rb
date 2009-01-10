@@ -33,8 +33,12 @@ def not_in_editor?
   ['TM_MODE', 'EMACS', 'VIM'].all? { |k| !ENV.has_key?(k) }
 end
 
+def runcoderun?
+  ENV["RUN_CODE_RUN"]
+end
+
 Micronaut.configure do |c|
-  #c.formatter = :documentation
+  c.formatter = :documentation if runcoderun?
   c.mock_with :mocha
   c.color_enabled = not_in_editor?
   c.filter_run :focused => true
