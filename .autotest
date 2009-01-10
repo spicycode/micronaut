@@ -21,7 +21,8 @@ end
 class MicronautCommandError < StandardError; end
 
 class Autotest::Micronaut < Autotest
-  # remove_method :consolidate_failures, :make_test_cmd
+  remove_method :consolidate_failures if instance_methods(false).include?("consolidate_failures")
+  remove_method :make_test_cmd if instance_methods(false).include?("make_test_cmd")
 
   def consolidate_failures(failed)
     filters = new_hash_of_arrays
