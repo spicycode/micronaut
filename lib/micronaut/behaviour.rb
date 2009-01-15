@@ -6,6 +6,7 @@ module Micronaut
     
     def self.inherited(klass)
       super
+      Micronaut.configuration.autorun!
       Micronaut.world.behaviours << klass
     end
     
