@@ -74,7 +74,7 @@ describe Micronaut::Configuration do
       Micronaut::Configuration.new.trace?.should == false
     end
     
-    it "is true if configuration.trace is true", :full_backtrace => true do
+    it "is true if configuration.trace is true" do
       config = Micronaut::Configuration.new
       config.trace = true
       config.trace?.should == true
