@@ -4,7 +4,7 @@ require 'rubygems/specification'
 require 'lib/micronaut/rake_task'
 
 GEM = "micronaut"
-GEM_VERSION = "0.2.1.1"
+GEM_VERSION = "0.2.1.2"
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
 HOMEPAGE = "http://github.com/spicycode/micronaut"
