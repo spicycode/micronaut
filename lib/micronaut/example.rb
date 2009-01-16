@@ -47,23 +47,26 @@ module Micronaut
       @reporter.example_started(self)
 
       all_systems_nominal = true
-
+      exception_encountered = nil
+      
       begin
         run_before_each
         run_example
       rescue Exception => e
-        @reporter.example_failed(self, e)
+        exception_encountered = e
         all_systems_nominal = false
       end
 
       begin
         run_after_each
       rescue Exception => e
-        @reporter.example_failed(self, e)
+        exception_encountered ||= e
         all_systems_nominal = false
       ensure
         @behaviour_instance.running_example = nil
       end
+      
+      @reporter.example_failed(self, exception_encountered) if exception_encountered 
 
       all_systems_nominal
     end
