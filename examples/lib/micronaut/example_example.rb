@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 
-describe Micronaut::Example do
+describe Micronaut::Example, :parent_metadata => 'sample' do
 
   before do
     behaviour = stub('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})
@@ -47,6 +47,12 @@ describe Micronaut::Example do
 
     it "should have a reference to itself when running" do
       running_example.description.should == "should have a reference to itself when running"
+    end
+
+    it "should be able to access the behaviours top level metadata as if it were its own" do
+      running_example.metadata.each { |k,v| puts "#{k} => #{v.inspect}\n\n" }
+      running_example.behaviour.metadata.should include(:parent_metadata => 'sample')
+      running_example.metadata.should include(:parent_metadata => 'sample')
     end
   
   end

@@ -77,10 +77,11 @@ module Micronaut
     end
 
     def self.set_it_up(*args)
-      @metadata = { :behaviour => {} }
+      @metadata = { }
       extra_metadata = args.last.is_a?(Hash) ? args.pop : {}
       extra_metadata.delete(:behaviour) # Remove it when present to prevent it clobbering the one we setup
-      
+      @metadata.update(self.superclass.metadata) 
+      @metadata[:behaviour] = {}
       @metadata[:behaviour][:describes] = args.shift unless args.first.is_a?(String)
       @metadata[:behaviour][:describes] ||= self.superclass.metadata && self.superclass.metadata[:behaviour][:describes]
       @metadata[:behaviour][:description] = args.shift || ''

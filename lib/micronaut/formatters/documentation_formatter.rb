@@ -52,7 +52,7 @@ module Micronaut
       end
 
       def current_indentation
-        '  ' * previous_nested_behaviours.length
+        '  ' * previous_nested_behaviours.size
       end
 
       def described_behaviour_chain

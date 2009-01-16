@@ -108,7 +108,11 @@ module Micronaut
     def trace(override = false)
       raise(ArgumentError, "Must yield a block with your string to trace.") unless block_given?
       return unless trace? || override
-      Micronaut.configuration.output.puts("[TRACE] #{yield}")
+      puts("[TRACE] #{yield}")
+    end
+
+    def puts(msg)
+      output.puts(msg)    
     end
     
     # If true, Micronaut will provide detailed trace output of its self as it runs.
