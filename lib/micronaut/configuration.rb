@@ -13,7 +13,8 @@ module Micronaut
     # Modules that will be included or extended based on given filters
     attr_reader :include_or_extend_modules
     
-    # Run all examples if the run is filtered, and no examples were found - defaults to true
+    # Run all examples if the run is filtered, and no examples were found.  Normally this is what you want -
+    # when using focused examples for instance.  Defaults to true
     attr_accessor :run_all_when_everything_filtered
 
     # Enable profiling of example run - defaults to false
@@ -67,6 +68,7 @@ module Micronaut
       Micronaut::Runner.autorun
     end
        
+    # Turn ANSI on with 'true', or off with 'false'
     def color_enabled=(on_or_off)
       @color_enabled = on_or_off
     end
