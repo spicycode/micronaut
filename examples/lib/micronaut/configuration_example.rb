@@ -10,11 +10,13 @@ describe Micronaut::Configuration do
       Micronaut.configuration.mock_with :mocha
     end
 
-    it "should include the do absolutely nothing mocking adapter for all other cases" do
+    it "should include the null adapter for nil" do
       Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
-      Micronaut.configuration.mock_with
+      Micronaut.configuration.mock_with nil
     end
     
+    # if the below example doesn't pass, @behaviour_instance._setup_mocks and similiar calls fail without a mock library specified
+    # this is really a case where cucumber would be a better fit to catch these type of regressions
     it "should include the null adapter by default, if no mocking library is specified" do
       Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
       config = Micronaut::Configuration.new

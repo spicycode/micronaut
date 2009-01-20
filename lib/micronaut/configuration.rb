@@ -35,6 +35,7 @@ module Micronaut
       @include_or_extend_modules = []
       @formatter_to_use = Micronaut::Formatters::ProgressFormatter
       @filter = nil
+      mock_with nil unless @mock_framework_established
     end
     
     # E.g. alias_example_to :crazy_slow, :speed => 'crazy_slow' defines
@@ -48,6 +49,7 @@ module Micronaut
     end
     
     def mock_with(make_a_mockery_with=nil)
+      @mock_framework_established = true
       @mock_framework = make_a_mockery_with
       mock_framework_class = case make_a_mockery_with.to_s
                              when /mocha/i
