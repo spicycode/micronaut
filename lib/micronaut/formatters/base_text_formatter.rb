@@ -29,16 +29,20 @@ module Micronaut
       def dump_failures
         output.puts
         failed_examples.each_with_index do |examples_with_exception, index|
-          example, exception = examples_with_exception.first, examples_with_exception.last
+          failed_example, exception = examples_with_exception.first, examples_with_exception.last
           padding = '    '
-          output.puts "#{index.next}) #{example}"
-          output.puts "#{padding}Failure/Error: #{read_failed_line(exception, example).strip}"
+          
+          output.puts "#{index.next}) #{failed_example}"
+          output.puts "#{padding}Failure/Error: #{read_failed_line(exception, failed_example).strip}"
+          
           exception.message.split("\n").each do |line|
             output.puts "#{padding}#{colorise(line, exception).strip}"
           end
-          format_backtrace(exception.backtrace, example).each do |backtrace_info|
+
+          format_backtrace(exception.backtrace, failed_example).each do |backtrace_info|
             output.puts grey("#{padding}# #{backtrace_info}")
           end
+          
           output.puts 
           output.flush
         end

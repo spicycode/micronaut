@@ -1,8 +1,8 @@
 module Micronaut
   module KernelExtensions
 
-    def describe(*args, &describe_block)
-      Micronaut::Behaviour.describe(*args, &describe_block)
+    def describe(*args, &behaviour_block)
+      Micronaut::Behaviour.describe(*args, &behaviour_block)
     end
 
   end

@@ -18,6 +18,10 @@ describe Micronaut do
       end
     end
     
+    it "should be callable without a block" do
+      Micronaut.configure
+    end
+    
   end
   
   describe "#world" do

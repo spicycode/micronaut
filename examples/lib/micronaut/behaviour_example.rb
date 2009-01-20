@@ -188,9 +188,9 @@ describe Micronaut::Behaviour do
 
   end
 
-  describe Object, "describing nested behaviours" do 
+  describe Object, "describing nested behaviours", :little_less_nested => 'yep' do 
 
-    describe "A sample nested describe", :just_testing => 'yep' do
+    describe "A sample nested describe", :nested_describe => "yep" do
     
       it "should set the described type to the constant Object" do
         running_example.behaviour.describes.should == Object
@@ -200,8 +200,12 @@ describe Micronaut::Behaviour do
         running_example.behaviour.description.should == 'A sample nested describe'
       end
       
-      it "should have :just_testing => 'yep' in the metadata" do
-        running_example.behaviour.metadata.should include(:just_testing => 'yep')
+      it "should have top level metadata from the behaviour and its ancestors" do
+        running_example.behaviour.metadata.should include(:little_less_nested => 'yep', :nested_describe => 'yep')
+      end
+      
+      it "should make the parent metadata available on the contained examples" do
+        running_example.metadata.should include(:little_less_nested => 'yep', :nested_describe => 'yep')
       end
 
     end

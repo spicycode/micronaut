@@ -30,7 +30,7 @@ module Micronaut
   end
 
   def self.configure
-    yield configuration
+    yield configuration if block_given?
     configuration.autorun!
   end
   

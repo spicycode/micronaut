@@ -79,7 +79,7 @@ describe Micronaut::Configuration do
       Micronaut::Configuration.new.trace?.should == false
     end
     
-    it "is true if configuration.trace is true", :full_backtrace => true do
+    it "is true if configuration.trace is true" do
       config = Micronaut::Configuration.new
       config.trace = true
       config.trace?.should == true
@@ -98,14 +98,14 @@ describe Micronaut::Configuration do
     it "does nothing if trace is false" do
       config = Micronaut::Configuration.new
       config.trace = false
-      config.output.expects(:puts).never
+      config.expects(:puts).with("my trace string is awesome").never
       config.trace { "my trace string is awesome" }
     end
     
     it "allows overriding tracing an optional param" do
       config = Micronaut::Configuration.new
       config.trace = false
-      config.output.expects(:puts).with(includes("my trace string is awesome"))
+      config.expects(:puts).with(includes("my trace string is awesome"))
       config.trace(true) { "my trace string is awesome" }
     end
        
@@ -125,6 +125,7 @@ describe Micronaut::Configuration do
       config = Micronaut::Configuration.new
       lambda { config.formatter = :progresss }.should raise_error(ArgumentError)
     end
+    
   end
 
 end
