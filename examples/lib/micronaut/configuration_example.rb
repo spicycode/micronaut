@@ -14,7 +14,12 @@ describe Micronaut::Configuration do
       Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
       Micronaut.configuration.mock_with
     end
-
+    
+    it "should include the null adapter by default, if no mocking library is specified" do
+      Micronaut::Behaviour.expects(:send).with(:include, Micronaut::Mocking::WithAbsolutelyNothing)
+      config = Micronaut::Configuration.new
+    end
+    
   end  
  
   describe "#include" do
