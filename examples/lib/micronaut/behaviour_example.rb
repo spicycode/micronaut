@@ -60,7 +60,7 @@ describe Micronaut::Behaviour do
       end
       
       it "should add the caller to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller].should include("#{__FILE__}:#{__LINE__}")
+        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller][4].should =~ /#{__FILE__}:#{__LINE__}/
       end
       
       it "should add the the file_path to metadata" do

@@ -3,9 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 describe Micronaut::Matchers, "have" do
 
   before do
-    unless defined?(ActiveSupport::Inflector)
+    unless defined?(::ActiveSupport::Inflector)
       @active_support_was_not_defined
-      module ActiveSupport
+      module ::ActiveSupport
         class Inflector
           def self.pluralize(string)
             string.to_s + 's'
@@ -76,9 +76,9 @@ describe Micronaut::Matchers, "have" do
   describe 'should have(1).item when Inflector is defined' do
     
     before do
-      unless defined?(Inflector)
+      unless defined?(::Inflector)
         @inflector_was_not_defined
-        class Inflector
+        class ::Inflector
           def self.pluralize(string)
             string.to_s + 's'
           end
