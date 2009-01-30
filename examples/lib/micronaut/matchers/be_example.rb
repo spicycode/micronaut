@@ -42,11 +42,11 @@ describe Micronaut::Matchers do
         actual.should be_foo
       end.should raise_error(/aaaah/)
     end
-    
+
   end
 
   describe "should_not be_predicate" do
-    
+
     it "should pass when actual returns false for :sym?" do
       actual = stub("actual", :happy? => false)
       actual.should_not be_happy
@@ -64,11 +64,11 @@ describe Micronaut::Matchers do
         Object.new.should_not be_happy
       end.should raise_error(NameError)
     end
-    
+
   end
 
   describe "should be_predicate(*args)" do
-    
+
     it "should pass when actual returns true for :predicate?(*args)" do
       actual = mock("actual")
       actual.expects(:older_than?).with(3).returns(true)
@@ -88,11 +88,11 @@ describe Micronaut::Matchers do
         Object.new.should be_older_than(3)
       end.should raise_error(NameError)
     end
-    
+
   end
 
   describe "should_not be_predicate(*args)" do
-    
+
     it "should pass when actual returns false for :predicate?(*args)" do
       actual = mock("actual")
       actual.expects(:older_than?).with(3).returns(false)
@@ -112,11 +112,11 @@ describe Micronaut::Matchers do
         Object.new.should_not be_older_than(3)
       end.should raise_error(NameError)
     end
-    
+
   end
 
   describe "should be_true" do
-    
+
     it "should pass when actual equal(true)" do
       true.should be_true
     end
@@ -126,11 +126,11 @@ describe Micronaut::Matchers do
         false.should be_true
       end.should fail_with("expected true, got false")
     end
-    
+
   end
 
   describe "should be_false" do
-    
+
     it "should pass when actual equal(false)" do
       false.should be_false
     end
@@ -140,11 +140,11 @@ describe Micronaut::Matchers do
         true.should be_false
       end.should fail_with("expected false, got true")
     end
-    
+
   end
 
   describe "should be_nil" do
-    
+
     it "should pass when actual is nil" do
       nil.should be_nil
     end
@@ -154,11 +154,11 @@ describe Micronaut::Matchers do
         :not_nil.should be_nil
       end.should fail_with("expected nil? to return true, got false")
     end
-    
+
   end
 
   describe "should_not be_nil" do
-    
+
     it "should pass when actual is not nil" do
       :not_nil.should_not be_nil
     end
@@ -168,11 +168,11 @@ describe Micronaut::Matchers do
         nil.should_not be_nil
       end.should fail_with("expected nil? to return false, got true")
     end
-    
+
   end
 
   describe "should be <" do
-    
+
     it "should pass when < operator returns true" do
       3.should be < 4
     end
@@ -180,11 +180,11 @@ describe Micronaut::Matchers do
     it "should fail when < operator returns false" do
       lambda { 3.should be < 3 }.should fail_with("expected < 3, got 3")
     end
-    
+
   end
 
   describe "should be <=" do
-    
+
     it "should pass when <= operator returns true" do
       3.should be <= 4
       4.should be <= 4
@@ -193,11 +193,11 @@ describe Micronaut::Matchers do
     it "should fail when <= operator returns false" do
       lambda { 3.should be <= 2 }.should fail_with("expected <= 2, got 3")
     end
-    
+
   end
 
   describe "should be >=" do
-    
+
     it "should pass when >= operator returns true" do
       4.should be >= 4
       5.should be >= 4
@@ -206,11 +206,11 @@ describe Micronaut::Matchers do
     it "should fail when >= operator returns false" do
       lambda { 3.should be >= 4 }.should fail_with("expected >= 4, got 3")
     end
-    
+
   end
 
   describe "should be >" do
-    
+
     it "should pass when > operator returns true" do
       5.should be > 4
     end
@@ -218,11 +218,11 @@ describe Micronaut::Matchers do
     it "should fail when > operator returns false" do
       lambda { 3.should be > 4 }.should fail_with("expected > 4, got 3")
     end
-    
+
   end
 
   describe "should be ==" do
-    
+
     it "should pass when == operator returns true" do
       5.should be == 5
     end
@@ -230,11 +230,11 @@ describe Micronaut::Matchers do
     it "should fail when == operator returns false" do
       lambda { 3.should be == 4 }.should fail_with("expected == 4, got 3")
     end
-    
+
   end
 
   describe "should be ===" do
-    
+
     it "should pass when === operator returns true" do
       Hash.should be === Hash.new
     end
@@ -242,21 +242,21 @@ describe Micronaut::Matchers do
     it "should fail when === operator returns false" do
       lambda { Hash.should be === "not a hash" }.should fail_with(%[expected === not a hash, got Hash])
     end
-    
+
   end
 
   describe "should_not with operators" do
-    
+
     it "should coach user to stop using operators with should_not" do
       lambda do
         5.should_not be < 6
       end.should raise_error(/not only FAILED,\nit reads really poorly./m)
     end
-    
+
   end
 
   describe "should be" do
-    
+
     it "should pass if actual is true or a set value" do
       true.should be
       1.should be
@@ -269,30 +269,30 @@ describe Micronaut::Matchers do
     it "should fail if actual is nil" do
       lambda {nil.should be}.should fail_with("expected true, got nil")
     end
-    
+
   end
 
   describe "should be(value)" do
-    
+
     it "should pass if actual.equal?(value)" do
       5.should be(5)
     end
-    
+
     it "should fail if !actual.equal?(value)" do
       lambda { 5.should be(6) }.should fail_with("expected 6, got 5")
     end
-    
+
   end
 
   describe "'should be' with operator" do
-    
+
     it "should include 'be' in the description" do
       (be > 6).description.should =~ /be > 6/
       (be >= 6).description.should =~ /be >= 6/
       (be <= 6).description.should =~ /be <= 6/
       (be < 6).description.should =~ /be < 6/
     end
-    
+
   end
 
 end

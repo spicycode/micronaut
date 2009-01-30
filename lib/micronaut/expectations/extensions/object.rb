@@ -24,12 +24,11 @@ module Micronaut
       # See Micronaut::Matchers for more information about matchers
       #
       # == Warning
-      #
       # NOTE that this does NOT support receiver.should != expected.
       # Instead, use receiver.should_not == expected
       def should(matcher=nil, &block)
         ::Micronaut::Matchers.last_should = "should"
-        return Micronaut::Matchers::PositiveOperatorMatcher.new(self) if matcher.nil?
+        return ::Micronaut::Matchers::PositiveOperatorMatcher.new(self) if matcher.nil?
 
         unless matcher.respond_to?(:matches?)
           raise InvalidMatcherError, "Expected a matcher, got #{matcher.inspect}."
@@ -38,7 +37,7 @@ module Micronaut
         match_found = matcher.matches?(self, &block)
         ::Micronaut::Matchers.last_matcher = matcher
         
-        Micronaut::Expectations.fail_with(matcher.failure_message) unless match_found
+        ::Micronaut::Expectations.fail_with(matcher.failure_message) unless match_found
         match_found
       end
 
@@ -63,14 +62,14 @@ module Micronaut
       # See Micronaut::Matchers for more information about matchers
       def should_not(matcher=nil, &block)
         ::Micronaut::Matchers.last_should = "should not"
-        return Micronaut::Matchers::NegativeOperatorMatcher.new(self) if matcher.nil?
+        return ::Micronaut::Matchers::NegativeOperatorMatcher.new(self) if matcher.nil?
 
         unless matcher.respond_to?(:matches?)
           raise InvalidMatcherError, "Expected a matcher, got #{matcher.inspect}."
         end
 
         unless matcher.respond_to?(:negative_failure_message)
-          Micronaut::Expectations.fail_with(
+          ::Micronaut::Expectations.fail_with(
           <<-EOF
           Matcher does not support should_not.
           See Micronaut::Matchers for more information about matchers.
@@ -80,7 +79,7 @@ module Micronaut
         match_found = matcher.matches?(self, &block)
         ::Micronaut::Matchers.last_matcher = matcher
         
-        Micronaut::Expectations.fail_with(matcher.negative_failure_message) if match_found
+        ::Micronaut::Expectations.fail_with(matcher.negative_failure_message) if match_found
         match_found
       end
 
