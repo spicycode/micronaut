@@ -20,21 +20,20 @@ module Micronaut
     end
 
     def run_before_each
-      @behaviour_instance._setup_mocks
+      @behaviour_instance._setup_mocks if @behaviour_instance.respond_to?(:_setup_mocks)
       @behaviour.eval_before_eachs(@behaviour_instance)
     end
 
     def run_after_each
       @behaviour.eval_after_eachs(@behaviour_instance)
-      @behaviour_instance._verify_mocks
+      @behaviour_instance._verify_mocks if @behaviour_instance.respond_to?(:_verify_mocks)
     ensure
-      @behaviour_instance._teardown_mocks
+      @behaviour_instance._teardown_mocks if @behaviour_instance.respond_to?(:_teardown_mocks)
     end
 
     def run_example
       if example_block
         @behaviour_instance.instance_eval(&example_block)
-        @behaviour_instance._verify_mocks
         @reporter.example_passed(self)
       else
         @reporter.example_pending(self, 'Not yet implemented')

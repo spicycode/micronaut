@@ -220,6 +220,6 @@ module Micronaut
     def self.to_s
       self == Micronaut::Behaviour ? 'Micronaut::Behaviour' : name
     end
-    
+   
   end
 end
