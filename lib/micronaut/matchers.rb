@@ -124,22 +124,15 @@ module Micronaut
   #     include CustomGameMatchers
   #     ...
   #   end
-  #
-  # or you can include in globally in a spec_helper.rb file <tt>require</tt>d
-  # from your spec file(s):
-  #
-  #   Micronaut::Runner.configure do |config|
-  #     config.include(CustomGameMatchers)
-  #   end
-  #
+
   module Matchers
     
     class MatcherError < StandardError; end
     
     private
     def method_missing(sym, *args, &block) # :nodoc:
-      return Matchers::Be.new(sym, *args) if sym.starts_with?("be_")
-      return has(sym, *args) if sym.starts_with?("have_")
+      return Matchers::Be.new(sym, *args) if sym.to_s =~ /^be_/
+      return has(sym, *args) if sym.to_s =~ /^have_/
       super
     end
       

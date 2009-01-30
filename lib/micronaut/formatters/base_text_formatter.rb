@@ -117,6 +117,14 @@ module Micronaut
         return text unless color_enabled?
         "#{color_code}#{text}\e[0m"
       end
+      
+      def bold(text)
+        color(text, "\e[1m")
+      end
+      
+      def white(text)
+        color(text, "\e[37m")
+      end
 
       def green(text)
         color(text, "\e[32m")

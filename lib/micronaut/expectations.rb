@@ -1,6 +1,5 @@
 require 'micronaut/matchers'
 require 'micronaut/expectations/extensions/object'
-require 'micronaut/expectations/extensions/string_and_symbol'
 require 'micronaut/expectations/handler'
 require 'micronaut/expectations/wrap_expectation'
 
