@@ -50,7 +50,6 @@ describe Micronaut::Example, :parent_metadata => 'sample' do
     end
 
     it "should be able to access the behaviours top level metadata as if it were its own" do
-      running_example.metadata.each { |k,v| puts "#{k} => #{v.inspect}\n\n" }
       running_example.behaviour.metadata.should include(:parent_metadata => 'sample')
       running_example.metadata.should include(:parent_metadata => 'sample')
     end

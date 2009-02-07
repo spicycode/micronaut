@@ -34,8 +34,9 @@ def not_in_editor?
 end
 
 Micronaut.configure do |c|
-  c.formatter = :documentation
+  # c.formatter = :documentation
   c.mock_with :mocha
   c.color_enabled = not_in_editor?
   c.filter_run :focused => true
+  c.profile_examples = true
 end

@@ -27,8 +27,8 @@ module Micronaut
       befores[:all]
     end
 
-    def self.before(type=:each, options={}, &block)
-      befores[type] << [options, block]
+    def self.before(type=:each, &block)
+      befores[type] << block
     end
 
     def self.afters
@@ -43,8 +43,8 @@ module Micronaut
       afters[:all]
     end
 
-    def self.after(type=:each, options={}, &block)
-      afters[type] << [options, block]
+    def self.after(type=:each, &block)
+      afters[type] << block
     end
 
     def self.example(desc=nil, options={}, &block)
@@ -156,38 +156,36 @@ module Micronaut
       @_after_ancestors ||= ancestors(true)
     end
 
-    def self.eval_before_alls(example)
+    def self.eval_before_alls(running_behaviour)
+      Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| running_behaviour.instance_eval(&blk) }
+
       before_ancestors.each do |ancestor| 
-        ancestor.before_alls.each { |opts, blk| example.instance_eval(&blk) }
+        ancestor.before_alls.each { |blk| running_behaviour.instance_eval(&blk) }
       end
-      
-      Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| example.instance_eval(&blk) }
     end
         
-    def self.eval_before_eachs(example)
+    def self.eval_before_eachs(running_behaviour)
+      Micronaut.configuration.find_before_or_after(:before, :each, self).each { |blk| running_behaviour.instance_eval(&blk) }
+      
       before_ancestors.each do |ancestor| 
-        ancestor.before_eachs.each { |opts, blk| example.instance_eval(&blk) }
+        ancestor.before_eachs.each { |blk| running_behaviour.instance_eval(&blk) }
       end
-      
-      Micronaut.configuration.find_before_or_after(:before, :each, self).each { |blk| example.instance_eval(&blk) }
     end
 
-    def self.eval_after_alls(example)
-      Micronaut.configuration.find_before_or_after(:after, :all, self).each { |blk| example.instance_eval(&blk) }
-            
+    def self.eval_after_alls(running_behaviour)
       after_ancestors.each do |ancestor| 
-        ancestor.after_alls.each { |opts, blk| example.instance_eval(&blk) }
+        ancestor.after_alls.each { |blk| running_behaviour.instance_eval(&blk) }
       end
+      
+      Micronaut.configuration.find_before_or_after(:after, :all, self).each { |blk| running_behaviour.instance_eval(&blk) }
     end
 
-    def self.eval_after_eachs(example)
-      Micronaut.configuration.find_before_or_after(:after, :each, self).each { |blk| example.instance_eval(&blk) }
-      
+    def self.eval_after_eachs(running_behaviour)
       after_ancestors.each do |ancestor|
-        ancestor.after_eachs.each { |opts, blk| example.instance_eval(&blk) }
+        ancestor.after_eachs.each { |blk| running_behaviour.instance_eval(&blk) }
       end
-    rescue Exception => e # TODO not sure what to do about this case?
-      nil
+      
+      Micronaut.configuration.find_before_or_after(:after, :each, self).each { |blk| running_behaviour.instance_eval(&blk) }
     end
 
     def self.run(reporter)
