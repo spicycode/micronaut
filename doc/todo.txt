@@ -1,7 +1,6 @@
 * Track if a behaviour inherits it's described type in metadata
 * Track example output in metadata
 * Setup lighthouse
-* TextMate issues (on the BAM and rob's MBP) (Still an issue?)
 
 * make this sort of thing possible:
 

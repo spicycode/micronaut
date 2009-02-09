@@ -1,48 +1,19 @@
-require 'rubygems'
-require 'rake/gempackagetask'
-require 'rubygems/specification'
 require 'lib/micronaut/rake_task'
 
-GEM = "micronaut"
-GEM_VERSION = "0.2.1.6"
-AUTHOR = "Chad Humphries"
-EMAIL = "chad@spicycode.com"
-HOMEPAGE = "http://github.com/spicycode/micronaut"
-SUMMARY = "An excellent replacement for the wheel..."
-
-spec = Gem::Specification.new do |s|
-  s.name = GEM
-  s.version = GEM_VERSION
-  s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
-  s.extra_rdoc_files = ["README.markdown", "LICENSE", "RSPEC-LICENSE"]
-  s.summary = SUMMARY
-  s.description = s.summary
-  s.author = AUTHOR
-  s.email = EMAIL
-  s.homepage = HOMEPAGE
-  s.bindir = 'bin'
-  s.default_executable = 'micronaut'
-  s.executables = ["micronaut"]
-  s.require_path = 'lib'
-  s.autorequire = GEM
-  s.files = %w(LICENSE README.markdown RSPEC-LICENSE Rakefile) + Dir.glob("{lib,examples}/**/*")
-end
-
-Rake::GemPackageTask.new(spec) do |pkg|
-  pkg.gem_spec = spec
-end
-
-desc "install the gem locally"
-task :install => [:package] do
-  sh %{sudo gem install pkg/#{GEM}-#{GEM_VERSION}}
-end
-
-desc "create a gemspec file"
-task :make_gemspec do
-  File.open("#{GEM}.gemspec", "w") do |file|
-    file.puts spec.to_ruby
-  end
+begin 
+  require 'jeweler' 
+  Jeweler::Tasks.new do |s| 
+    s.name = "micronaut" 
+    s.executables = "micronaut" 
+    s.summary = "An excellent replacement for the wheel..."
+    s.email = "chad@spicycode.com" 
+    s.homepage = "http://github.com/spicycode/micronaut" 
+    s.description = "An excellent replacement for the wheel..."
+    s.authors = ["Chad Humphries"] 
+    s.files =  FileList["[A-Z]*", "{bin,lib,examples}/**/*"] 
+  end 
+rescue LoadError 
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com" 
 end
 
 desc "List files that don't have examples"
