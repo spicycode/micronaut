@@ -2,12 +2,18 @@ require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 
 describe Micronaut::Behaviour do
 
+  before(:all) { puts "ba: describe Micronaut::Behaviour" }
+  after(:all)  { puts "aa: describe Micronaut::Behaviour" }
+
   def empty_behaviour_group
     group = Micronaut::Behaviour.describe(Object, 'Empty Behaviour Group') { }
     remove_last_describe_from_world
   end
 
   describe "describing behaviour with #describe" do
+    
+    before(:all) { puts "ba: describing behaviour with #describe" }
+    after(:all)  { puts "aa: describing behaviour with #describe" }
 
     example "an ArgumentError is raised if no type or description is given" do
       lambda { Micronaut::Behaviour.describe() {} }.should raise_error(ArgumentError, "No arguments given.  You must a least supply a type or description")
@@ -21,10 +27,12 @@ describe Micronaut::Behaviour do
 
       it "should expose the first parameter as name" do
         Micronaut::Behaviour.describe("my favorite pony") { }.name.should == 'my favorite pony'
+        remove_last_describe_from_world
       end
 
       it "should call to_s on the first parameter in case it is a constant" do
         Micronaut::Behaviour.describe(Object) { }.name.should == 'Object'
+        remove_last_describe_from_world
       end
 
     end
@@ -33,10 +41,12 @@ describe Micronaut::Behaviour do
 
       it "should be the first parameter when it is a constant" do
         Micronaut::Behaviour.describe(Object) { }.describes.should == Object
+        remove_last_describe_from_world
       end
 
       it "should be nil when the first parameter is a string" do
         Micronaut::Behaviour.describe("i'm a computer") { }.describes.should be_nil
+        remove_last_describe_from_world
       end
 
     end
@@ -45,36 +55,43 @@ describe Micronaut::Behaviour do
 
       it "should expose the second parameter as description" do
         Micronaut::Behaviour.describe(Object, "my desc") { }.description.should == 'my desc'
+        remove_last_describe_from_world
       end
-      
+
       it "should allow the second parameter to be nil" do
         Micronaut::Behaviour.describe(Object, nil) { }.description.size.should == 0
+        remove_last_describe_from_world
       end
 
     end
 
     describe '#metadata' do
-      
+
       it "should add the third parameter to the metadata" do
         Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.metadata.should include({ "foo" => 'bar' })
+        remove_last_describe_from_world
       end
-      
+
       it "should add the caller to metadata" do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller][4].should =~ /#{__FILE__}:#{__LINE__}/
+        remove_last_describe_from_world
       end
-      
+
       it "should add the the file_path to metadata" do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == __FILE__
+        remove_last_describe_from_world
       end
-      
+
       it "should have a reader for file_path" do
         Micronaut::Behaviour.describe(Object) { }.file_path.should == __FILE__
+        remove_last_describe_from_world
       end
-      
+
       it "should add the line_number to metadata" do
         Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
+        remove_last_describe_from_world
       end
-      
+
       it "should add file path and line number metadata for arbitrarily nested describes" do
         Micronaut::Behaviour.describe(Object) do
           Micronaut::Behaviour.describe("foo") do
@@ -82,8 +99,12 @@ describe Micronaut::Behaviour do
             Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
           end
         end
+        remove_last_describe_from_world
+        remove_last_describe_from_world
+        remove_last_describe_from_world
+        remove_last_describe_from_world
       end
-      
+
     end
 
     describe "adding before and after hooks" do
@@ -191,19 +212,19 @@ describe Micronaut::Behaviour do
   describe Object, "describing nested behaviours", :little_less_nested => 'yep' do 
 
     describe "A sample nested describe", :nested_describe => "yep" do
-    
+
       it "should set the described type to the constant Object" do
         running_example.behaviour.describes.should == Object
       end
-      
+
       it "should set the description to 'A sample nested describe'" do
         running_example.behaviour.description.should == 'A sample nested describe'
       end
-      
+
       it "should have top level metadata from the behaviour and its ancestors" do
         running_example.behaviour.metadata.should include(:little_less_nested => 'yep', :nested_describe => 'yep')
       end
-      
+
       it "should make the parent metadata available on the contained examples" do
         running_example.metadata.should include(:little_less_nested => 'yep', :nested_describe => 'yep')
       end
@@ -211,9 +232,9 @@ describe Micronaut::Behaviour do
     end
 
   end
-  
+
   describe "#run_examples" do
-    
+
     def stub_behaviour
       stub_everything('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})
     end
@@ -225,7 +246,7 @@ describe Micronaut::Behaviour do
 
       Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should == true
     end
-    
+
     it "should return false if any of the examples return false" do
       failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
       passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
@@ -233,17 +254,49 @@ describe Micronaut::Behaviour do
 
       Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should == false
     end
-    
+
     it "should run all examples, regardless of any of them failing" do
       failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
       passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
       Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
 
       passing_example.expects(:run)
-      
+
       Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter'))
+    end
+
+  end
+  
+  describe "how instance variables inherit" do
+    
+    before do
+      @before_each_top_level = 'before_each_top_level'
+    end
+    
+    before(:all) do
+      @before_all_top_level = 'before_all_top_level'
+    end
+    
+    it "should be able to access a before each ivar at the same level" do
+      @before_each_top_level.should == 'before_each_top_level'
+    end
+    
+    it "should be able to access a before all ivar at the same level" do
+      @before_all_top_level.should == 'before_all_top_level'
+    end
+    
+    describe "but now I am nested" do
+      
+      it "should be able to access a parent behaviours before each ivar at a nested level" do
+        @before_each_top_level.should == 'before_each_top_level'
+      end
+      
+      it "should not be able to access a parent behaviours before all ivar at a nested level (YET)" do
+        @before_all_top_level.should be_nil
+      end
+      
     end
     
   end
-  
+
 end

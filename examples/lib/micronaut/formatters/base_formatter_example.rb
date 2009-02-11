@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../example_helper")
 
 describe Micronaut::Formatters::BaseFormatter do
   
-  before(:all) do
+  before do
     @formatter = Micronaut::Formatters::BaseFormatter.new 
   end
 

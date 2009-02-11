@@ -158,10 +158,8 @@ module Micronaut
 
     def self.eval_before_alls(running_behaviour)
       Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| running_behaviour.instance_eval(&blk) }
-
-      before_ancestors.each do |ancestor| 
-        ancestor.before_alls.each { |blk| running_behaviour.instance_eval(&blk) }
-      end
+      
+      before_alls.each { |blk| running_behaviour.instance_eval(&blk) }
     end
         
     def self.eval_before_eachs(running_behaviour)
@@ -173,9 +171,7 @@ module Micronaut
     end
 
     def self.eval_after_alls(running_behaviour)
-      after_ancestors.each do |ancestor| 
-        ancestor.after_alls.each { |blk| running_behaviour.instance_eval(&blk) }
-      end
+      after_alls.each { |blk| running_behaviour.instance_eval(&blk) }
       
       Micronaut.configuration.find_before_or_after(:after, :all, self).each { |blk| running_behaviour.instance_eval(&blk) }
     end
@@ -189,8 +185,6 @@ module Micronaut
     end
 
     def self.run(reporter)
-      return true if examples.empty?
-
       behaviour_instance = new
       reporter.add_behaviour(self)
       eval_before_alls(behaviour_instance)
