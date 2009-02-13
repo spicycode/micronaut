@@ -156,31 +156,31 @@ module Micronaut
       @_after_ancestors ||= ancestors(true)
     end
 
+    def self.before_all_ivars
+      @before_all_ivars ||= {}
+    end
+
     def self.eval_before_alls(running_behaviour)
+      superclass.before_all_ivars.each { |ivar, val| running_behaviour.instance_variable_set(ivar, val) }
       Micronaut.configuration.find_before_or_after(:before, :all, self).each { |blk| running_behaviour.instance_eval(&blk) }
       
       before_alls.each { |blk| running_behaviour.instance_eval(&blk) }
+      running_behaviour.instance_variables.each { |ivar| before_all_ivars[ivar] = running_behaviour.instance_variable_get(ivar) }
     end
         
     def self.eval_before_eachs(running_behaviour)
       Micronaut.configuration.find_before_or_after(:before, :each, self).each { |blk| running_behaviour.instance_eval(&blk) }
-      
-      before_ancestors.each do |ancestor| 
-        ancestor.before_eachs.each { |blk| running_behaviour.instance_eval(&blk) }
-      end
+      before_ancestors.each { |ancestor| ancestor.before_eachs.each { |blk| running_behaviour.instance_eval(&blk) } }
     end
 
     def self.eval_after_alls(running_behaviour)
       after_alls.each { |blk| running_behaviour.instance_eval(&blk) }
-      
       Micronaut.configuration.find_before_or_after(:after, :all, self).each { |blk| running_behaviour.instance_eval(&blk) }
+      before_all_ivars.keys.each { |ivar| before_all_ivars[ivar] = running_behaviour.instance_variable_get(ivar) }
     end
 
     def self.eval_after_eachs(running_behaviour)
-      after_ancestors.each do |ancestor|
-        ancestor.after_eachs.each { |blk| running_behaviour.instance_eval(&blk) }
-      end
-      
+      after_ancestors.each { |ancestor| ancestor.after_eachs.each { |blk| running_behaviour.instance_eval(&blk) } }
       Micronaut.configuration.find_before_or_after(:after, :each, self).each { |blk| running_behaviour.instance_eval(&blk) }
     end
 

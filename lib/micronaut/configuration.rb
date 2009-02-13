@@ -149,8 +149,8 @@ module Micronaut
       before_and_afters[:after][each_or_all] << [options, block]
     end
     
-    def find_before_or_after(desired_type, desired_each_or_all, group)
-      before_and_afters[desired_type][desired_each_or_all].select do |options, block|
+    def find_before_or_after(desired_before_or_after, desired_each_or_all, group)
+      before_and_afters[desired_before_or_after][desired_each_or_all].select do |options, block|
         options.all? do |filter_on, filter|
           Micronaut.world.apply_condition(filter_on, filter, group.metadata)
         end

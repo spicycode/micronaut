@@ -272,12 +272,12 @@ describe Micronaut::Behaviour do
   
   describe "how instance variables inherit" do
     
-    before do
-      @before_each_top_level = 'before_each_top_level'
-    end
-    
     before(:all) do
       @before_all_top_level = 'before_all_top_level'
+    end
+
+    before(:each) do
+      @before_each_top_level = 'before_each_top_level'
     end
     
     it "should be able to access a before each ivar at the same level" do
@@ -287,6 +287,11 @@ describe Micronaut::Behaviour do
     it "should be able to access a before all ivar at the same level" do
       @before_all_top_level.should == 'before_all_top_level'
     end
+
+
+    it "should be able to access the before all ivars in the before_all_ivars hash" do
+      running_example.behaviour.before_all_ivars.should include('@before_all_top_level' => 'before_all_top_level')
+    end
     
     describe "but now I am nested" do
       
@@ -294,8 +299,20 @@ describe Micronaut::Behaviour do
         @before_each_top_level.should == 'before_each_top_level'
       end
       
-      it "should not be able to access a parent behaviours before all ivar at a nested level (YET)" do
-        @before_all_top_level.should be_nil
+      it "should be able to access a parent behaviours before all ivar at a nested level" do
+        @before_all_top_level.should == "before_all_top_level"
+      end
+
+      it "changes to before all ivars from within an example do not persist outside the current describe" do
+        @before_all_top_level = "ive been changed"
+      end
+
+      describe "accessing a before_all ivar that was changed in a parent behaviour" do
+        
+        it "should have access to the modified version" do
+          @before_all_top_level.should == 'ive been changed'
+        end
+
       end
       
     end
