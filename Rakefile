@@ -12,6 +12,8 @@ begin
     s.authors = ["Chad Humphries"] 
     s.files =  FileList["[A-Z]*", "{bin,lib,examples}/**/*"] 
   end 
+rescue => e
+  puts "Jeweler, or one of its dependencies blew right up. #{e}"
 rescue LoadError 
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com" 
 end

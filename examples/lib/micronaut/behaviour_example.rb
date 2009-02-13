@@ -290,7 +290,12 @@ describe Micronaut::Behaviour do
 
 
     it "should be able to access the before all ivars in the before_all_ivars hash" do
-      running_example.behaviour.before_all_ivars.should include('@before_all_top_level' => 'before_all_top_level')
+      with_ruby('1.8') do
+        running_example.behaviour.before_all_ivars.should include('@before_all_top_level' => 'before_all_top_level')
+      end
+      with_ruby('1.9') do
+        running_example.behaviour.before_all_ivars.should include(:@before_all_top_level => 'before_all_top_level')
+      end
     end
     
     describe "but now I am nested" do
