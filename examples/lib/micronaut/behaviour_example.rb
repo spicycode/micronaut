@@ -2,9 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../../example_helper")
 
 describe Micronaut::Behaviour do
 
-  before(:all) { puts "ba: describe Micronaut::Behaviour" }
-  after(:all)  { puts "aa: describe Micronaut::Behaviour" }
-
   def empty_behaviour_group
     group = Micronaut::Behaviour.describe(Object, 'Empty Behaviour Group') { }
     remove_last_describe_from_world
@@ -12,9 +9,6 @@ describe Micronaut::Behaviour do
 
   describe "describing behaviour with #describe" do
     
-    before(:all) { puts "ba: describing behaviour with #describe" }
-    after(:all)  { puts "aa: describing behaviour with #describe" }
-
     example "an ArgumentError is raised if no type or description is given" do
       lambda { Micronaut::Behaviour.describe() {} }.should raise_error(ArgumentError, "No arguments given.  You must a least supply a type or description")
     end
@@ -26,13 +20,15 @@ describe Micronaut::Behaviour do
     describe '#name' do
 
       it "should expose the first parameter as name" do
-        Micronaut::Behaviour.describe("my favorite pony") { }.name.should == 'my favorite pony'
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe("my favorite pony") { }.name.should == 'my favorite pony'
+        end
       end
 
       it "should call to_s on the first parameter in case it is a constant" do
-        Micronaut::Behaviour.describe(Object) { }.name.should == 'Object'
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object) { }.name.should == 'Object'
+        end
       end
 
     end
@@ -40,13 +36,15 @@ describe Micronaut::Behaviour do
     describe '#describes' do
 
       it "should be the first parameter when it is a constant" do
-        Micronaut::Behaviour.describe(Object) { }.describes.should == Object
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object) { }.describes.should == Object
+        end
       end
 
       it "should be nil when the first parameter is a string" do
-        Micronaut::Behaviour.describe("i'm a computer") { }.describes.should be_nil
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe("i'm a computer") { }.describes.should be_nil
+        end
       end
 
     end
@@ -54,13 +52,15 @@ describe Micronaut::Behaviour do
     describe '#description' do
 
       it "should expose the second parameter as description" do
-        Micronaut::Behaviour.describe(Object, "my desc") { }.description.should == 'my desc'
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object, "my desc") { }.description.should == 'my desc'
+        end
       end
 
       it "should allow the second parameter to be nil" do
-        Micronaut::Behaviour.describe(Object, nil) { }.description.size.should == 0
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object, nil) { }.description.size.should == 0
+        end
       end
 
     end
@@ -68,28 +68,33 @@ describe Micronaut::Behaviour do
     describe '#metadata' do
 
       it "should add the third parameter to the metadata" do
-        Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.metadata.should include({ "foo" => 'bar' })
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object, nil, 'foo' => 'bar') { }.metadata.should include({ "foo" => 'bar' })
+        end
       end
 
       it "should add the caller to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller][4].should =~ /#{__FILE__}:#{__LINE__}/
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:caller][4].should =~ /#{__FILE__}:#{__LINE__}/
+        end
       end
 
       it "should add the the file_path to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == __FILE__
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:file_path].should == __FILE__
+        end
       end
 
       it "should have a reader for file_path" do
-        Micronaut::Behaviour.describe(Object) { }.file_path.should == __FILE__
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object) { }.file_path.should == __FILE__
+        end
       end
 
       it "should add the line_number to metadata" do
-        Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
-        remove_last_describe_from_world
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
+        end
       end
 
       it "should add file path and line number metadata for arbitrarily nested describes" do
@@ -99,10 +104,8 @@ describe Micronaut::Behaviour do
             Micronaut::Behaviour.describe(Object) { }.metadata[:behaviour][:line_number].should == __LINE__
           end
         end
-        remove_last_describe_from_world
-        remove_last_describe_from_world
-        remove_last_describe_from_world
-        remove_last_describe_from_world
+
+        4.times { remove_last_describe_from_world }
       end
 
     end

@@ -11,6 +11,7 @@ end
 with_ruby("1.8") do
   gem :mocha
 end
+
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
 module Micronaut
@@ -29,8 +30,15 @@ def remove_last_describe_from_world
   Micronaut.world.behaviours.pop
 end
 
+def isolate_behaviour
+  if block_given?
+    yield
+    Micronaut.world.behaviours.pop
+  end
+end
+
 def not_in_editor?
-  ['TM_MODE', 'EMACS', 'VIM'].all? { |k| !ENV.has_key?(k) }
+  !(ENV.has_key?('TM_MODE') || ENV.has_key?('EMACS') || ENV.has_key?('VIM'))
 end
 
 Micronaut.configure do |c|
