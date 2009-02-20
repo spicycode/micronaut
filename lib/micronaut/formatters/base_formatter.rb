@@ -2,11 +2,12 @@ module Micronaut
   module Formatters
 
     class BaseFormatter
-      attr_accessor :behaviour, :total_example_failed, :total_example_pending
-      attr_reader :example_count, :duration
+      attr_accessor :behaviour
+      attr_reader :example_count, :duration, :examples
       
       def initialize
-        @total_example_failed, @total_example_pending, @example_count = 0, 0, 0
+        @example_count = 0
+        @examples = []
         @behaviour = nil
       end
       
@@ -35,16 +36,12 @@ module Micronaut
         configuration.color_enabled?
       end
       
-      def example_profiling_info
-        @example_profiling_info ||= []
-      end
-      
       def pending_examples
-        @pending_examples ||= []
+        @pending_examples ||= ::Micronaut.world.find(examples, :execution_result => { :status => 'pending' })
       end
       
       def failed_examples
-        @failed_examples ||= []
+        @failed_examples ||= ::Micronaut.world.find(examples, :execution_result => { :status => 'failed' })
       end
 
       # This method is invoked before any examples are run, right after
@@ -57,37 +54,19 @@ module Micronaut
         @example_count = example_count
       end
 
+      def example_started(example)
+      end
+
+      def example_finished(example)
+        examples << example
+      end
+
       # This method is invoked at the beginning of the execution of each behaviour.
       # +behaviour+ is the behaviour.
       #
       # The next method to be invoked after this is #example_failed or #example_finished
       def add_behaviour(behaviour)
         @behaviour = behaviour
-      end
-
-      # This method is invoked when an +example+ starts.
-      def example_started(example)
-      end
-
-      # This method is invoked when an +example+ passes.
-      def example_passed(example)
-      end
-
-      # This method is invoked when an +example+ fails, i.e. an exception occurred
-      # inside it (such as a failed should or other exception). +counter+ is the 
-      # sequence number of the failure (starting at 1) and +failure+ is the associated 
-      # exception.
-      def example_failed(example, exception)
-        @total_example_failed += 1
-      end
-
-      # This method is invoked when an example is not yet implemented (i.e. has not
-      # been provided a block), or when an ExamplePendingError is raised.
-      # +message+ is the message from the ExamplePendingError, if it exists, or the
-      # default value of "Not Yet Implemented"
-      # +pending_caller+ is the file and line number of the spec which
-      # has called the pending method
-      def example_pending(example, message)
       end
 
       # This method is invoked after all of the examples have executed. The next method

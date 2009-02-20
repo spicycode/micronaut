@@ -45,5 +45,6 @@ Micronaut.configure do |c|
   c.mock_with :mocha
   c.color_enabled = not_in_editor?
   c.filter_run :focused => true
+  c.profile_examples = true
   #c.formatter = :documentation
 end

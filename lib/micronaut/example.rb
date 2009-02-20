@@ -8,6 +8,7 @@ module Micronaut
       @behaviour, @description, @options, @example_block = behaviour, desc, options, example_block
       @metadata = @behaviour.metadata.dup
       @metadata[:description] = description
+      @metadata[:execution_result] = {}
       @metadata.update(options)
     end
 
@@ -17,6 +18,38 @@ module Micronaut
     
     def to_s
       inspect
+    end
+
+    def record_results(results={})
+      @metadata[:execution_result].update(results)
+    end
+
+    def execution_result
+      @metadata[:execution_result]
+    end
+    
+    def run_started
+      record_results :started_at => Time.now
+      Micronaut.configuration.formatter.example_started(self)
+    end
+
+    def run_passed
+      run_finished 'passed'
+    end
+
+    def run_pending(message='Not yet implemented')
+      run_finished 'pending', :pending_message => message
+    end
+
+    def run_failed(exception)
+      run_finished 'failed', :exception_encountered => exception
+    end
+
+    def run_finished(status, results={})
+      record_results results.update(:status => status)
+      finish_time = Time.now
+      record_results :finished_at => finish_time, :run_time => (finish_time - execution_result[:started_at])
+      Micronaut.configuration.formatter.example_finished(self)
     end
 
     def run_before_each
@@ -34,16 +67,17 @@ module Micronaut
     def run_example
       if example_block
         @behaviour_instance.instance_eval(&example_block)
-        @reporter.example_passed(self)
+        run_passed
       else
-        @reporter.example_pending(self, 'Not yet implemented')
+        run_pending
       end
     end
 
-    def run(behaviour_instance, reporter)
-      @behaviour_instance, @reporter = behaviour_instance, reporter
+    def run(behaviour_instance)
+      @behaviour_instance = behaviour_instance
       @behaviour_instance.running_example = self
-      @reporter.example_started(self)
+
+      run_started
 
       all_systems_nominal = true
       exception_encountered = nil
@@ -64,8 +98,8 @@ module Micronaut
       ensure
         @behaviour_instance.running_example = nil
       end
-      
-      @reporter.example_failed(self, exception_encountered) if exception_encountered 
+
+      run_failed(exception_encountered) if exception_encountered
 
       all_systems_nominal
     end

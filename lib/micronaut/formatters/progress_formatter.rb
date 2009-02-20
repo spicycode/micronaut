@@ -3,22 +3,19 @@ module Micronaut
     
     class ProgressFormatter < BaseTextFormatter
       
-      def example_failed(example, exception)
-        super
-        output.print colorise('F', exception)
-        output.flush
+      def output_for(example)
+        case example.execution_result[:status]
+        when 'failed' then colorise('F', example.execution_result[:exception_encountered])
+        when 'pending' then yellow('*')
+        when 'passed' then green('.')
+        else
+          red(example.execution_result[:status])
+        end
       end
 
-      def example_passed(example)
+      def example_finished(example)
         super
-        output.print green('.')
-        output.flush
-      end
-
-      def example_pending(example, message)
-        super
-        output.print yellow('*')
-        output.flush
+        output.print output_for(example)
       end
 
       def start_dump(duration)
@@ -27,10 +24,6 @@ module Micronaut
         output.flush
       end
 
-      def method_missing(sym, *args)
-        # ignore
-      end
-      
     end
     
   end

@@ -76,12 +76,8 @@ describe Micronaut::Formatters::BaseFormatter do
     @formatter.should have_interface_for(:example_started).with(1).argument
   end
 
-  it "should have example_failed as an interface with two arguments" do
-    @formatter.should have_interface_for(:example_failed).with(2).arguments
-  end
-
-  it "should have example_pending as an interface with two arguments" do
-    @formatter.should have_interface_for(:example_pending).with(2).arguments
+  it "should have example_finished as an interface with one argument" do
+    @formatter.should have_interface_for(:example_finished).with(1).arguments
   end
 
   it "should have start_dump as an interface with 1 arguments" do

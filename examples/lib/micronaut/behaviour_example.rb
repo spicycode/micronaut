@@ -236,7 +236,7 @@ describe Micronaut::Behaviour do
 
   end
 
-  describe "#run_examples" do
+  pending "#run_examples" do
 
     def stub_behaviour
       stub_everything('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})

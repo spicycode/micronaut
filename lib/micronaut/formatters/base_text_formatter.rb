@@ -3,33 +3,11 @@ module Micronaut
   module Formatters
 
     class BaseTextFormatter < BaseFormatter
-            
-      def example_passed(example)
-        super
-        # Why && @start_time
-        if profile_examples? && @start_time
-          example_profiling_info << [example, Time.now - @start_time] 
-        end
-      end
       
-      def example_started(example)
-        super
-        @start_time = Time.now
-      end
-
-      def example_pending(example, message)
-        pending_examples << [example, message]
-      end
-
-      def example_failed(example, exception)
-        super
-        failed_examples << [example, exception]
-      end
-
       def dump_failures
         output.puts
-        failed_examples.each_with_index do |examples_with_exception, index|
-          failed_example, exception = examples_with_exception.first, examples_with_exception.last
+        failed_examples.each_with_index do |failed_example, index|
+          exception = failed_example.execution_result[:exception_encountered]
           padding = '    '
           
           output.puts "#{index.next}) #{failed_example}"
@@ -77,11 +55,11 @@ module Micronaut
         
         # Don't print out profiled info if there are failures, it just clutters the output
         if profile_examples? && failure_count == 0
-          sorted_examples = example_profiling_info.sort_by { |desc, time| time }.last(10)
+          sorted_examples = examples.sort_by { |example| example.execution_result[:run_time] }.reverse.first(10)
           output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
-          sorted_examples.reverse.each do |ex, time|
-            output.puts "  (#{sprintf("%.7f", time)} seconds) #{ex}"
-            output.puts grey("   # #{ex.metadata[:caller]}")
+          sorted_examples.each do |example|
+            output.puts "  (#{sprintf("%.7f", example.execution_result[:run_time])} seconds) #{example}"
+            output.puts grey("   # #{example.metadata[:caller]}")
           end
         end
         

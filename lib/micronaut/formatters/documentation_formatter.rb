@@ -25,9 +25,27 @@ module Micronaut
         @previous_nested_behaviours = described_behaviour_chain
       end
 
-      def example_failed(example, exception)
+      def output_for(example)
+        case example.execution_result[:status]
+        when 'failed'
+          failure_output(example, example.execution_result[:exception_encountered])
+        when 'pending'
+          pending_output(example, example.execution_result[:pending_message])
+        when 'passed'
+          passed_output(example)
+        else
+          red(example.execution_result[:status])
+        end
+      end
+
+      def example_finished(example)
         super
-        expectation_not_met = exception.is_a?(Micronaut::Expectations::ExpectationNotMetError)
+        output.puts output_for(example)
+        output.flush
+      end
+
+      def failure_output(example, exception)
+        expectation_not_met = exception.is_a?(::Micronaut::Expectations::ExpectationNotMetError)
         
         message = if expectation_not_met
           "#{current_indentation}#{example.description} (FAILED)"
@@ -35,20 +53,15 @@ module Micronaut
           "#{current_indentation}#{example.description} (ERROR)"
         end
 
-        output.puts(expectation_not_met ? red(message) : magenta(message))
-        output.flush
+        expectation_not_met ? red(message) : magenta(message)
       end
 
-      def example_passed(example)
-        super
-        output.puts green("#{current_indentation}#{example.description}")
-        output.flush
+      def passed_output(example)
+        green("#{current_indentation}#{example.description}")
       end
 
-      def example_pending(example, message)
-        super
-        output.puts yellow("#{current_indentation}#{example.description} (PENDING: #{message})")
-        output.flush
+      def pending_output(example, message)
+        yellow("#{current_indentation}#{example.description} (PENDING: #{message})")
       end
 
       def current_indentation

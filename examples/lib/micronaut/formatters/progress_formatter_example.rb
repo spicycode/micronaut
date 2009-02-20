@@ -21,7 +21,7 @@ describe Micronaut::Formatters::ProgressFormatter do
      @output.string.should =~ /Finished in 3 seconds\n2 examples/i
    end
    
-   it "should produce standard summary" do
+   pending "should produce standard summary" do
      @formatter.start_dump(3)
      @formatter.example_pending(running_example, "message")
      @output.rewind
@@ -36,17 +36,17 @@ describe Micronaut::Formatters::ProgressFormatter do
        @formatter.stubs(:color_enabled?).returns(true)
      end
    
-     it "should output a green dot for passing spec" do
+     pending "should output a green dot for passing spec" do
        @formatter.example_passed("spec")
        @output.string.should == "\e[32m.\e[0m"
      end
    
-     it "should push red F for failure spec" do
+     pending "should push red F for failure spec" do
        @formatter.example_failed("spec", Micronaut::Expectations::ExpectationNotMetError.new)
        @output.string.should == "\e[31mF\e[0m"
      end
    
-     it "should push magenta F for error spec" do
+     pending "should push magenta F for error spec" do
        @formatter.example_failed("spec", RuntimeError.new)
        @output.string.should == "\e[35mF\e[0m"
      end

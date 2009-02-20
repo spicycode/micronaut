@@ -196,7 +196,7 @@ module Micronaut
     
     # Runs all examples, returning true only if all of them pass
     def self.run_examples(behaviour_instance, reporter)
-      examples_to_run.map { |ex| ex.run(behaviour_instance, reporter) }.all?
+      examples_to_run.map { |ex| ex.run(behaviour_instance) }.all?
     end
 
     def self.subclass(base_name, &body) # :nodoc:
