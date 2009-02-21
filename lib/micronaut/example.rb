@@ -12,14 +12,6 @@ module Micronaut
       @metadata.update(options)
     end
 
-    def inspect
-      "#{@metadata[:behaviour][:name]} - #{@metadata[:description]}"
-    end
-    
-    def to_s
-      inspect
-    end
-
     def record_results(results={})
       @metadata[:execution_result].update(results)
     end
@@ -102,6 +94,14 @@ module Micronaut
       run_failed(exception_encountered) if exception_encountered
 
       all_systems_nominal
+    end
+
+    def inspect
+      "#{@metadata[:behaviour][:name]} - #{@metadata[:description]}"
+    end
+    
+    def to_s
+      inspect
     end
   
   end

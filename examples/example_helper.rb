@@ -8,9 +8,7 @@ def with_ruby(version)
   yield if RUBY_PLATFORM =~ Regexp.compile("^#{version}")
 end
 
-with_ruby("1.8") do
-  gem :mocha
-end
+with_ruby("1.8") { gem :mocha }
 
 require File.expand_path(File.dirname(__FILE__) + "/resources/example_classes")
 
@@ -45,6 +43,6 @@ Micronaut.configure do |c|
   c.mock_with :mocha
   c.color_enabled = not_in_editor?
   c.filter_run :focused => true
-  c.profile_examples = true
+  c.profile_examples = false
   #c.formatter = :documentation
 end
