@@ -50,7 +50,7 @@ module Micronaut
     def self.example(desc=nil, options={}, &block)
       examples << Micronaut::Example.new(self, desc, options.update(:caller => caller[0]), block)
     end
-
+        
     def self.alias_example_to(new_alias, extra_options={})
       new_alias = <<-END_RUBY
                     def self.#{new_alias}(desc=nil, options={}, &block)
@@ -62,7 +62,7 @@ module Micronaut
                   END_RUBY
       module_eval(new_alias, __FILE__, __LINE__)
     end
-    
+
     alias_example_to :it
     alias_example_to :focused, :focused => true
     alias_example_to :disabled, :disabled => true

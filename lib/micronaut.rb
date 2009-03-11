@@ -31,7 +31,6 @@ module Micronaut
 
   def self.configure
     yield configuration if block_given?
-    configuration.autorun!
   end
   
   def self.world
