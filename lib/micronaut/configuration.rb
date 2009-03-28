@@ -100,7 +100,7 @@ module Micronaut
     def formatter
       @formatter ||= @formatter_to_use.new
     end
-    
+        
     # Where does output go? For now $stdout
     def output
       $stdout

@@ -35,6 +35,14 @@ def isolate_behaviour
   end
 end
 
+def use_formatter(new_formatter)
+  original_formatter = Micronaut.configuration.formatter
+  Micronaut.configuration.instance_variable_set(:@formatter, new_formatter)
+  yield
+ensure
+  Micronaut.configuration.instance_variable_set(:@formatter, original_formatter)
+end
+
 def not_in_editor?
   !(ENV.has_key?('TM_MODE') || ENV.has_key?('EMACS') || ENV.has_key?('VIM'))
 end
@@ -44,5 +52,5 @@ Micronaut.configure do |c|
   c.color_enabled = not_in_editor?
   c.filter_run :focused => true
   c.profile_examples = true
-  #c.formatter = :documentation
+  # c.formatter = :documentation
 end

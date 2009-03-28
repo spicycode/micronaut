@@ -72,10 +72,6 @@ describe Micronaut::Formatters::BaseFormatter do
     @formatter.should have_interface_for(:add_behaviour).with(1).argument
   end
 
-  it "should have example_started as an interface with one argument" do
-    @formatter.should have_interface_for(:example_started).with(1).argument
-  end
-
   it "should have example_finished as an interface with one argument" do
     @formatter.should have_interface_for(:example_finished).with(1).arguments
   end

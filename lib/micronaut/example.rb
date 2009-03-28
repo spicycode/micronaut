@@ -22,7 +22,6 @@ module Micronaut
     
     def run_started
       record_results :started_at => Time.now
-      Micronaut.configuration.formatter.example_started(self)
     end
 
     def run_passed
@@ -56,15 +55,6 @@ module Micronaut
       @behaviour_instance._teardown_mocks if @behaviour_instance.respond_to?(:_teardown_mocks)
     end
 
-    def run_example
-      if example_block
-        @behaviour_instance.instance_eval(&example_block)
-        run_passed
-      else
-        run_pending
-      end
-    end
-
     def run(behaviour_instance)
       @behaviour_instance = behaviour_instance
       @behaviour_instance.running_example = self
@@ -76,7 +66,7 @@ module Micronaut
       
       begin
         run_before_each
-        run_example
+        @behaviour_instance.instance_eval(&example_block) if example_block
       rescue Exception => e
         exception_encountered = e
         all_systems_nominal = false
@@ -90,8 +80,12 @@ module Micronaut
       ensure
         @behaviour_instance.running_example = nil
       end
-
-      run_failed(exception_encountered) if exception_encountered
+      
+      if exception_encountered
+        run_failed(exception_encountered) 
+      else
+        example_block ? run_passed : run_pending
+      end
 
       all_systems_nominal
     end

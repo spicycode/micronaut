@@ -6,7 +6,7 @@ describe Micronaut::Example, :parent_metadata => 'sample' do
     behaviour = stub('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})
     @example = Micronaut::Example.new(behaviour, 'description', {}, (lambda {}))
   end
-  
+    
   describe "attr readers" do
   
     it "should have one for the parent behaviour" do
@@ -24,7 +24,7 @@ describe Micronaut::Example, :parent_metadata => 'sample' do
     it "should have one for it's block" do
       @example.should respond_to(:example_block)
     end
-
+  
   end
   
   describe '#inspect' do
@@ -44,11 +44,11 @@ describe Micronaut::Example, :parent_metadata => 'sample' do
   end
   
   describe "accessing metadata within a running example" do
-
+  
     it "should have a reference to itself when running" do
       running_example.description.should == "should have a reference to itself when running"
     end
-
+  
     it "should be able to access the behaviours top level metadata as if it were its own" do
       running_example.behaviour.metadata.should include(:parent_metadata => 'sample')
       running_example.metadata.should include(:parent_metadata => 'sample')
@@ -59,10 +59,9 @@ describe Micronaut::Example, :parent_metadata => 'sample' do
   describe "#run" do
     
     pending "should run after(:each) when the example fails"
-
+  
     pending "should run after(:each) when the example raises an Exception" 
     
   end
-  
   
 end

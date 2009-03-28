@@ -54,9 +54,6 @@ module Micronaut
         @example_count = example_count
       end
 
-      def example_started(example)
-      end
-
       def example_finished(example)
         examples << example
       end
