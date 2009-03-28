@@ -236,36 +236,46 @@ describe Micronaut::Behaviour do
 
   end
 
-  pending "#run_examples" do
+  describe "#run_examples" do
+    
+    before do
+      @fake_formatter = Micronaut::Formatters::BaseFormatter.new
+    end
 
     def stub_behaviour
       stub_everything('behaviour', :metadata => { :behaviour => { :name => 'behaviour_name' }})
     end
 
     it "should return true if all examples pass" do
-      passing_example1 = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
-      passing_example2 = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
-      Micronaut::Behaviour.stubs(:examples_to_run).returns([passing_example1, passing_example2])
+      use_formatter(@fake_formatter) do
+        passing_example1 = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+        passing_example2 = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+        Micronaut::Behaviour.stubs(:examples_to_run).returns([passing_example1, passing_example2])
 
-      Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should == true
+        Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should be_true
+      end
     end
 
     it "should return false if any of the examples return false" do
-      failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
-      passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
-      Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
+      use_formatter(@fake_formatter) do
+        failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
+        passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+        Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
 
-      Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should == false
+        Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter')).should be_false
+      end
     end
 
     it "should run all examples, regardless of any of them failing" do
-      failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
-      passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
-      Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
+      use_formatter(@fake_formatter) do
+        failing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 2 }))
+        passing_example = Micronaut::Example.new(stub_behaviour, 'description', {}, (lambda { 1.should == 1 }))
+        Micronaut::Behaviour.stubs(:examples_to_run).returns([failing_example, passing_example])
 
-      passing_example.expects(:run)
+        passing_example.expects(:run)
 
-      Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter'))
+        Micronaut::Behaviour.run_examples(stub_behaviour, stub_everything('reporter'))
+      end
     end
 
   end

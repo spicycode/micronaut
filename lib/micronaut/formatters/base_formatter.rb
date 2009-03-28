@@ -108,7 +108,7 @@ module Micronaut
       end
       
       def read_failed_line(exception, example)
-        original_file = example.behaviour.file_path.downcase
+        original_file = example.behaviour.file_path.to_s.downcase
         matching_line = exception.backtrace.detect { |line| line.split(':').first.downcase == original_file.downcase }
 
         return "Unable to find matching line from backtrace" if matching_line.nil?
