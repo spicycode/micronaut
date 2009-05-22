@@ -37,11 +37,11 @@ module Micronaut
       end
       
       def pending_examples
-        @pending_examples ||= ::Micronaut.world.find(examples, :execution_result => { :status => 'pending' })
+        @pending_examples ||= ::Micronaut.world.find(examples, :positive, :execution_result => { :status => 'pending' })
       end
       
       def failed_examples
-        @failed_examples ||= ::Micronaut.world.find(examples, :execution_result => { :status => 'failed' })
+        @failed_examples ||= ::Micronaut.world.find(examples, :positive, :execution_result => { :status => 'failed' })
       end
 
       # This method is invoked before any examples are run, right after

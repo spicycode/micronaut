@@ -10,6 +10,8 @@ module Micronaut
     # Allows you to control what examples are ran by filtering 
     attr_reader :filter
     
+    attr_reader :exclusion_filter
+    
     # Modules that will be included or extended based on given filters
     attr_reader :include_or_extend_modules
     
@@ -34,7 +36,7 @@ module Micronaut
       @before_and_afters = { :before => { :each => [], :all => [] }, :after => { :each => [], :all => [] } }
       @include_or_extend_modules = []
       @formatter_to_use = Micronaut::Formatters::ProgressFormatter
-      @filter = nil
+      @filter, @exclusion_filter = nil, nil
       mock_with nil unless @mock_framework_established
     end
     

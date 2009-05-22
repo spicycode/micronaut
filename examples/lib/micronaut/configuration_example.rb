@@ -130,4 +130,14 @@ describe Micronaut::Configuration do
     
   end
 
+  describe "filters" do
+    
+    it "tells you filter is deprecated"
+    
+    it "responds to exclusion_filter"
+    
+    it "responds to inclusion_filter"
+    
+    
+  end
 end
