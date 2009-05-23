@@ -54,7 +54,7 @@ module Micronaut
       desc("Run all examples") unless ::Rake.application.last_comment
 
       task name do
-        RakeFileUtils.verbose(verbose) do
+        RakeFileUtils.send(:verbose, verbose) do
           if examples_to_run.empty?
             puts "No examples matching #{pattern} could be found"
           else

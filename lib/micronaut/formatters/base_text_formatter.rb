@@ -59,7 +59,7 @@ module Micronaut
           output.puts "\nTop #{sorted_examples.size} slowest examples:\n"        
           sorted_examples.each do |example|
             output.puts "  (#{sprintf("%.7f", example.execution_result[:run_time])} seconds) #{example}"
-            output.puts grey("   # #{example.metadata[:caller]}")
+            output.puts grey("   # #{format_caller(example.metadata[:caller])}")
           end
         end
         
@@ -70,6 +70,10 @@ module Micronaut
       #   file, line = path.split(':')
       #   "txmt://open/?url=file://#{File.expand_path(file)}&line=#{line}"
       # end
+      
+      def format_caller(caller_info)
+        caller_info.to_s.split(':in `block').first
+      end
 
       def dump_pending
         unless pending_examples.empty?
@@ -77,7 +81,7 @@ module Micronaut
           output.puts "Pending:"
           pending_examples.each do |pending_example, message|
             output.puts "  #{pending_example}"
-            output.puts grey("   # #{pending_example.metadata[:caller]}")
+            output.puts grey("   # #{format_caller(pending_example.metadata[:caller])}")
           end
         end
         output.flush

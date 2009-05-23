@@ -31,6 +31,20 @@ describe Micronaut::Behaviour do
         end
       end
 
+      pending "should build a nested name correctly, including the module, and each nested description in the correct order" do
+        behaviour_to_test = nil
+
+        isolate_behaviour do
+          Micronaut::Behaviour.describe(Micronaut, "test") do
+            Micronaut::Behaviour.describe("nested one") do
+              behaviour_to_test = Micronaut::Behaviour.describe("nested two") { }
+            end
+          end
+        end
+        
+        behaviour_to_test.name.should == 'Micronaut - test - nested one - nested two'
+      end
+
     end
 
     describe '#describes' do
