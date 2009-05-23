@@ -9,6 +9,11 @@ module Micronaut
       @metadata = @behaviour.metadata.dup
       @metadata[:description] = description
       @metadata[:execution_result] = {}
+      @metadata[:caller] = options.delete(:caller)
+      if @metadata[:caller]
+        @metadata[:file_path] = @metadata[:caller].split(":")[0].strip 
+        @metadata[:line_number] = @metadata[:caller].split(":")[1].to_i
+      end
       @metadata.update(options)
     end
 
@@ -18,6 +23,10 @@ module Micronaut
 
     def execution_result
       @metadata[:execution_result]
+    end
+    
+    def file_path
+      @metadata[:file_path] || behaviour.file_path
     end
     
     def run_started

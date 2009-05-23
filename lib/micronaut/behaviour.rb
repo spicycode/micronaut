@@ -87,9 +87,9 @@ module Micronaut
       @metadata[:behaviour][:description] = args.shift || ''
       @metadata[:behaviour][:name] = "#{describes} #{description}".strip
       @metadata[:behaviour][:block] = extra_metadata.delete(:behaviour_block)
-      @metadata[:behaviour][:caller] = caller(1)
-      @metadata[:behaviour][:file_path] = @metadata[:behaviour][:caller][4].split(":")[0].strip
-      @metadata[:behaviour][:line_number] = @metadata[:behaviour][:caller][4].split(":")[1].to_i
+      @metadata[:behaviour][:caller] = extra_metadata.delete(:caller) || caller(1)
+      @metadata[:behaviour][:file_path] = extra_metadata.delete(:file_path) || @metadata[:behaviour][:caller][4].split(":")[0].strip
+      @metadata[:behaviour][:line_number] = extra_metadata.delete(:line_number) || @metadata[:behaviour][:caller][4].split(":")[1].to_i
       
       @metadata.update(extra_metadata)
       
@@ -108,8 +108,8 @@ module Micronaut
       @metadata ||= { :behaviour => {} }
     end
 
-    def self.name
-      metadata[:behaviour][:name]
+    def self.name(friendly=true)
+      friendly ? metadata[:behaviour][:name] : super()
     end
 
     def self.describes
