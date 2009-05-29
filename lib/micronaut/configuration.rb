@@ -22,16 +22,15 @@ module Micronaut
     # Enable profiling of example run - defaults to false
     attr_accessor :profile_examples
     
-    # Enable verbose interal logging of the framework - defaults to false
-    attr_accessor :trace
-    
     attr_reader :mock_framework
+
+    attr_accessor :format_caller_using
     
     def initialize
       @backtrace_clean_patterns = [/\/lib\/ruby\//, /bin\/rcov:/, /vendor\/rails/, /bin\/micronaut/, /#{::Micronaut::InstallDirectory}/]
       @run_all_when_everything_filtered = true
-      @trace = false
       @profile_examples = false
+      @format_caller_using = nil
       @color_enabled = false
       @before_and_afters = { :before => { :each => [], :all => [] }, :after => { :each => [], :all => [] } }
       @include_or_extend_modules = []
@@ -108,25 +107,10 @@ module Micronaut
       $stdout
     end
     
-    # Output some string for debugging/tracing assistance if trace is enabled
-    # The trace string should be sent as a block, which means it will only be interpolated if trace is actually enabled
-    # We allow an override here so that trace can be set at lower levels (such as the describe or example level)
-    def trace(override = false)
-      raise(ArgumentError, "Must yield a block with your string to trace.") unless block_given?
-      return unless trace? || override
-      puts("[TRACE] #{yield}")
-    end
-
     def puts(msg)
       output.puts(msg)    
     end
     
-    # If true, Micronaut will provide detailed trace output of its self as it runs.
-    # Can be turned on at the global (configuration) level or at the individual behaviour (describe) level.
-    def trace?
-      @trace == true
-    end
-
     def include(mod, options={})
       include_or_extend_modules << [:include, mod, options]
     end

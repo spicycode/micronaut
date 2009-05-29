@@ -72,7 +72,14 @@ module Micronaut
       # end
       
       def format_caller(caller_info)
-        caller_info.to_s.split(':in `block').first
+        whos_there = caller_info.to_s.split(':in `block').first
+        handle_them_with = Micronaut.configuration.format_caller_using
+        if handle_them_with
+          file, line = whos_there.split(':')
+          "#{whos_there}\n     #{handle_them_with[file, line]}"
+        else
+          whos_there
+        end
       end
 
       def dump_pending

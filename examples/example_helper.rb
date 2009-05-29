@@ -51,4 +51,7 @@ Micronaut.configure do |c|
   c.mock_with :mocha
   c.color_enabled = not_in_editor?
   c.filter_run :focused => true
+  c.format_caller_using = lambda do |file, line|
+    "mvim://open/?url=file://#{File.expand_path(file)}&line=#{line}"
+  end
 end
