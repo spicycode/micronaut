@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{micronaut}
-  s.version = "0.2.9"
+  s.version = "0.2.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chad Humphries"]
-  s.date = %q{2009-06-13}
+  s.date = %q{2009-06-15}
   s.default_executable = %q{micronaut}
   s.description = %q{An excellent replacement for the wheel...}
   s.email = %q{chad@spicycode.com}
@@ -98,7 +98,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{spicycode-depot}
-  s.rubygems_version = %q{1.3.4}
+  s.rubygems_version = %q{1.3.3}
   s.summary = %q{An excellent replacement for the wheel...}
   s.test_files = [
     "examples/example_helper.rb",
