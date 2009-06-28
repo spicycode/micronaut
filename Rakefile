@@ -2,16 +2,18 @@ require 'lib/micronaut/rake_task'
 
 begin 
   require 'jeweler' 
-  Jeweler::Tasks.new do |s| 
-    s.name = "micronaut" 
-    s.executables = "micronaut" 
-    s.summary = "An excellent replacement for the wheel..."
-    s.email = "chad@spicycode.com" 
-    s.homepage = "http://github.com/spicycode/micronaut" 
-    s.description = "An excellent replacement for the wheel..."
-    s.authors = ["Chad Humphries"] 
-    s.files =  FileList["[A-Z]*", "{bin,lib,examples}/**/*"] 
-    s.rubyforge_project = 'spicycode-depot' 
+  Jeweler::Tasks.new do |gem| 
+    gem.name = "micronaut" 
+    gem.executables = "micronaut" 
+    gem.summary = "An excellent replacement for the wheel..."
+    gem.email = "chad@spicycode.com" 
+    gem.homepage = "http://github.com/spicycode/micronaut" 
+    gem.description = "An excellent replacement for the wheel..."
+    gem.authors = ["Chad Humphries"] 
+    gem.files =  FileList["[A-Z]*", "{bin,lib,examples}/**/*"] 
+    gem.add_dependency "rspec", ">= 1.2.7"
+    gem.add_development_dependency "mocha"
+    gem.rubyforge_project = 'spicycode-depot' 
   end 
 rescue => e
   puts "Jeweler, or one of its dependencies blew right up. #{e}"

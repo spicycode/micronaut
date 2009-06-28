@@ -1,6 +1,8 @@
+# Pull in the RSpec matchers, expectations in
+require 'spec/expectations'
+require 'spec/matchers'
+
 require 'micronaut/mocking/with_absolutely_nothing'
-require 'micronaut/matchers'
-require 'micronaut/expectations'
 require 'micronaut/world'
 require 'micronaut/configuration'
 require 'micronaut/runner'
