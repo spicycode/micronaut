@@ -4,7 +4,7 @@ require 'mocha/object'
 module Micronaut
   module Mocking
     module WithMocha
-      include Mocha::Standalone
+      include Mocha::API
 
       alias :_setup_mocks :mocha_setup
       alias :_verify_mocks :mocha_verify
