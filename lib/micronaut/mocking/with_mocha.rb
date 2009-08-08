@@ -4,7 +4,12 @@ require 'mocha/object'
 module Micronaut
   module Mocking
     module WithMocha
-      include Mocha::API
+      # Mocha::Standalone was deprecated as of Mocha 0.9.7.  
+      begin
+        include Mocha::API
+      rescue NameError
+        include Mocha::Standalone
+      end
 
       alias :_setup_mocks :mocha_setup
       alias :_verify_mocks :mocha_verify
