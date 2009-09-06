@@ -42,7 +42,7 @@ task :untested do
   end
 end
 
-puts "Running in Ruby #{RUBY_VERSION}"
+puts "Running in Ruby #{RUBY_PLATFORM} #{RUBY_VERSION}"
 desc "Run all micronaut examples"
 Micronaut::RakeTask.new :examples do |t|
   t.pattern = "examples/**/*_example.rb"
