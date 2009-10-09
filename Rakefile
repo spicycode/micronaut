@@ -11,26 +11,11 @@ begin
     s.description = "An excellent replacement for the wheel..."
     s.authors = ["Chad Humphries"] 
     s.files =  FileList["[A-Z]*", "{bin,lib,examples}/**/*"] 
-    s.rubyforge_project = 'spicycode-depot' 
   end 
   Jeweler::GemcutterTasks.new
-rescue => e
-  puts "Jeweler, or one of its dependencies blew right up. #{e}"
 rescue LoadError 
-  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com" 
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: gem install jeweler" 
 end
-
-# These are new tasks
-begin
-  require 'rake/contrib/sshpublisher'
-  namespace :rubyforge do
-    desc "Release gem and RDoc documentation to RubyForge"
-    task :release => ["rubyforge:release:gem"]
-  end
-rescue LoadError
-  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
-end
-
 
 desc "List files that don't have examples"
 task :untested do
@@ -60,4 +45,21 @@ namespace :examples do
 
 end
 
-task :default => 'examples:coverage'
+task :default => [:check_dependencies, :examples]
+
+begin
+  %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
+  require 'sdoc_helpers'
+rescue LoadError => ex
+  puts "sdoc support not enabled:"
+  puts ex.inspect
+end
+
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ''
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "micronaut #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
