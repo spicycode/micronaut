@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::Configuration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Micronaut::Configuration 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/micronaut/configuration_rb.html">lib/micronaut/configuration.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000034">after</a>,</li>
+                
+                <li><a href="#M000004">alias_example_to</a>,</li>
+                
+                <li><a href="#M000016">autorun!</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>B</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000033">before</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000012">cleaned_from_backtrace?</a>,</li>
+                
+                <li><a href="#M000017">color_enabled=</a>,</li>
+                
+                <li><a href="#M000018">color_enabled?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>E</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000031">extend</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000019">filter_run</a>,</li>
+                
+                <li><a href="#M000035">find_before_or_after</a>,</li>
+                
+                <li><a href="#M000032">find_modules</a>,</li>
+                
+                <li><a href="#M000022">formatter</a>,</li>
+                
+                <li><a href="#M000021">formatter=</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>I</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000030">include</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000013">mock_with</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000003">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>O</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000023">output</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>P</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000028">puts</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000020">run_all_when_everything_filtered?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000024">trace</a>,</li>
+                
+                <li><a href="#M000029">trace?</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>backtrace_clean_patterns</td>
+            <td class='attr-desc'><p>
+Regex patterns to scrub backtrace with
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>before_and_afters</td>
+            <td class='attr-desc'><p>
+All of the defined before/after blocks setup in the configuration
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>filter</td>
+            <td class='attr-desc'><p>
+Allows you to control what examples are ran by filtering
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>exclusion_filter</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>include_or_extend_modules</td>
+            <td class='attr-desc'><p>
+Modules that will be included or extended based on given filters
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>run_all_when_everything_filtered</td>
+            <td class='attr-desc'><p>
+Run all examples if the run is filtered, and no examples were found.
+Normally this is what you want - when using focused examples for instance.
+Defaults to true
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>profile_examples</td>
+            <td class='attr-desc'><p>
+Enable profiling of example run - defaults to false
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>trace</td>
+            <td class='attr-desc'><p>
+Enable verbose interal logging of the framework - defaults to false
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>mock_framework</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000003">
+                    
+                    <a name="M000003"></a><b>new</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000003_source')" id="l_M000003_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L30" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000003_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 30</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+      <span class="ruby-ivar">@backtrace_clean_patterns</span> = [<span class="ruby-regexp re">/\/lib\/ruby\//</span>, <span class="ruby-regexp re">/bin\/rcov:/</span>, <span class="ruby-regexp re">/vendor\/rails/</span>, <span class="ruby-regexp re">/bin\/micronaut/</span>, <span class="ruby-node">/#{::Micronaut::InstallDirectory}/</span>]
+      <span class="ruby-ivar">@run_all_when_everything_filtered</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-ivar">@trace</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@profile_examples</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@color_enabled</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@before_and_afters</span> = { <span class="ruby-identifier">:before</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:each</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-identifier">:all</span> =<span class="ruby-operator">&gt;</span> [] }, <span class="ruby-identifier">:after</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:each</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-identifier">:all</span> =<span class="ruby-operator">&gt;</span> [] } }
+      <span class="ruby-ivar">@include_or_extend_modules</span> = []
+      <span class="ruby-ivar">@formatter_to_use</span> = <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">ProgressFormatter</span>
+      <span class="ruby-ivar">@filter</span>, <span class="ruby-ivar">@exclusion_filter</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">mock_with</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@mock_framework_established</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000034">
+                    
+                    <a name="M000034"></a><b>after</b>(each_or_all=:each, options={}, &amp;block)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000034_source')" id="l_M000034_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L150" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000034_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 150</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after</span>(<span class="ruby-identifier">each_or_all</span>=<span class="ruby-identifier">:each</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">before_and_afters</span>[<span class="ruby-identifier">:after</span>][<span class="ruby-identifier">each_or_all</span>] <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">options</span>, <span class="ruby-identifier">block</span>]
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000004">
+                    
+                    <a name="M000004"></a><b>alias_example_to</b>(new_name, extra_options={})
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+E.g. <a href="Configuration.html#M000004">alias_example_to</a> :crazy_slow,
+:speed => &#8216;crazy_slow&#8217; defines crazy_slow as an example variant
+that has the crazy_slow speed option
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000004_source')" id="l_M000004_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L45" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000004_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 45</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alias_example_to</span>(<span class="ruby-identifier">new_name</span>, <span class="ruby-identifier">extra_options</span>={})
+      <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Behaviour</span>.<span class="ruby-identifier">alias_example_to</span>(<span class="ruby-identifier">new_name</span>, <span class="ruby-identifier">extra_options</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000016">
+                    
+                    <a name="M000016"></a><b>autorun!</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000016_source')" id="l_M000016_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L71" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000016_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 71</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">autorun!</span>
+      <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Runner</span>.<span class="ruby-identifier">autorun</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000033">
+                    
+                    <a name="M000033"></a><b>before</b>(each_or_all=:each, options={}, &amp;block)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000033_source')" id="l_M000033_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L146" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000033_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 146</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">before</span>(<span class="ruby-identifier">each_or_all</span>=<span class="ruby-identifier">:each</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">before_and_afters</span>[<span class="ruby-identifier">:before</span>][<span class="ruby-identifier">each_or_all</span>] <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">options</span>, <span class="ruby-identifier">block</span>]
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000012">
+                    
+                    <a name="M000012"></a><b>cleaned_from_backtrace?</b>(line)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000012_source')" id="l_M000012_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L49" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000012_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 49</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleaned_from_backtrace?</span>(<span class="ruby-identifier">line</span>)
+      <span class="ruby-ivar">@backtrace_clean_patterns</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">regex</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">regex</span> }
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000017">
+                    
+                    <a name="M000017"></a><b>color_enabled=</b>(on_or_off)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Turn ANSI on with &#8216;true&#8217;, or off with &#8216;false&#8217;
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000017_source')" id="l_M000017_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L76" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000017_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 76</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">color_enabled=</span>(<span class="ruby-identifier">on_or_off</span>)
+      <span class="ruby-ivar">@color_enabled</span> = <span class="ruby-identifier">on_or_off</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000018">
+                    
+                    <a name="M000018"></a><b>color_enabled?</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Output with ANSI color enabled? Defaults to false
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000018_source')" id="l_M000018_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L81" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000018_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 81</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">color_enabled?</span>
+      <span class="ruby-ivar">@color_enabled</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000031">
+                    
+                    <a name="M000031"></a><b>extend</b>(mod, options={})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000031_source')" id="l_M000031_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L134" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000031_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 134</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extend</span>(<span class="ruby-identifier">mod</span>, <span class="ruby-identifier">options</span>={})
+      <span class="ruby-identifier">include_or_extend_modules</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">:extend</span>, <span class="ruby-identifier">mod</span>, <span class="ruby-identifier">options</span>]
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000019">
+                    
+                    <a name="M000019"></a><b>filter_run</b>(options={})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000019_source')" id="l_M000019_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L85" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000019_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 85</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filter_run</span>(<span class="ruby-identifier">options</span>={})
+      <span class="ruby-ivar">@filter</span> = <span class="ruby-identifier">options</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000035">
+                    
+                    <a name="M000035"></a><b>find_before_or_after</b>(desired_before_or_after, desired_each_or_all, group)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000035_source')" id="l_M000035_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L154" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000035_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 154</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_before_or_after</span>(<span class="ruby-identifier">desired_before_or_after</span>, <span class="ruby-identifier">desired_each_or_all</span>, <span class="ruby-identifier">group</span>)
+      <span class="ruby-identifier">before_and_afters</span>[<span class="ruby-identifier">desired_before_or_after</span>][<span class="ruby-identifier">desired_each_or_all</span>].<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">options</span>, <span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">options</span>.<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span><span class="ruby-operator">|</span>
+          <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">world</span>.<span class="ruby-identifier">apply_condition</span>(<span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span>, <span class="ruby-identifier">group</span>.<span class="ruby-identifier">metadata</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">options</span>, <span class="ruby-identifier">block</span><span class="ruby-operator">|</span> <span class="ruby-identifier">block</span> }
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000032">
+                    
+                    <a name="M000032"></a><b>find_modules</b>(group)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000032_source')" id="l_M000032_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L138" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000032_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 138</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_modules</span>(<span class="ruby-identifier">group</span>)
+      <span class="ruby-identifier">include_or_extend_modules</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">include_or_extend</span>, <span class="ruby-identifier">mod</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">options</span>.<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span><span class="ruby-operator">|</span>
+          <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">world</span>.<span class="ruby-identifier">apply_condition</span>(<span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span>, <span class="ruby-identifier">group</span>.<span class="ruby-identifier">metadata</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000022">
+                    
+                    <a name="M000022"></a><b>formatter</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+The formatter all output should use. Defaults to the progress formatter
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L102" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000022_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 102</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">formatter</span>
+      <span class="ruby-ivar">@formatter</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@formatter_to_use</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000021">
+                    
+                    <a name="M000021"></a><b>formatter=</b>(formatter_to_use)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L93" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000021_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 93</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">formatter=</span>(<span class="ruby-identifier">formatter_to_use</span>)
+      <span class="ruby-ivar">@formatter_to_use</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">formatter_to_use</span>.<span class="ruby-identifier">to_s</span>
+                          <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'documentation'</span> <span class="ruby-keyword kw">then</span> <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">DocumentationFormatter</span>
+                          <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'progress'</span> <span class="ruby-keyword kw">then</span> <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">ProgressFormatter</span>
+                          <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Formatter '#{formatter_to_use}' unknown - maybe you meant 'documentation' or 'progress'?.&quot;</span>)
+                          <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000030">
+                    
+                    <a name="M000030"></a><b>include</b>(mod, options={})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000030_source')" id="l_M000030_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L130" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000030_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 130</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">include</span>(<span class="ruby-identifier">mod</span>, <span class="ruby-identifier">options</span>={})
+      <span class="ruby-identifier">include_or_extend_modules</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">:include</span>, <span class="ruby-identifier">mod</span>, <span class="ruby-identifier">options</span>]
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000013">
+                    
+                    <a name="M000013"></a><b>mock_with</b>(make_a_mockery_with=nil)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000013_source')" id="l_M000013_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L53" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000013_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 53</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mock_with</span>(<span class="ruby-identifier">make_a_mockery_with</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-ivar">@mock_framework_established</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-ivar">@mock_framework</span> = <span class="ruby-identifier">make_a_mockery_with</span>
+      <span class="ruby-identifier">mock_framework_class</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">make_a_mockery_with</span>.<span class="ruby-identifier">to_s</span>
+                             <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/mocha/i</span>
+                               <span class="ruby-identifier">require</span> <span class="ruby-value str">'micronaut/mocking/with_mocha'</span>
+                               <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Mocking</span><span class="ruby-operator">::</span><span class="ruby-constant">WithMocha</span>
+                             <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/rr/i</span>
+                               <span class="ruby-identifier">require</span> <span class="ruby-value str">'micronaut/mocking/with_rr'</span>
+                               <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Mocking</span><span class="ruby-operator">::</span><span class="ruby-constant">WithRR</span>
+                             <span class="ruby-keyword kw">else</span>
+                               <span class="ruby-identifier">require</span> <span class="ruby-value str">'micronaut/mocking/with_absolutely_nothing'</span>
+                               <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Mocking</span><span class="ruby-operator">::</span><span class="ruby-constant">WithAbsolutelyNothing</span>
+                             <span class="ruby-keyword kw">end</span> 
+
+      <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Behaviour</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-identifier">mock_framework_class</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000023">
+                    
+                    <a name="M000023"></a><b>output</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Where does output go? For now $stdout
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000023_source')" id="l_M000023_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L107" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000023_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 107</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output</span>
+      <span class="ruby-identifier">$stdout</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000028">
+                    
+                    <a name="M000028"></a><b>puts</b>(msg)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000028_source')" id="l_M000028_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L120" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000028_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 120</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">msg</span>)
+      <span class="ruby-identifier">output</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">msg</span>)    
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000020">
+                    
+                    <a name="M000020"></a><b>run_all_when_everything_filtered?</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000020_source')" id="l_M000020_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L89" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000020_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 89</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_all_when_everything_filtered?</span>
+      <span class="ruby-ivar">@run_all_when_everything_filtered</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000024">
+                    
+                    <a name="M000024"></a><b>trace</b>(override = false)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Output some string for debugging/tracing assistance if trace is enabled The
+trace string should be sent as a block, which means it will only be
+interpolated if trace is actually enabled We allow an override here so that
+trace can be set at lower levels (such as the describe or example level)
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L114" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000024_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 114</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-identifier">override</span> = <span class="ruby-keyword kw">false</span>)
+      <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Must yield a block with your string to trace.&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">trace?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">override</span>
+      <span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;[TRACE] #{yield}&quot;</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000029">
+                    
+                    <a name="M000029"></a><b>trace?</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+If true, <a href="../Micronaut.html">Micronaut</a> will provide detailed
+trace output of its self as it runs. Can be turned on at the global
+(configuration) level or at the individual behaviour (describe) level.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000029_source')" id="l_M000029_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/a7220683bb449ee56a4096b596c4749d15f2afa9/lib/micronaut/configuration.rb#L126" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000029_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/configuration.rb, line 126</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace?</span>
+      <span class="ruby-ivar">@trace</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">true</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

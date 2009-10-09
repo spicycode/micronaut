@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::RakeTask</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Micronaut::RakeTask 
+            
+                <span class="parent">&lt; 
+                    
+                    ::Rake::TaskLib
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/micronaut/rake_task_rb.html">lib/micronaut/rake_task.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000167">new</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>name</td>
+            <td class='attr-desc'><p>
+Name of task. (default is :examples)
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>warning</td>
+            <td class='attr-desc'><p>
+If true, requests that the specs be run with the warning flag set. E.g.
+warning=true implies &#8220;ruby -w&#8221; used to run the specs. Defaults
+to false.
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>pattern</td>
+            <td class='attr-desc'><p>
+Glob pattern to match example files. (default is
+&#8216;examples/**/*_example.rb&#8217;)
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>ruby_opts</td>
+            <td class='attr-desc'><p>
+Array of commandline options to pass to ruby. Defaults to [].
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>fail_on_error</td>
+            <td class='attr-desc'><p>
+Whether or not to fail Rake when an error occurs (typically when examples
+fail). Defaults to true.
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>failure_message</td>
+            <td class='attr-desc'><p>
+A message to print to stderr when there are failures.
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>verbose</td>
+            <td class='attr-desc'><p>
+Use verbose output. If this is set to true, the task will print the
+executed spec command to stdout. Defaults to false.
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>rcov</td>
+            <td class='attr-desc'><p>
+Use rcov for code coverage? defaults to false
+</p></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>rcov_opts</td>
+            <td class='attr-desc'><p>
+The options to pass to rcov. Defaults to blank
+</p></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000167">
+                    
+                    <a name="M000167"></a><b>new</b>(*args)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000167_source')" id="l_M000167_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/f2effb7982b66884080280c85ba58297ea83d2f1/lib/micronaut/rake_task.rb#L40" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000167_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/rake_task.rb, line 40</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">:examples</span>
+      <span class="ruby-ivar">@pattern</span>, <span class="ruby-ivar">@rcov_opts</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-ivar">@warning</span>, <span class="ruby-ivar">@rcov</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@ruby_opts</span> = []
+      <span class="ruby-ivar">@fail_on_error</span> = <span class="ruby-keyword kw">true</span>
+
+      <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+      <span class="ruby-ivar">@pattern</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">'examples/**/*_example.rb'</span>
+      <span class="ruby-identifier">define</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

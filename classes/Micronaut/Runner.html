@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::Runner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Micronaut::Runner 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/micronaut/runner_rb.html">lib/micronaut/runner.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000163">autorun</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000164">configuration</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000165">formatter</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>I</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000162">installed_at_exit?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000166">require_all_behaviours</a>,</li>
+                
+                <li><a href="#M000168">run</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000163">
+                    
+                    <a name="M000163"></a><b>autorun</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000163_source')" id="l_M000163_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/runner.rb#L9" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000163_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/runner.rb, line 9</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">autorun</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">installed_at_exit?</span>
+      <span class="ruby-ivar">@installed_at_exit</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-identifier">at_exit</span> { <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Runner</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>(<span class="ruby-constant">ARGV</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">exit</span>(<span class="ruby-value">0</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">exit</span>(<span class="ruby-value">1</span>) } 
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000162">
+                    
+                    <a name="M000162"></a><b>installed_at_exit?</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000162_source')" id="l_M000162_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/runner.rb#L5" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000162_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/runner.rb, line 5</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">installed_at_exit?</span>
+      <span class="ruby-ivar">@installed_at_exit</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000164">
+                    
+                    <a name="M000164"></a><b>configuration</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000164_source')" id="l_M000164_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/runner.rb#L15" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000164_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/runner.rb, line 15</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">configuration</span>
+      <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000165">
+                    
+                    <a name="M000165"></a><b>formatter</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000165_source')" id="l_M000165_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/runner.rb#L19" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000165_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/runner.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">formatter</span>
+      <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">formatter</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000166">
+                    
+                    <a name="M000166"></a><b>require_all_behaviours</b>(files_from_args=[])
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000166_source')" id="l_M000166_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/runner.rb#L23" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000166_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/runner.rb, line 23</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_all_behaviours</span>(<span class="ruby-identifier">files_from_args</span>=[])
+      <span class="ruby-identifier">files_from_args</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">file</span> }
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000168">
+                    
+                    <a name="M000168"></a><b>run</b>(args = [])
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000168_source')" id="l_M000168_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/runner.rb#L27" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000168_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/runner.rb, line 27</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">args</span> = [])
+      <span class="ruby-identifier">require_all_behaviours</span>(<span class="ruby-identifier">args</span>)
+
+      <span class="ruby-identifier">total_examples_to_run</span> = <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">world</span>.<span class="ruby-identifier">total_examples_to_run</span>
+
+      <span class="ruby-identifier">old_sync</span>, <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">sync</span>, <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:sync=</span>)
+
+      <span class="ruby-identifier">suite_success</span> = <span class="ruby-keyword kw">true</span>
+
+      <span class="ruby-identifier">formatter_supports_sync</span> = <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:sync=</span>)
+      <span class="ruby-identifier">old_sync</span>, <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">sync</span>, <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">formatter_supports_sync</span>
+
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">start</span>(<span class="ruby-identifier">total_examples_to_run</span>) <span class="ruby-comment cmt"># start the clock</span>
+      <span class="ruby-identifier">start</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+
+      <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">world</span>.<span class="ruby-identifier">behaviours_to_run</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">behaviour</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">suite_success</span> <span class="ruby-operator">&amp;=</span> <span class="ruby-identifier">behaviour</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">formatter</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">start_dump</span>(<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">start</span>)
+      
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">dump_failures</span>
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">dump_summary</span>
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">dump_pending</span>
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">close</span>
+      
+      <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-identifier">old_sync</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">formatter_supports_sync</span>
+
+      <span class="ruby-identifier">suite_success</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

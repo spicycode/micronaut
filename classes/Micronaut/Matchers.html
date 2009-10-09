@@ -1,0 +1,1444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::Matchers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Module</span> 
+            Micronaut::Matchers 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/micronaut/expectations/wrap_expectation_rb.html">lib/micronaut/expectations/wrap_expectation.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/be_close_rb.html">lib/micronaut/matchers/be_close.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/be_rb.html">lib/micronaut/matchers/be.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/change_rb.html">lib/micronaut/matchers/change.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/eql_rb.html">lib/micronaut/matchers/eql.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/equal_rb.html">lib/micronaut/matchers/equal.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/generated_descriptions_rb.html">lib/micronaut/matchers/generated_descriptions.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/has_rb.html">lib/micronaut/matchers/has.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/have_rb.html">lib/micronaut/matchers/have.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/include_rb.html">lib/micronaut/matchers/include.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/match_rb.html">lib/micronaut/matchers/match.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/method_missing_rb.html">lib/micronaut/matchers/method_missing.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/operator_matcher_rb.html">lib/micronaut/matchers/operator_matcher.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/raise_error_rb.html">lib/micronaut/matchers/raise_error.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/respond_to_rb.html">lib/micronaut/matchers/respond_to.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/satisfy_rb.html">lib/micronaut/matchers/satisfy.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/simple_matcher_rb.html">lib/micronaut/matchers/simple_matcher.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers/throw_symbol_rb.html">lib/micronaut/matchers/throw_symbol.rb</a></li>
+            
+            <li><a href="../../files/lib/micronaut/matchers_rb.html">lib/micronaut/matchers.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+We ship (courtesy of RSpec and <a href="../Micronaut.html">Micronaut</a>)
+with a number of useful Expression <a href="Matchers.html">Matchers</a>. An
+Expression Matcher is any object that responds to the following methods:
+</p>
+<pre>
+  matches?(actual)
+  failure_message
+  negative_failure_message #optional
+  description #optional
+</pre>
+<p>
+See <a href="Expectations.html">Micronaut::Expectations</a> to learn how to
+use these as Expectation <a href="Matchers.html">Matchers</a>. See
+Micronaut::Mocks to learn how to use them as Mock Argument Constraints.
+</p>
+<h2>Predicates</h2>
+<p>
+In addition to those Expression <a href="Matchers.html">Matchers</a> that
+are defined explicitly, we will create custom <a
+href="Matchers.html">Matchers</a> on the fly for any arbitrary predicate,
+giving your specs a much more natural language feel.
+</p>
+<p>
+A Ruby predicate is a method that ends with a &#8220;?&#8221; and returns
+true or false. Common examples are <tt>empty?</tt>, <tt>nil?</tt>, and
+<tt>instance_of?</tt>.
+</p>
+<p>
+All you need to do is write +should be_+ followed by the predicate without
+the question mark, and we will figure it out from there. For example:
+</p>
+<pre>
+  [].should be_empty =&gt; [].empty? #passes
+  [].should_not be_empty =&gt; [].empty? #fails
+</pre>
+<p>
+In addtion to prefixing the predicate matchers with &#8220;be_&#8221;, you
+can also use &#8220;be_a_&#8220; and &#8220;be_an_&#8220;, making your
+specs read much more naturally:
+</p>
+<pre>
+  &quot;a string&quot;.should be_an_instance_of(String) =&gt;&quot;a string&quot;.instance_of?(String) #passes
+
+  3.should be_a_kind_of(Fixnum) =&gt; 3.kind_of?(Numeric) #passes
+  3.should be_a_kind_of(Numeric) =&gt; 3.kind_of?(Numeric) #passes
+  3.should be_an_instance_of(Fixnum) =&gt; 3.instance_of?(Fixnum) #passes
+  3.should_not be_instance_of(Numeric) =&gt; 3.instance_of?(Numeric) #fails
+</pre>
+<p>
+We will also create custom matchers for predicates like <tt>has_key?</tt>.
+To use this feature, just state that the object should have_key(:key) and
+we will call has_key?(:key) on the target. For example:
+</p>
+<pre>
+  {:a =&gt; &quot;A&quot;}.should have_key(:a) =&gt; {:a =&gt; &quot;A&quot;}.has_key?(:a) #passes
+  {:a =&gt; &quot;A&quot;}.should have_key(:b) =&gt; {:a =&gt; &quot;A&quot;}.has_key?(:b) #fails
+</pre>
+<p>
+You can use this feature to invoke any predicate that begins with
+&#8220;has_&#8221;, whether it is part of the Ruby libraries (like
++Hash#has_key?+) or a method you wrote on your own class.
+</p>
+<h2>Custom Expectation <a href="Matchers.html">Matchers</a></h2>
+<p>
+When you find that none of the stock Expectation <a
+href="Matchers.html">Matchers</a> provide a natural feeling expectation,
+you can very easily write your own.
+</p>
+<p>
+For example, imagine that you are writing a game in which players can be in
+various zones on a virtual board. To specify that bob should be in zone 4,
+you could say:
+</p>
+<pre>
+  bob.current_zone.should eql(Zone.new(&quot;4&quot;))
+</pre>
+<p>
+But you might find it more expressive to say:
+</p>
+<pre>
+  bob.should be_in_zone(&quot;4&quot;)
+</pre>
+<p>
+and/or
+</p>
+<pre>
+  bob.should_not be_in_zone(&quot;3&quot;)
+</pre>
+<p>
+To do this, you would need to write a class like this:
+</p>
+<pre>
+  class BeInZone
+    def initialize(expected)
+      @expected = expected
+    end
+    def matches?(target)
+      @target = target
+      @target.current_zone.eql?(Zone.new(@expected))
+    end
+    def failure_message
+      &quot;expected #{@target.inspect} to be in Zone #{@expected}&quot;
+    end
+    def negative_failure_message
+      &quot;expected #{@target.inspect} not to be in Zone #{@expected}&quot;
+    end
+  end
+</pre>
+<p>
+&#8230; and a method like this:
+</p>
+<pre>
+  def be_in_zone(expected)
+    BeInZone.new(expected)
+  end
+</pre>
+<p>
+And then expose the method to your specs. This is normally done by
+including the method and the class in a module, which is then included in
+your spec:
+</p>
+<pre>
+  module CustomGameMatchers
+    class BeInZone
+      ...
+    end
+
+    def be_in_zone(expected)
+      ...
+    end
+  end
+
+  describe &quot;Player behaviour&quot; do
+    include CustomGameMatchers
+    ...
+  end
+</pre>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>B</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000125">be</a>,</li>
+                
+                <li><a href="#M000124">be_close</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000127">change</a>,</li>
+                
+                <li><a href="#M000129">clear_generated_description</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>E</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000126">eql</a>,</li>
+                
+                <li><a href="#M000128">equal</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>G</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000130">generated_description</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>H</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000135">have</a>,</li>
+                
+                <li><a href="#M000137">have_at_least</a>,</li>
+                
+                <li><a href="#M000138">have_at_most</a>,</li>
+                
+                <li><a href="#M000136">have_exactly</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>I</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000134">include</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000139">match</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000144">raise_error</a>,</li>
+                
+                <li><a href="#M000145">respond_to</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>S</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000146">satisfy</a>,</li>
+                
+                <li><a href="#M000153">simple_matcher</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000154">throw_symbol</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>W</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000070">wrap_expectation</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Classes and Modules</div>
+    <ul>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/Be.html">Micronaut::Matchers::Be</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/BeClose.html">Micronaut::Matchers::BeClose</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/Change.html">Micronaut::Matchers::Change</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/Have.html">Micronaut::Matchers::Have</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/Include.html">Micronaut::Matchers::Include</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/MatcherError.html">Micronaut::Matchers::MatcherError</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/NegativeOperatorMatcher.html">Micronaut::Matchers::NegativeOperatorMatcher</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/OperatorMatcher.html">Micronaut::Matchers::OperatorMatcher</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/PositiveOperatorMatcher.html">Micronaut::Matchers::PositiveOperatorMatcher</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/RaiseError.html">Micronaut::Matchers::RaiseError</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/RespondTo.html">Micronaut::Matchers::RespondTo</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/Satisfy.html">Micronaut::Matchers::Satisfy</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/SimpleMatcher.html">Micronaut::Matchers::SimpleMatcher</a></li>
+        
+        <li><span class="type">CLASS</span> <a href="Matchers/ThrowSymbol.html">Micronaut::Matchers::ThrowSymbol</a></li>
+        
+    </ul>
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>last_matcher</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>last_should</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000129">
+                    
+                    <a name="M000129"></a><b>clear_generated_description</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000129_source')" id="l_M000129_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/b13914369fecf7747cb6d46340ee0b71a1ee8010/lib/micronaut/matchers/generated_descriptions.rb#L6" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000129_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/generated_descriptions.rb, line 6</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_generated_description</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">last_matcher</span> = <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">last_should</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000130">
+                    
+                    <a name="M000130"></a><b>generated_description</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000130_source')" id="l_M000130_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/b13914369fecf7747cb6d46340ee0b71a1ee8010/lib/micronaut/matchers/generated_descriptions.rb#L11" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000130_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/generated_descriptions.rb, line 11</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generated_description</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">last_should</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-node">&quot;#{last_should} #{last_description}&quot;</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000125">
+                    
+                    <a name="M000125"></a><b>should be_true
+should be_false
+should be_nil
+should be_arbitrary_predicate(*args)
+should_not be_nil
+should_not be_arbitrary_predicate(*args)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Given true, false, or nil, will pass if actual value is true, false or nil
+(respectively). Given no args means the caller should satisfy an if
+condition (to be or not to be).
+</p>
+<p>
+Predicates are any Ruby method that ends in a &#8220;?&#8221; and returns
+true or false. Given be_ followed by arbitrary_predicate (without the
+&#8220;?&#8221;), we will match convert that into a query against the
+target object.
+</p>
+<p>
+The arbitrary_predicate feature will handle any predicate prefixed with
+&#8220;be_an_&#8220; (e.g. be_an_instance_of), &#8220;be_a_&#8220; (e.g.
+be_a_kind_of) or &#8220;be_&#8221; (e.g. be_empty), letting you choose the
+prefix that best suits the predicate.
+</p>
+<h2>Examples</h2>
+<pre>
+  target.should be_true
+  target.should be_false
+  target.should be_nil
+  target.should_not be_nil
+
+  collection.should be_empty #passes if target.empty?
+  &quot;this string&quot;.should be_an_intance_of(String)
+
+  target.should_not be_empty #passes unless target.empty?
+  target.should_not be_old_enough(16) #passes unless target.old_enough?(16)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000125_source')" id="l_M000125_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/25313fff2e31fd2bef314e3e56f8f0fcc4046f1f/lib/micronaut/matchers/be.rb#L200" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000125_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/be.rb, line 200</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">be</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Be</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000124">
+                    
+                    <a name="M000124"></a><b>should be_close(expected, delta)
+should_not be_close(expected, delta)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Passes if actual == expected +/- delta
+</p>
+<h2><a href="Example.html">Example</a></h2>
+<pre>
+  result.should be_close(3.0, 0.5)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000124_source')" id="l_M000124_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/b418d913c8377313a0c957bf0f3b7c78dc05cfbc/lib/micronaut/matchers/be_close.rb#L32" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000124_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/be_close.rb, line 32</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">be_close</span>(<span class="ruby-identifier">expected</span>, <span class="ruby-identifier">delta</span>)
+      <span class="ruby-constant">BeClose</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">expected</span>, <span class="ruby-identifier">delta</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000127">
+                    
+                    <a name="M000127"></a><b>should change(receiver, message, &block)
+should change(receiver, message, &block).by(value)
+should change(receiver, message, &block).from(old).to(new)
+should_not change(receiver, message, &block)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Allows you to specify that a Proc will cause some value to change.
+</p>
+<h2>Examples</h2>
+<pre>
+  lambda {
+    team.add_player(player)
+  }.should change(roster, :count)
+
+  lambda {
+    team.add_player(player)
+  }.should change(roster, :count).by(1)
+
+  lambda {
+    team.add_player(player)
+  }.should change(roster, :count).by_at_least(1)
+
+  lambda {
+    team.add_player(player)
+  }.should change(roster, :count).by_at_most(1)
+
+  string = &quot;string&quot;
+  lambda {
+    string.reverse!
+  }.should change { string }.from(&quot;string&quot;).to(&quot;gnirts&quot;)
+
+  lambda {
+    person.happy_birthday
+  }.should change(person, :birthday).from(32).to(33)
+
+  lambda {
+    employee.develop_great_new_social_networking_app
+  }.should change(employee, :title).from(&quot;Mail Clerk&quot;).to(&quot;CEO&quot;)
+</pre>
+<p>
+Evaluates <tt>receiver.message</tt> or <tt>block</tt> before and after it
+evaluates the c object (generated by the lambdas in the examples above).
+</p>
+<p>
+Then compares the values before and after the <tt>receiver.message</tt> and
+evaluates the difference compared to the expected difference.
+</p>
+<h2>WARNING</h2>
+<p>
+<tt>should_not change</tt> only supports the form with no subsequent calls
+to <tt>by</tt>, <tt>by_at_least</tt>, <tt>by_at_most</tt>, <tt>to</tt> or
+<tt>from</tt>.
+</p>
+<p>
+blocks passed to <tt>should</tt> <tt>change</tt> and <tt>should_not</tt>
+<tt>change</tt> must use the <tt>{}</tt> form (<tt>do/end</tt> is not
+supported).
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000127_source')" id="l_M000127_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/change.rb#L145" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000127_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/change.rb, line 145</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">change</span>(<span class="ruby-identifier">receiver</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">message</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Change</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">receiver</span>, <span class="ruby-identifier">message</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000126">
+                    
+                    <a name="M000126"></a><b>should eql(expected)
+should_not eql(expected)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Passes if actual and expected are of equal value, but not necessarily the
+same object.
+</p>
+<p>
+See <a
+href="http://www.ruby-doc.org/core/classes/Object.html#M001057">www.ruby-doc.org/core/classes/Object.html#M001057</a>
+for more information about equality in Ruby.
+</p>
+<h2>Examples</h2>
+<pre>
+  5.should eql(5)
+  5.should_not eql(3)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000126_source')" id="l_M000126_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/eql.rb#L16" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000126_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/eql.rb, line 16</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eql</span>(<span class="ruby-identifier">expected</span>)
+      <span class="ruby-identifier">simple_matcher</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">actual</span>, <span class="ruby-identifier">matcher</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">failure_message</span>          = <span class="ruby-node">&quot;expected #{expected.inspect}, got #{actual.inspect} (using .eql?)&quot;</span>, <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">actual</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">negative_failure_message</span> = <span class="ruby-node">&quot;expected #{actual.inspect} not to equal #{expected.inspect} (using .eql?)&quot;</span>, <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">actual</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">description</span>              = <span class="ruby-node">&quot;eql #{expected.inspect}&quot;</span>
+        <span class="ruby-identifier">actual</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">expected</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000128">
+                    
+                    <a name="M000128"></a><b>should equal(expected)
+should_not equal(expected)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Passes if given and expected are the same object (object identity).
+</p>
+<p>
+See <a
+href="http://www.ruby-doc.org/core/classes/Object.html#M001057">www.ruby-doc.org/core/classes/Object.html#M001057</a>
+for more information about equality in Ruby.
+</p>
+<h2>Examples</h2>
+<pre>
+  5.should equal(5) #Fixnums are equal
+  &quot;5&quot;.should_not equal(&quot;5&quot;) #Strings that look the same are not the same object
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000128_source')" id="l_M000128_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/equal.rb#L16" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000128_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/equal.rb, line 16</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">equal</span>(<span class="ruby-identifier">expected</span>)
+      <span class="ruby-identifier">simple_matcher</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">actual</span>, <span class="ruby-identifier">matcher</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">failure_message</span>          = <span class="ruby-node">&quot;expected #{expected.inspect}, got #{actual.inspect} (using .equal?)&quot;</span>, <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">actual</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">negative_failure_message</span> = <span class="ruby-node">&quot;expected #{actual.inspect} not to equal #{expected.inspect} (using .equal?)&quot;</span>, <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">actual</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">description</span>              = <span class="ruby-node">&quot;equal #{expected.inspect}&quot;</span>
+        <span class="ruby-identifier">actual</span>.<span class="ruby-identifier">equal?</span>(<span class="ruby-identifier">expected</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000135">
+                    
+                    <a name="M000135"></a><b>should have(number).named_collection__or__sugar
+should_not have(number).named_collection__or__sugar
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Passes if receiver is a collection with the submitted number of items OR if
+the receiver OWNS a collection with the submitted number of items.
+</p>
+<p>
+If the receiver OWNS the collection, you must use the name of the
+collection. So if a <tt>Team</tt> instance has a collection named
+<tt>players</tt>, you must use that name to set the expectation.
+</p>
+<p>
+If the receiver IS the collection, you can use any name you like for
+<tt>named_collection</tt>. We&#8217;d recommend using either
+&#8220;elements&#8221;, &#8220;members&#8221;, or &#8220;items&#8221; as
+these are all standard ways of describing the things IN a collection.
+</p>
+<p>
+This also works for Strings, letting you set an expectation about its
+length
+</p>
+<h2>Examples</h2>
+<pre>
+  # Passes if team.players.size == 11
+  team.should have(11).players
+
+  # Passes if [1,2,3].length == 3
+  [1,2,3].should have(3).items #&quot;items&quot; is pure sugar
+
+  # Passes if &quot;this string&quot;.length == 11
+  &quot;this string&quot;.should have(11).characters #&quot;characters&quot; is pure sugar
+</pre>
+
+                </div>
+                
+                
+                <div class="aka">
+                    This method is also aliased as
+                    
+                    <a href="Matchers.html#M000136">have_exactly</a>
+                    
+                </div>
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000135_source')" id="l_M000135_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/have.rb#L125" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000135_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/have.rb, line 125</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">have</span>(<span class="ruby-identifier">n</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Have</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">n</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000137">
+                    
+                    <a name="M000137"></a><b>should have_at_least(number).items
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Exactly like have() with >=.
+</p>
+<h2>Warning</h2>
+<p>
+<tt>should_not</tt> <tt><a
+href="Matchers.html#M000137">have_at_least</a></tt> is not supported
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000137_source')" id="l_M000137_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/have.rb#L138" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000137_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/have.rb, line 138</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">have_at_least</span>(<span class="ruby-identifier">n</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Have</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">:at_least</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000138">
+                    
+                    <a name="M000138"></a><b>should have_at_most(number).items
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Exactly like have() with <=.
+</p>
+<h2>Warning</h2>
+<p>
+<tt>should_not</tt> <tt><a
+href="Matchers.html#M000138">have_at_most</a></tt> is not supported
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000138_source')" id="l_M000138_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/have.rb#L150" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000138_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/have.rb, line 150</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">have_at_most</span>(<span class="ruby-identifier">n</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Have</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">:at_most</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000136">
+                    
+                    <a name="M000136"></a><b>have_exactly</b>(n)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Alias for <a href="Matchers.html#M000135">have</a>
+</p>
+
+                </div>
+                
+                
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000134">
+                    
+                    <a name="M000134"></a><b>should include(expected)
+should_not include(expected)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Passes if actual includes expected. This works for collections and Strings.
+You can also pass in multiple args and it will only pass if all args are
+found in collection.
+</p>
+<h2>Examples</h2>
+<pre>
+  [1,2,3].should include(3)
+  [1,2,3].should include(2,3) #would pass
+  [1,2,3].should include(2,3,4) #would fail
+  [1,2,3].should_not include(4)
+  &quot;spread&quot;.should include(&quot;read&quot;)
+  &quot;spread&quot;.should_not include(&quot;red&quot;)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000134_source')" id="l_M000134_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5f9eeef633397ad02030bebd210be35f62010cc4/lib/micronaut/matchers/include.rb#L76" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000134_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/include.rb, line 76</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">include</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">expected</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Include</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">expected</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000139">
+                    
+                    <a name="M000139"></a><b>should match(regexp)
+should_not match(regexp)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Given a Regexp, passes if actual =~ regexp
+</p>
+<h2>Examples</h2>
+<pre>
+  email.should match(/^([^\s]+)((?:[-a-z0-9]+\.)+[a-z]{2,})$/i)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000139_source')" id="l_M000139_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5f9eeef633397ad02030bebd210be35f62010cc4/lib/micronaut/matchers/match.rb#L13" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000139_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/match.rb, line 13</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match</span>(<span class="ruby-identifier">regexp</span>)
+      <span class="ruby-identifier">simple_matcher</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">actual</span>, <span class="ruby-identifier">matcher</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">failure_message</span>          = <span class="ruby-node">&quot;expected #{actual.inspect} to match #{regexp.inspect}&quot;</span>, <span class="ruby-identifier">regexp</span>, <span class="ruby-identifier">actual</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">negative_failure_message</span> = <span class="ruby-node">&quot;expected #{actual.inspect} not to match #{regexp.inspect}&quot;</span>, <span class="ruby-identifier">regexp</span>, <span class="ruby-identifier">actual</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">description</span>              = <span class="ruby-node">&quot;match #{regexp.inspect}&quot;</span>
+        <span class="ruby-identifier">actual</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">regexp</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000144">
+                    
+                    <a name="M000144"></a><b>should raise_error()
+should raise_error(NamedError)
+should raise_error(NamedError, String)
+should raise_error(NamedError, Regexp)
+should raise_error() { |error| ... }
+should raise_error(NamedError) { |error| ... }
+should raise_error(NamedError, String) { |error| ... }
+should raise_error(NamedError, Regexp) { |error| ... }
+should_not raise_error()
+should_not raise_error(NamedError)
+should_not raise_error(NamedError, String)
+should_not raise_error(NamedError, Regexp)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+With no args, matches if any error is raised. With a named error, matches
+only if that specific error is raised. With a named error and messsage
+specified as a String, matches only if both match. With a named error and
+messsage specified as a Regexp, matches only if both match. Pass an
+optional block to perform extra verifications on the exception matched
+</p>
+<h2>Examples</h2>
+<pre>
+  lambda { do_something_risky }.should raise_error
+  lambda { do_something_risky }.should raise_error(PoorRiskDecisionError)
+  lambda { do_something_risky }.should raise_error(PoorRiskDecisionError) { |error| error.data.should == 42 }
+  lambda { do_something_risky }.should raise_error(PoorRiskDecisionError, &quot;that was too risky&quot;)
+  lambda { do_something_risky }.should raise_error(PoorRiskDecisionError, /oo ri/)
+
+  lambda { do_something_risky }.should_not raise_error
+  lambda { do_something_risky }.should_not raise_error(PoorRiskDecisionError)
+  lambda { do_something_risky }.should_not raise_error(PoorRiskDecisionError, &quot;that was too risky&quot;)
+  lambda { do_something_risky }.should_not raise_error(PoorRiskDecisionError, /oo ri/)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000144_source')" id="l_M000144_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5f9eeef633397ad02030bebd210be35f62010cc4/lib/micronaut/matchers/raise_error.rb#L124" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000144_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/raise_error.rb, line 124</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">raise_error</span>(<span class="ruby-identifier">error</span>=<span class="ruby-constant">Exception</span>, <span class="ruby-identifier">message</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">RaiseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">error</span>, <span class="ruby-identifier">message</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000145">
+                    
+                    <a name="M000145"></a><b>should respond_to(*names)
+should_not respond_to(*names)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Matches if the target object responds to all of the names provided. Names
+can be Strings or Symbols.
+</p>
+<h2>Examples</h2>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000145_source')" id="l_M000145_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/respond_to.rb#L45" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000145_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/respond_to.rb, line 45</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond_to</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">RespondTo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000146">
+                    
+                    <a name="M000146"></a><b>should satisfy {}
+should_not satisfy {}
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Passes if the submitted block returns true. Yields target to the block.
+</p>
+<p>
+Generally speaking, this should be thought of as a last resort when you
+can&#8217;t find any other way to specify the behaviour you wish to
+specify.
+</p>
+<p>
+If you do find yourself in such a situation, you could always write a
+custom matcher, which would likely make your specs more expressive.
+</p>
+<h2>Examples</h2>
+<pre>
+  5.should satisfy { |n|
+    n &gt; 3
+  }
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000146_source')" id="l_M000146_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/satisfy.rb#L45" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000146_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/satisfy.rb, line 45</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">satisfy</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">Satisfy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000153">
+                    
+                    <a name="M000153"></a><b>simple_matcher</b>(description=nil, &amp;match_block)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+<a href="Matchers.html#M000153">simple_matcher</a> makes it easy for you to
+create your own custom matchers in just a few lines of code when you
+don&#8217;t need all the power of a completely custom matcher object.
+</p>
+<p>
+The <tt>description</tt> argument will appear as part of any failure
+message, and is also the source for auto-generated descriptions.
+</p>
+<p>
+The <tt>match_block</tt> can have an arity of 1 or 2. The first block
+argument will be the given value. The second, if the block accepts it will
+be the matcher itself, giving you access to set custom failure messages in
+favor of the defaults.
+</p>
+<p>
+The <tt>match_block</tt> should return a boolean: <tt>true</tt> indicates a
+match, which will pass if you use <tt>should</tt> and fail if you use
+<tt>should_not</tt>. false (or nil) indicates no match, which will do the
+reverse: fail if you use <tt>should</tt> and pass if you use
+<tt>should_not</tt>.
+</p>
+<p>
+An error in the <tt>match_block</tt> will bubble up, resulting in a
+failure.
+</p>
+<h2><a href="Example.html">Example</a> with default messages</h2>
+<pre>
+  def be_even
+    simple_matcher(&quot;an even number&quot;) { |given| given % 2 == 0 }
+  end
+
+  describe 2 do
+    it &quot;should be even&quot; do
+      2.should be_even
+    end
+  end
+</pre>
+<p>
+Given an odd number, this example would produce an error message stating:
+expected &#8220;an even number&#8221;, got 3.
+</p>
+<p>
+Unfortunately, if you&#8217;re a fan of auto-generated descriptions, this
+will produce &#8220;should an even number.&#8221; Not the most desirable
+result. You can control that using custom messages:
+</p>
+<h2><a href="Example.html">Example</a> with custom messages</h2>
+<pre>
+  def rhyme_with(expected)
+    simple_matcher(&quot;rhyme with #{expected.inspect}&quot;) do |given, matcher|
+      matcher.failure_message = &quot;expected #{given.inspect} to rhyme with #{expected.inspect}&quot;
+      matcher.negative_failure_message = &quot;expected #{given.inspect} not to rhyme with #{expected.inspect}&quot;
+      given.rhymes_with? expected
+    end
+  end
+
+  # OR
+
+  def rhyme_with(expected)
+    simple_matcher do |given, matcher|
+      matcher.description = &quot;rhyme with #{expected.inspect}&quot;
+      matcher.failure_message = &quot;expected #{given.inspect} to rhyme with #{expected.inspect}&quot;
+      matcher.negative_failure_message = &quot;expected #{given.inspect} not to rhyme with #{expected.inspect}&quot;
+      given.rhymes_with? expected
+    end
+  end
+
+  describe &quot;pecan&quot; do
+    it &quot;should rhyme with 'be gone'&quot; do
+      nut = &quot;pecan&quot;
+      nut.extend Rhymer
+      nut.should rhyme_with(&quot;be gone&quot;)
+    end
+  end
+</pre>
+<p>
+The resulting messages would be:
+</p>
+<pre>
+  description:              rhyme with &quot;be gone&quot;
+  failure_message:          expected &quot;pecan&quot; to rhyme with &quot;be gone&quot;
+  negative failure_message: expected &quot;pecan&quot; not to rhyme with &quot;be gone&quot;
+</pre>
+<h2>Wrapped <a href="Expectations.html">Expectations</a></h2>
+<p>
+Because errors will bubble up, it is possible to wrap other expectations in
+a <a href="Matchers/SimpleMatcher.html">SimpleMatcher</a>.
+</p>
+<pre>
+  def be_even
+    simple_matcher(&quot;an even number&quot;) { |given| (given % 2).should == 0 }
+  end
+</pre>
+<p>
+BE VERY CAREFUL when you do this. Only use wrapped expectations for
+matchers that will always be used in only the positive (<tt>should</tt>) or
+negative (<tt>should_not</tt>), but not both. The reason is that is you
+wrap a <tt>should</tt> and call the wrapper with <tt>should_not</tt>, the
+correct result (the <tt>should</tt> failing), will fail when you want it to
+pass.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000153_source')" id="l_M000153_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/simple_matcher.rb#L130" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000153_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/simple_matcher.rb, line 130</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">simple_matcher</span>(<span class="ruby-identifier">description</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">match_block</span>)
+      <span class="ruby-constant">SimpleMatcher</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">description</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">match_block</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000154">
+                    
+                    <a name="M000154"></a><b>should throw_symbol()
+should throw_symbol(:sym)
+should throw_symbol(:sym, arg)
+should_not throw_symbol()
+should_not throw_symbol(:sym)
+should_not throw_symbol(:sym, arg)
+</b>
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Given no argument, matches if a proc throws any Symbol.
+</p>
+<p>
+Given a Symbol, matches if the given proc throws the specified Symbol.
+</p>
+<p>
+Given a Symbol and an arg, matches if the given proc throws the specified
+Symbol with the specified arg.
+</p>
+<h2>Examples</h2>
+<pre>
+  lambda { do_something_risky }.should throw_symbol
+  lambda { do_something_risky }.should throw_symbol(:that_was_risky)
+  lambda { do_something_risky }.should throw_symbol(:that_was_risky, culprit)
+
+  lambda { do_something_risky }.should_not throw_symbol
+  lambda { do_something_risky }.should_not throw_symbol(:that_was_risky)
+  lambda { do_something_risky }.should_not throw_symbol(:that_was_risky, culprit)
+</pre>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000154_source')" id="l_M000154_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/338946f580eb2ad70f28a09150f5e136b0d4472b/lib/micronaut/matchers/throw_symbol.rb#L103" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000154_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/throw_symbol.rb, line 103</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">throw_symbol</span>(<span class="ruby-identifier">sym</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-constant">Matchers</span><span class="ruby-operator">::</span><span class="ruby-constant">ThrowSymbol</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">sym</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000070">
+                    
+                    <a name="M000070"></a><b>wrap_expectation</b>(matcher, &amp;block)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+wraps an expectation in a block that will return true if the expectation
+passes and false if it fails (without bubbling up the failure).
+</p>
+<p>
+This is intended to be used in the context of a simple matcher, and is
+especially useful for wrapping multiple expectations or one or more
+assertions from test/unit extensions when running with test/unit.
+</p>
+<h2>Examples</h2>
+<pre>
+  def eat_cheese(cheese)
+    simple_matcher do |mouse, matcher|
+      matcher.negative_failure_message = &quot;expected #{mouse} not to eat cheese&quot;
+      wrap_expectation do |matcher|
+        assert_eats_cheese(mouse)
+      end
+    end
+  end
+
+  describe Mouse do
+    it &quot;eats cheese&quot; do
+      Mouse.new.should eat_cheese
+    end
+  end
+</pre>
+<p>
+The other benefit you get is that you can use the negative version of the
+matcher:
+</p>
+<pre>
+  describe Cat do
+    it &quot;does not eat cheese&quot; do
+      Cat.new.should_not eat_cheese
+    end
+  end
+</pre>
+<p>
+So in the event there is no assert_does_not_eat_cheese available,
+you&#8217;re all set!
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000070_source')" id="l_M000070_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/5c78d41840773dfdabc4fcd4997368ba79d1270c/lib/micronaut/expectations/wrap_expectation.rb#L41" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000070_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/expectations/wrap_expectation.rb, line 41</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wrap_expectation</span>(<span class="ruby-identifier">matcher</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">matcher</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+        <span class="ruby-identifier">matcher</span>.<span class="ruby-identifier">failure_message</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::World</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Micronaut::World 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/micronaut/world_rb.html">lib/micronaut/world.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000183">apply_condition</a>,</li>
+                
+                <li><a href="#M000182">apply_exclusion_filters</a>,</li>
+                
+                <li><a href="#M000181">apply_inclusion_filters</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>B</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000174">behaviours_to_run</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>E</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000173">exclusion_filter</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000172">filter</a>,</li>
+                
+                <li><a href="#M000179">filter_behaviours</a>,</li>
+                
+                <li><a href="#M000180">find</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000171">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000178">total_examples_to_run</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>behaviours</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000171">
+                    
+                    <a name="M000171"></a><b>new</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000171_source')" id="l_M000171_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L7" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000171_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 7</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+      <span class="ruby-ivar">@behaviours</span> = []
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000183">
+                    
+                    <a name="M000183"></a><b>apply_condition</b>(filter_on, filter, metadata)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000183_source')" id="l_M000183_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L79" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000183_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 79</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">apply_condition</span>(<span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span>, <span class="ruby-identifier">metadata</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">nil?</span>
+
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+        <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">apply_condition</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>, <span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">filter_on</span>]) }
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Regexp</span>
+        <span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">filter_on</span>] <span class="ruby-operator">=~</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Proc</span>
+        <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">filter_on</span>]) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">filter_on</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000182">
+                    
+                    <a name="M000182"></a><b>apply_exclusion_filters</b>(collection, conditions={})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000182_source')" id="l_M000182_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L75" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000182_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 75</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">apply_exclusion_filters</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">conditions</span>={})
+      <span class="ruby-identifier">find</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">:negative</span>, <span class="ruby-identifier">conditions</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000181">
+                    
+                    <a name="M000181"></a><b>apply_inclusion_filters</b>(collection, conditions={})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000181_source')" id="l_M000181_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L71" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000181_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 71</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">apply_inclusion_filters</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">conditions</span>={})
+      <span class="ruby-identifier">find</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">:positive</span>, <span class="ruby-identifier">conditions</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000174">
+                    
+                    <a name="M000174"></a><b>behaviours_to_run</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000174_source')" id="l_M000174_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L19" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000174_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">behaviours_to_run</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@behaviours_to_run</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@behaviours_to_run</span>
+      
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">filter</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">exclusion_filter</span>
+        <span class="ruby-ivar">@behaviours_to_run</span> = <span class="ruby-identifier">filter_behaviours</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@behaviours_to_run</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">run_all_when_everything_filtered?</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No examples were matched by #{filter.inspect}, running all&quot;</span>
+          <span class="ruby-comment cmt"># reset the behaviour list to all behaviours, and add back all examples</span>
+          <span class="ruby-ivar">@behaviours_to_run</span> = <span class="ruby-ivar">@behaviours</span>
+          <span class="ruby-ivar">@behaviours</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>.<span class="ruby-identifier">examples_to_run</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">b</span>.<span class="ruby-identifier">examples</span>) }
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Run filtered using #{filter.inspect}&quot;</span>          
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@behaviours_to_run</span> = <span class="ruby-ivar">@behaviours</span>
+        <span class="ruby-ivar">@behaviours</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>.<span class="ruby-identifier">examples_to_run</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">b</span>.<span class="ruby-identifier">examples</span>) }
+      <span class="ruby-keyword kw">end</span>      
+
+      <span class="ruby-ivar">@behaviours_to_run</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000173">
+                    
+                    <a name="M000173"></a><b>exclusion_filter</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000173_source')" id="l_M000173_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L15" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000173_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 15</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exclusion_filter</span>
+      <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">exclusion_filter</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000172">
+                    
+                    <a name="M000172"></a><b>filter</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000172_source')" id="l_M000172_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L11" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000172_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 11</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filter</span>
+      <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">filter</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000179">
+                    
+                    <a name="M000179"></a><b>filter_behaviours</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000179_source')" id="l_M000179_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L44" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000179_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 44</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filter_behaviours</span>
+      <span class="ruby-identifier">behaviours</span>.<span class="ruby-identifier">inject</span>([]) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">list_of_behaviors</span>, <span class="ruby-identifier">_behavior</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">examples</span> = <span class="ruby-identifier">_behavior</span>.<span class="ruby-identifier">examples</span>
+        <span class="ruby-identifier">examples</span> = <span class="ruby-identifier">apply_exclusion_filters</span>(<span class="ruby-identifier">examples</span>, <span class="ruby-identifier">exclusion_filter</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exclusion_filter</span>
+        <span class="ruby-identifier">examples</span> = <span class="ruby-identifier">apply_inclusion_filters</span>(<span class="ruby-identifier">examples</span>, <span class="ruby-identifier">filter</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">filter</span>
+        <span class="ruby-identifier">examples</span>.<span class="ruby-identifier">uniq!</span>
+        <span class="ruby-identifier">_behavior</span>.<span class="ruby-identifier">examples_to_run</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">examples</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">examples</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-identifier">list_of_behaviors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">list_of_behaviors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">_behavior</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">compact</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000180">
+                    
+                    <a name="M000180"></a><b>find</b>(collection, type_of_filter=:positive, conditions={})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000180_source')" id="l_M000180_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L59" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000180_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 59</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">type_of_filter</span>=<span class="ruby-identifier">:positive</span>, <span class="ruby-identifier">conditions</span>={})
+      <span class="ruby-identifier">negative</span> = <span class="ruby-identifier">type_of_filter</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:positive</span>
+      
+      <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+        <span class="ruby-comment cmt"># negative conditions.any?, positive conditions.all? ?????</span>
+        <span class="ruby-identifier">result</span> = <span class="ruby-identifier">conditions</span>.<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span><span class="ruby-operator">|</span> 
+                   <span class="ruby-identifier">apply_condition</span>(<span class="ruby-identifier">filter_on</span>, <span class="ruby-identifier">filter</span>, <span class="ruby-identifier">item</span>.<span class="ruby-identifier">metadata</span>)
+                 <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">negative</span> <span class="ruby-value">? </span><span class="ruby-operator">!</span><span class="ruby-identifier">result</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">result</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000178">
+                    
+                    <a name="M000178"></a><b>total_examples_to_run</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000178_source')" id="l_M000178_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/dc8511d625244e76e808675dd4c8041623fde5ac/lib/micronaut/world.rb#L40" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000178_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/world.rb, line 40</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">total_examples_to_run</span>
+      <span class="ruby-ivar">@total_examples_to_run</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">behaviours_to_run</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">b</span>.<span class="ruby-identifier">examples_to_run</span>.<span class="ruby-identifier">size</span> }
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

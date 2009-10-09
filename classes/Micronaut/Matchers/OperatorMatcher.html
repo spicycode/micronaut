@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::Matchers::OperatorMatcher</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Micronaut::Matchers::OperatorMatcher 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/micronaut/matchers/operator_matcher_rb.html">lib/micronaut/matchers/operator_matcher.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>D</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000143">description</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000142">fail_with_message</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000141">new</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000141">
+                    
+                    <a name="M000141"></a><b>new</b>(actual)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000141_source')" id="l_M000141_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/d5321e8f558d5ce6018f1310dde516ef207171f6/lib/micronaut/matchers/operator_matcher.rb#L5" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000141_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/operator_matcher.rb, line 5</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">actual</span>)
+        <span class="ruby-ivar">@actual</span> = <span class="ruby-identifier">actual</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000143">
+                    
+                    <a name="M000143"></a><b>description</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000143_source')" id="l_M000143_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/d5321e8f558d5ce6018f1310dde516ef207171f6/lib/micronaut/matchers/operator_matcher.rb#L21" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000143_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/operator_matcher.rb, line 21</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">description</span>
+        <span class="ruby-node">&quot;#{@operator} #{@expected.inspect}&quot;</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000142">
+                    
+                    <a name="M000142"></a><b>fail_with_message</b>(message)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000142_source')" id="l_M000142_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/d5321e8f558d5ce6018f1310dde516ef207171f6/lib/micronaut/matchers/operator_matcher.rb#L17" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000142_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/matchers/operator_matcher.rb, line 17</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fail_with_message</span>(<span class="ruby-identifier">message</span>)
+        <span class="ruby-constant">Micronaut</span><span class="ruby-operator">::</span><span class="ruby-constant">Expectations</span>.<span class="ruby-identifier">fail_with</span>(<span class="ruby-identifier">message</span>, <span class="ruby-ivar">@expected</span>, <span class="ruby-ivar">@actual</span>)
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

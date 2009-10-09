@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Micronaut::Formatters::BaseFormatter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Micronaut::Formatters::BaseFormatter 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/micronaut/formatters/base_formatter_rb.html">lib/micronaut/formatters/base_formatter.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000083">add_behaviour</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>B</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000090">backtrace_line</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000088">close</a>,</li>
+                
+                <li><a href="#M000078">color_enabled?</a>,</li>
+                
+                <li><a href="#M000073">configuration</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>D</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000085">dump_failures</a>,</li>
+                
+                <li><a href="#M000087">dump_pending</a>,</li>
+                
+                <li><a href="#M000086">dump_summary</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>E</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000082">example_finished</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000080">failed_examples</a>,</li>
+                
+                <li><a href="#M000089">format_backtrace</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000072">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>O</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000074">output</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>P</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000079">pending_examples</a>,</li>
+                
+                <li><a href="#M000077">profile_examples?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000094">read_failed_line</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>S</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000081">start</a>,</li>
+                
+                <li><a href="#M000084">start_dump</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000075">trace</a>,</li>
+                
+                <li><a href="#M000076">trace_override_flag</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>behaviour</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>example_count</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>duration</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>examples</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000072">
+                    
+                    <a name="M000072"></a><b>new</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000072_source')" id="l_M000072_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L8" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000072_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 8</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+        <span class="ruby-ivar">@example_count</span> = <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@examples</span> = []
+        <span class="ruby-ivar">@behaviour</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000083">
+                    
+                    <a name="M000083"></a><b>add_behaviour</b>(behaviour)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+This method is invoked at the beginning of the execution of each behaviour.
+<tt>behaviour</tt> is the behaviour.
+</p>
+<p>
+The next method to be invoked after this is example_failed or <a
+href="BaseFormatter.html#M000082">example_finished</a>
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000083_source')" id="l_M000083_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L65" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000083_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 65</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_behaviour</span>(<span class="ruby-identifier">behaviour</span>)
+        <span class="ruby-ivar">@behaviour</span> = <span class="ruby-identifier">behaviour</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000088">
+                    
+                    <a name="M000088"></a><b>close</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+This method is invoked at the very end. Allows the formatter to clean up,
+like closing open streams.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000088_source')" id="l_M000088_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L88" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000088_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 88</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000078">
+                    
+                    <a name="M000078"></a><b>color_enabled?</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000078_source')" id="l_M000078_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L35" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000078_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 35</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">color_enabled?</span>
+        <span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">color_enabled?</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000073">
+                    
+                    <a name="M000073"></a><b>configuration</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000073_source')" id="l_M000073_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L14" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000073_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 14</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">configuration</span>
+        <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000085">
+                    
+                    <a name="M000085"></a><b>dump_failures</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Dumps detailed information about each example failure.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000085_source')" id="l_M000085_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L76" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000085_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 76</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dump_failures</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000087">
+                    
+                    <a name="M000087"></a><b>dump_pending</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+This gets invoked after the summary if option is set to do so.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000087_source')" id="l_M000087_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L84" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000087_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 84</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dump_pending</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000086">
+                    
+                    <a name="M000086"></a><b>dump_summary</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+This method is invoked after the dumping of examples and failures.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000086_source')" id="l_M000086_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L80" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000086_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 80</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dump_summary</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000082">
+                    
+                    <a name="M000082"></a><b>example_finished</b>(example)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000082_source')" id="l_M000082_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L57" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000082_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 57</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">example_finished</span>(<span class="ruby-identifier">example</span>)
+        <span class="ruby-identifier">examples</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">example</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000080">
+                    
+                    <a name="M000080"></a><b>failed_examples</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000080_source')" id="l_M000080_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L43" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000080_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 43</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">failed_examples</span>
+        <span class="ruby-ivar">@failed_examples</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">world</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">examples</span>, <span class="ruby-identifier">:positive</span>, <span class="ruby-identifier">:execution_result</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'failed'</span> })
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000089">
+                    
+                    <a name="M000089"></a><b>format_backtrace</b>(backtrace, example)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000089_source')" id="l_M000089_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L91" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000089_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 91</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_backtrace</span>(<span class="ruby-identifier">backtrace</span>, <span class="ruby-identifier">example</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">backtrace</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">backtrace</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">example</span>.<span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">:full_backtrace</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">true</span>
+
+        <span class="ruby-identifier">cleansed</span> = <span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">backtrace_line</span>(<span class="ruby-identifier">line</span>) }
+        <span class="ruby-comment cmt"># Kick the describe stack info off the list, just keep the line the problem happened on from that file</span>
+        <span class="ruby-comment cmt"># cleansed = [cleansed.detect { |line| line.split(':').first == example.metadata[:caller].split(':').first }] if cleansed.size &gt; 1 </span>
+        <span class="ruby-identifier">cleansed</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-identifier">backtrace</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">cleansed</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000074">
+                    
+                    <a name="M000074"></a><b>output</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000074_source')" id="l_M000074_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L18" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000074_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 18</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output</span>
+        <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">output</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000079">
+                    
+                    <a name="M000079"></a><b>pending_examples</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000079_source')" id="l_M000079_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L39" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000079_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 39</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pending_examples</span>
+        <span class="ruby-ivar">@pending_examples</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">world</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">examples</span>, <span class="ruby-identifier">:positive</span>, <span class="ruby-identifier">:execution_result</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'pending'</span> })
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000077">
+                    
+                    <a name="M000077"></a><b>profile_examples?</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000077_source')" id="l_M000077_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L31" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000077_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 31</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">profile_examples?</span>
+        <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">profile_examples</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000081">
+                    
+                    <a name="M000081"></a><b>start</b>(example_count)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+This method is invoked before any examples are run, right after they have
+all been collected. This can be useful for special formatters that need to
+provide progress on feedback (graphical ones)
+</p>
+<p>
+This method will only be invoked once, and the next one to be invoked is <a
+href="BaseFormatter.html#M000083">add_behaviour</a>
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000081_source')" id="l_M000081_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L53" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000081_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 53</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">example_count</span>)
+        <span class="ruby-ivar">@example_count</span> = <span class="ruby-identifier">example_count</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000084">
+                    
+                    <a name="M000084"></a><b>start_dump</b>(duration)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+This method is invoked after all of the examples have executed. The next
+method to be invoked after this one is dump_failure (once for each failed
+example),
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000084_source')" id="l_M000084_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L71" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000084_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 71</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_dump</span>(<span class="ruby-identifier">duration</span>)
+        <span class="ruby-ivar">@duration</span> = <span class="ruby-identifier">duration</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000075">
+                    
+                    <a name="M000075"></a><b>trace</b>(&amp;blk)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000075_source')" id="l_M000075_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L22" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000075_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 22</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+        <span class="ruby-constant">Micronaut</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">trace</span>(<span class="ruby-identifier">trace_override_flag</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000076">
+                    
+                    <a name="M000076"></a><b>trace_override_flag</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Allow setting trace at the behaviour level as well globally
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000076_source')" id="l_M000076_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L27" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000076_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 27</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace_override_flag</span>
+        <span class="ruby-identifier">behaviour</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">behaviour</span>.<span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">:trace</span>]
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Protected methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000090">
+                    
+                    <a name="M000090"></a><b>backtrace_line</b>(line)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000090_source')" id="l_M000090_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L103" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000090_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 103</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrace_line</span>(<span class="ruby-identifier">line</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">cleaned_from_backtrace?</span>(<span class="ruby-identifier">line</span>)
+        <span class="ruby-identifier">line</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\A([^:]+:\d+)$/</span>, <span class="ruby-value str">'\\1'</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'-e:1'</span>
+        <span class="ruby-identifier">line</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000094">
+                    
+                    <a name="M000094"></a><b>read_failed_line</b>(exception, example)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000094_source')" id="l_M000094_source">show</a>
+                        
+                        | <a href="http://github.com/spicycode/micronaut/blob/c933e574fbdc1b9c7cf0c96edb39f6d48330b34c/lib/micronaut/formatters/base_formatter.rb#L110" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000094_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/micronaut/formatters/base_formatter.rb, line 110</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_failed_line</span>(<span class="ruby-identifier">exception</span>, <span class="ruby-identifier">example</span>)
+        <span class="ruby-identifier">original_file</span> = <span class="ruby-identifier">example</span>.<span class="ruby-identifier">file_path</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">downcase</span>
+        <span class="ruby-identifier">matching_line</span> = <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">detect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">':'</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">original_file</span>.<span class="ruby-identifier">downcase</span> }
+
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Unable to find matching line from backtrace&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matching_line</span>.<span class="ruby-identifier">nil?</span>
+        
+        <span class="ruby-identifier">file_path</span>, <span class="ruby-identifier">line_number</span> = <span class="ruby-identifier">matching_line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">':'</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file_path</span>)
+          <span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_path</span>, <span class="ruby-value str">'r'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">readlines</span>[<span class="ruby-identifier">line_number</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>] }
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-node">&quot;Unable to find #{file_path} to read failed line&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    
