@@ -13,6 +13,7 @@ begin
     s.files =  FileList["[A-Z]*", "{bin,lib,examples}/**/*"] 
     s.rubyforge_project = 'spicycode-depot' 
   end 
+  Jeweler::GemcutterTasks.new
 rescue => e
   puts "Jeweler, or one of its dependencies blew right up. #{e}"
 rescue LoadError 
