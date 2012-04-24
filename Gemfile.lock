@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    micronaut (0.4.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    metaclass (0.0.1)
+    mocha (0.10.5)
+      metaclass (~> 0.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  micronaut!
+  mocha (~> 0.10.5)
