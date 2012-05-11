@@ -19,15 +19,6 @@ module Micronaut
         Micronaut.configuration.output
       end
       
-      def trace(&blk)
-        Micronaut.configuration.trace(trace_override_flag, &blk)
-      end
-      
-      # Allow setting trace at the behaviour level as well globally
-      def trace_override_flag
-        behaviour && behaviour.metadata[:trace]
-      end
-      
       def profile_examples?
         Micronaut.configuration.profile_examples
       end
