@@ -132,7 +132,7 @@ it reads really poorly.
         end
         
         def inspected_args
-          @args.collect{|a| a.inspect}
+          @args.map { |a| a.inspect }
         end
         
         def comparison

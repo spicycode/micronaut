@@ -56,7 +56,7 @@ module Micronaut
             cmd_parts += ruby_opts
             cmd_parts << "-Ispec:lib"
             cmd_parts << "-w" if warning
-            cmd_parts += specs_to_run.collect { |fn| %["#{fn}"] }
+            cmd_parts += specs_to_run.map { |fn| %["#{fn}"] }
             cmd = cmd_parts.join(" ")
             puts cmd if verbose
             unless system(cmd)

@@ -19,11 +19,11 @@ module Micronaut
       end
       
       def failure_message
-        "expected #{@given.inspect} to respond to #{@names_not_responded_to.collect {|name| name.inspect }.join(', ')}"
+        "expected #{@given.inspect} to respond to #{@names_not_responded_to.map { |name| name.inspect }.join(', ')}"
       end
       
       def negative_failure_message
-        "expected #{@given.inspect} not to respond to #{@names.collect {|name| name.inspect }.join(', ')}"
+        "expected #{@given.inspect} not to respond to #{@names.map { |name| name.inspect }.join(', ')}"
       end
       
       def description
