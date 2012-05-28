@@ -27,7 +27,7 @@ module Micronaut
       end
 
       def colorise(s, failure)
-        if failure.is_a?(Micronaut::Expectations::ExpectationNotMetError)
+        if failure.is_a?(RSpec::Expectations::ExpectationNotMetError)
           red(s)
         else
           magenta(s)

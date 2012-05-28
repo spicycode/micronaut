@@ -45,7 +45,7 @@ module Micronaut
       end
 
       def failure_output(example, exception)
-        expectation_not_met = exception.is_a?(::Micronaut::Expectations::ExpectationNotMetError)
+        expectation_not_met = exception.is_a?(::RSpec::Expectations::ExpectationNotMetError)
         
         message = if expectation_not_met
           "#{current_indentation}#{example.description} (FAILED)"

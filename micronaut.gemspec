@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.license     = "MIT"
   s.authors = ["Chad Humphries"]
-  s.date = %q{2009-08-10}
+  s.date = %q{2012-05-10}
   s.default_executable = %q{micronaut}
   s.description = %q{An excellent replacement for the wheel...}
   s.email = %q{chad@spicycode.com}
@@ -34,7 +34,10 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "fakefs",   "0.4.0"
   # s.add_development_dependency "syntax",   "1.0.0"
 
+  s.add_dependency "rspec-expectations"
   s.add_development_dependency "mocha",    "~> 0.10.5"
+  s.add_development_dependency "guard",    "~> 1.0.0"
+  s.add_development_dependency "pry"
   # s.add_development_dependency "rr",       "~> 1.0.4"
   # s.add_development_dependency "flexmock", "~> 0.9.0"
 end

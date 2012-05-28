@@ -1,6 +1,6 @@
 module Micronaut
   class Behaviour
-    include Micronaut::Matchers 
+    include ::RSpec::Matchers 
     
     attr_accessor :running_example, :reporter
     
